@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./install fd fish git tmux vim
+
+echo 'Ubuntu dotfiles install complete.'

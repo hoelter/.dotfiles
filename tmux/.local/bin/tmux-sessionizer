@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# Adapted from: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/bin/tmux-sessionizer
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    dirs=""
+    for dir in ~/dev ~/personal ~/work
+    do
+        if [ -d "$dir" ]; then
+            dirs="$dirs $dir"
+        fi
+    done
+
+    static_dirs="\n$HOME"
+    for dir in ~/.dotfiles ~/.dotfiles-personal
+    do
+        if [ -d "$dir" ]; then
+            static_dirs="\n$dir $static_dirs"
+        fi
+    done
+
+    # echo $dirs
+    session_dir_list="$(fd --type directory --hidden --color=always --max-depth 1 . $dirs)$static_dirs"
+    selected=$(echo -e "$session_dir_list" | fzf --tac)
+    #selected=$(fd --type directory --hidden --color=always --max-depth 1 . $dirs | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+fi
+
+if [[ -z $TMUX ]]; then
+    tmux attach-session -d -t $selected_name
+    exit 0
+fi
+
+tmux switch-client -t $selected_name
+

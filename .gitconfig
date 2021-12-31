@@ -1,0 +1,12 @@
+[alias]
+	s = status
+	pr = !"git fetch; git remote prune origin"
+	ca = !"git add -A && git commit -av"
+	lg = log --graph --pretty=oneline --abbrev-commit --decorate
+	l = branch -a
+	d = branch -D
+	c = checkout
+	cb = checkout -b
+	m = merge --no-ff
+[user]
+	name = Christopher Hoelter

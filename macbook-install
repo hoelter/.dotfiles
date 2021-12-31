@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+fish -c 'set -U MACBOOK true'
+
+./install fd fish git tmux vim kitty
+
+echo 'Macbook dotfiles install complete.'
+

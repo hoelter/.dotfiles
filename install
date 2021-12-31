@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Clean symlinks if they exist
+for dir in "$@"; do
+    stow -v --delete $dir
+done
+
+# Ensure dirs we don't want symlinked exist on the off chance they don't
+mkdir -p ~/.config/fish/functions
+mkdir -p ~/.config/fish/conf.d
+mkdir -p ~/.local/bin/
+
+# Create the symlinks
+for dir in "$@"; do
+    stow -v $dir
+done
+
+./update-bashrc
+
+# Only executes if in wsl
+./update-wslconfig
+
+echo 'Replacing the .gitconfig in the home directory.'
+cp ./.gitconfig ~/.gitconfig
+
+# Just ignore error if directories don't exist
+cd ~/.dotfiles-personal 2> /dev/null && ./personal-install
+#cd ~/.dotfiles-work 2> /dev/null && ./work-install
+
