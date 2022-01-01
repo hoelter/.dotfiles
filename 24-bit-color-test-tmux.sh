@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+#   Sourced from here: https://github.com/tmux/tmux/blob/master/tools/24-bit-color.sh
 #   This file echoes a bunch of 24-bit color codes
 #   to the terminal to demonstrate its functionality.
 #   The foreground escape sequence is ^[38;2;<r>;<g>;<b>m
