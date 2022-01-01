@@ -213,9 +213,9 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'neovim/nvim-lspconfig'
 
 " Autocomplete
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 
@@ -225,6 +225,10 @@ Plug 'tpope/vim-fugitive'
 " Auto comement
 Plug 'tpope/vim-commentary'
 
+" Typescript plugins
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -233,15 +237,15 @@ call plug#end()
 
 " Filetype indentation
 augroup indentation_modifiers
-    autocmd!
-    "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-    "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-    autocmd Filetype xml,markdown setlocal expandtab ts=2 sw=2
-    
-    " Stop yaml comment causing indent
-    "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#
-    autocmd Filetype yaml setlocal indentkeys-=0#
-    autocmd Filetype gitconfig setlocal noexpandtab
+  autocmd!
+  "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
+  "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
+  autocmd Filetype xml,md,vim setlocal expandtab ts=2 sw=2
+  
+  " Stop yaml comment causing indent
+  "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#
+  autocmd Filetype yaml setlocal indentkeys-=0#
+  autocmd Filetype gitconfig setlocal noexpandtab
 augroup END
 
 "--------------------------------------------------------------------------
@@ -327,6 +331,7 @@ nnoremap <leader>lg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>lD <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>lq <cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>
 "nnoremap <leader>lB <cmd>lua require('telescope.builtin').file_browser()<cr>
 " End Telescope config --------------------------------
 
@@ -472,21 +477,25 @@ end
     })
   })
 
+
+  -- Setup null ls
+  local null_ls = require("null-ls")
+  null_ls.setup({
+    sources = {
+      null_ls.builtins.diagnostics.eslint_d,
+      null_ls.builtins.code_actions.eslint_d,
+      null_ls.builtins.formatting.prettier
+    },
+    on_attach = on_attach
+  })
+
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-  require('lspconfig')['tsserver'].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    capabilities = capabilities
-  }
-
-
+  -- Omnisharp
   local pid = vim.fn.getpid()
   local omnisharp_bin = vim.fn.expand('~/.local/omnisharp/run')
-  require('lspconfig')['omnisharp'].setup {
+  nvim_lsp['omnisharp'].setup {
     cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
     on_attach = on_attach,
     flags = {
@@ -494,6 +503,32 @@ end
     },
     capabilities = capabilities
   }
+
+-- Typescript/linting
+  nvim_lsp['tsserver'].setup({
+    on_attach = function(client, bufnr)
+
+      local buf_map = function(bufnr, mode, lhs, rhs, opts)
+          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+              silent = true,
+          })
+      end
+
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+      local ts_utils = require("nvim-lsp-ts-utils")
+      ts_utils.setup({})
+      ts_utils.setup_client(client)
+      buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+      buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+      buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+      on_attach(client, bufnr)
+    end,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    capabilities = capabilities
+  })
 
 EOF
 " End LSP and nvim cmp config -----------------------------

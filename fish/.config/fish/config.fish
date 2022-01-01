@@ -65,4 +65,7 @@ if status --is-interactive
     abbr -a -g ... "cd ../.."
     abbr -a -g .... "cd ../../.."
     abbr -a -g ..... "cd ../../../.."
+
+    # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
+    abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""
 end

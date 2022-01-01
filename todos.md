@@ -1,12 +1,12 @@
-## Dotfiles TODOS
+# Dotfiles TODOS
 - create cht.sh shortcut
 
 - git log -S fugitive integration, search and qfl?
 
-- test out git worktrees and create a nice way to use them
+- test out git worktrees and think about a nice way to use them
   - better fugitive/remote/work tree integration
 
-- wsl2 alias to free cache memory
-  - https://nickjanetakis.com/blog/3-gotchas-with-wsl-2-around-disk-space-memory-usage-and-performance
+- Test in more detail the typescript neovim support
+    - Setup for the most part using this: https://jose-elias-alvarez.medium.com/configuring-neovims-lsp-client-for-typescript-development-5789d58ea9c
 
-- Better typescript neovim support
+- consider this more maintainted ranger plugin: https://github.com/kevinhwang91/rnvimr
