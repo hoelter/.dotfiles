@@ -15,11 +15,6 @@ for dir in "$@"; do
     stow -v $dir
 done
 
-./update-bashrc
-
-# Only executes if in wsl
-./update-wslconfig
-
 echo 'Replacing the .gitconfig in the home directory.'
 cp ./.gitconfig ~/.gitconfig
 
