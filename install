@@ -18,6 +18,8 @@ done
 echo 'Replacing the .gitconfig in the home directory.'
 cp ./.gitconfig ~/.gitconfig
 
+./set-remote-ssh
+
 # Just ignore error if directories don't exist
 cd ~/.dotfiles-personal 2> /dev/null && ./personal-install
 #cd ~/.dotfiles-work 2> /dev/null && ./work-install
