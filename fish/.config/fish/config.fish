@@ -41,9 +41,7 @@ set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 set -gx FZF_ALT_C_COMMAND "fd --type directory --hidden --follow --color=always --ignore-file $HOME/.config/fd/ignore"
 set -gx FZF_ALT_C_OPTS "--ansi"
 
-if set -q MACBOOK
-    set -gx BAT_THEME Nord
-end
+set -gx BAT_THEME Nord
 
 if status --is-interactive
     abbr -a -g v "nvim"
