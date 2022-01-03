@@ -13,7 +13,7 @@ else
     done
 
     static_dirs="\n$HOME"
-    for dir in ~/.dotfiles ~/.dotfiles-personal
+    for dir in ~/.dotfiles ~/.dotfiles-personal ~/.dotfiles-work
     do
         if [ -d "$dir" ]; then
             static_dirs="\n$dir $static_dirs"
