@@ -338,14 +338,13 @@ nnoremap <leader>lh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>lt <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
-nnoremap <leader>lv <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <leader>lp <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>lz <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr> " consider removing
 nnoremap <leader>lg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>lD <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
-nnoremap <leader>lq <cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>
-"nnoremap <leader>lB <cmd>lua require('telescope.builtin').file_browser()<cr>
+nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
 " End Telescope config --------------------------------
 
 
