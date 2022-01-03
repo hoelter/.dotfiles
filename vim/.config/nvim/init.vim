@@ -240,7 +240,7 @@ augroup indentation_modifiers
   autocmd!
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-  autocmd Filetype xml,md,vim setlocal expandtab ts=2 sw=2
+  autocmd Filetype xml,markdown,vim setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#

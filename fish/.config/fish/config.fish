@@ -43,6 +43,9 @@ set -gx FZF_ALT_C_OPTS "--ansi"
 
 set -gx BAT_THEME Nord
 
+# Dev specific
+set -gx ASPNETCORE_ENVIRONMENT "Development"
+
 if status --is-interactive
     abbr -a -g v "nvim"
     abbr -a -g vim "nvim"
