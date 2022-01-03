@@ -179,6 +179,8 @@ nnoremap <leader>gh :0Gclog<CR>
 
 nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
+" toggle local spell check
+nnoremap <F6> :setlocal spell! spell?<CR>
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
@@ -235,17 +237,22 @@ call plug#end()
 " Custom Language Settings (post treesitter)
 "--------------------------------------------------------------------------
 
-" Filetype indentation
-augroup indentation_modifiers
+" Filetype settings
+augroup filetype_settings
   autocmd!
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-  autocmd Filetype xml,markdown,vim setlocal expandtab ts=2 sw=2
+  "
+  autocmd Filetype xml,vim setlocal expandtab ts=2 sw=2
+  autocmd Filetype markdown setlocal spell expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
-  "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#
   autocmd Filetype yaml setlocal indentkeys-=0#
   autocmd Filetype gitconfig setlocal noexpandtab
+  "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#
+  
+  " spell chek for git commits
+  autocmd FileType gitcommit setlocal spell
 augroup END
 
 "--------------------------------------------------------------------------
