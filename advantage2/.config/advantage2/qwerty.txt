@@ -5,6 +5,4 @@
 [kp-end]>[kpshift]
 [lalt]>[delete]
 [delete]>[rwin]
-[pdown]>[rwin]
 [home]>[lalt]
-[pup]>[lalt]

@@ -176,6 +176,8 @@ nnoremap N Nzzzv
 
 " vim fugitive quickfix commits for current file
 nnoremap <leader>gh :0Gclog<CR>
+" Git Blame
+nnoremap <leader>gb :G blame<CR>
 
 nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
@@ -282,6 +284,10 @@ local ignore_file = vim.fn.expand("~/.config/fd/ignore")
 -- vim.api.nvim_echo({{ignore_files}}, false, {})
 require("telescope").setup {
   defaults = {
+    preview = {
+      -- Consider undoing in the future: https://github.com/nvim-telescope/telescope.nvim/issues/1616
+      treesitter = false
+    },
     layout_strategy = 'vertical',
     layout_config = { height = 0.99, preview_height = 0.7 },
     vimgrep_arguments = {

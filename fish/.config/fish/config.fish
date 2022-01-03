@@ -45,6 +45,7 @@ set -gx BAT_THEME Nord
 
 # Dev specific
 set -gx ASPNETCORE_ENVIRONMENT "Development"
+set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 if status --is-interactive
     abbr -a -g v "nvim"
@@ -66,6 +67,8 @@ if status --is-interactive
     abbr -a -g ... "cd ../.."
     abbr -a -g .... "cd ../../.."
     abbr -a -g ..... "cd ../../../.."
+
+    abbr -a -g pkm "pkill mono"
 
     # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
     abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""
