@@ -20,7 +20,6 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set nofoldenable
-set nohlsearch
 set nowrap
 set colorcolumn=80
 set updatetime=50 " Unsure of the significance of this, default is 4000
@@ -183,6 +182,9 @@ nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
 " toggle local spell check
 nnoremap <F6> :setlocal spell! spell?<CR>
+
+" Remove search highlight
+nnoremap <leader>/ :nohlsearch<CR>
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
@@ -258,6 +260,12 @@ augroup filetype_settings
   
   " spell chek for git commits
   autocmd FileType gitcommit setlocal spell
+
+  " Jump to previous,next method name
+  autocmd FileType cs nnoremap <buffer> [m k?\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr>
+  autocmd FileType cs nnoremap <buffer> ]m /\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr>
+  autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr><cmd>Telescope lsp_references<cr>
+
 augroup END
 
 "--------------------------------------------------------------------------
@@ -281,10 +289,27 @@ nnoremap <leader>ld :Ranger<CR>
 
 " Begin Telescope config ------------------------------
 lua <<EOF
---local ignore_files = vim.fn.expand("~/.config/fd/ignore") .. "," .. vim.fn.expand('%:p:h')
+
 local ignore_file = vim.fn.expand("~/.config/fd/ignore")
 
--- vim.api.nvim_echo({{ignore_files}}, false, {})
+-- Wasn't working as an override
+--local actions = require("telescope.actions")
+--local transform_mod = require('telescope.actions.mt').transform_mod
+--
+--local move_up = transform_mod({
+--  move_up = function(_)
+--    return vim.cmd ":normal! zt"
+--  end
+--})
+--    mappings = {
+--      i = {
+--        ["<CR>"] = actions.select_default + move_up
+--      },
+--      n = {
+--        ["<CR>"] = actions.select_default + move_up
+--      },
+--    },
+
 require("telescope").setup {
   defaults = {
     preview = {
@@ -335,15 +360,17 @@ require('telescope').load_extension('fzf')
 EOF
 
 nnoremap <leader>lf <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>ll <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>lg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>lj <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>lk <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+" nnoremap <leader>lp <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>lh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>ll <cmd>lua require('telescope.builtin').resume()<cr>
+
 nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>lt <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
-nnoremap <leader>lp <cmd>lua require('telescope.builtin').grep_string()<cr>
-nnoremap <leader>lz <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr> " consider removing
-nnoremap <leader>lg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>lD <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
@@ -477,11 +504,11 @@ end
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+ --  cmp.setup.cmdline('/', {
+ --    sources = {
+ --      { name = 'buffer' }
+ --    }
+ --  })
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
