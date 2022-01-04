@@ -233,6 +233,9 @@ Plug 'tpope/vim-commentary'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+" Log File syntax highlighting
+Plug 'mtdl9/vim-log-highlighting'
+
 call plug#end()
 
 "--------------------------------------------------------------------------
