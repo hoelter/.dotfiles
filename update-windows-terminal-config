@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# if in wsl, copy wslconfig to windows home folder
+if [[ -x "$(command -v wslpath)" ]]; then
+    echo 'Replacing the current windows terminal settings.json file with the .windows-terminal-config.json'
+
+    WINHOME=$(wslpath "$(wslvar USERPROFILE)")
+
+    cp ~/.dotfiles/.windows-terminal-config.json $WINHOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+fi
+
