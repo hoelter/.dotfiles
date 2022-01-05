@@ -262,10 +262,10 @@ augroup filetype_settings
   autocmd FileType gitcommit setlocal spell
 
   " Jump to previous,next method name
-  autocmd FileType cs nnoremap <buffer> [m k?\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr>
-  autocmd FileType cs nnoremap <buffer> ]m /\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr>
-  autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr>f(b<cmd>nohlsearch<cr><cmd>Telescope lsp_references<cr>
-
+  autocmd FileType cs noremap <buffer> [m k?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
+  autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
+  autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
+  autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
 augroup END
 
 "--------------------------------------------------------------------------
