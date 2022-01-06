@@ -11,6 +11,14 @@
             "keys": "ctrl+v"
         },
         {
+            "command": "unbound",
+            "keys": "ctrl+plus"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+minus"
+        },
+        {
             "command": 
             {
                 "action": "copy",
@@ -27,12 +35,19 @@
         {
             "command": 
             {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
+                "action": "adjustFontSize",
+                "delta": 1
             },
-            "keys": "alt+shift+d"
-        }
+            "keys": "ctrl+shift+plus"
+        },
+       {
+            "command": 
+            {
+                "action": "adjustFontSize",
+                "delta": -1
+            },
+            "keys": "ctrl+shift+minus"
+        },
     ],
     "alwaysOnTop": false,
     "alwaysShowTabs": false,
