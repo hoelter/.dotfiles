@@ -173,6 +173,8 @@ nnoremap <silent> <M-s> :silent !tmux neww tmux-sessionizer<CR>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" Git Status
+nnoremap <leader>gs :G<CR>
 " vim fugitive quickfix commits for current file
 nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
@@ -249,7 +251,8 @@ augroup filetype_settings
   autocmd!
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-  "
+  autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
+
   autocmd Filetype xml,vim setlocal expandtab ts=2 sw=2
   autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal spell expandtab ts=2 sw=2
@@ -330,13 +333,14 @@ require("telescope").setup {
         "--column",
         "--smart-case",
         "--hidden",
-        "--ignore-file",
+        "--ignore-file", -- showing hidden and using same ignore_file as fd
         ignore_file
-    } -- showing hidden and using same ignore_file as fd
+    } 
   },
   pickers = {
     find_files = {
-        find_command = { "fd", "--type", "file", "--hidden", "--no-ignore", "--ignore-file", ignore_file } -- including hidden and using custom ignore file, not built in ignores based on .gitignore
+        -- including hidden and using custom ignore file, not built in ignores based on .gitignore
+        find_command = { "fd", "--type", "file", "--hidden", "--no-ignore", "--ignore-file", ignore_file } 
     },
     buffers = {
       mappings = {
@@ -404,73 +408,10 @@ EOF
 
 
 
-"nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
-"nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
-"nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-"nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
-"nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
-"nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-"nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
-"nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
-"nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
-"nnoremap <leader>vll :call LspLocationList()<CR>
-
-
-
 " Begin LSP and nvim cmp config -----------------------------
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
--- Setup LSP Config
-local nvim_lsp = require('lspconfig')
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-
--- local servers = { 'tsserver', 'omnisharp' }
--- for _, lsp in ipairs(servers) do
---   nvim_lsp[lsp].setup {
---     on_attach = on_attach,
---     flags = {
---       debounce_text_changes = 150,
---     }
---   }
--- end
-
-
   -- Setup nvim-cmp.
   local cmp = require'cmp'
 
@@ -523,6 +464,46 @@ end
   })
 
 
+
+
+-- Setup LSP Config
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+
+
+
   -- Setup null ls
   local null_ls = require("null-ls")
   null_ls.setup({
@@ -534,8 +515,16 @@ end
     on_attach = on_attach
   })
 
-  -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+  -- Csharp-ls (Maybe use in the future, omnisharp is better right now)
+  --nvim_lsp['csharp_ls'].setup {
+  --  on_attach = on_attach,
+  --  flags = {
+  --    debounce_text_changes = 150,
+  --  },
+  --  capabilities = capabilities
+  --}
 
   -- Omnisharp
   local pid = vim.fn.getpid()
