@@ -251,7 +251,9 @@ augroup filetype_settings
   "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
   "
   autocmd Filetype xml,vim setlocal expandtab ts=2 sw=2
+  autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal spell expandtab ts=2 sw=2
+  autocmd Filetype text setlocal spell expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
@@ -266,6 +268,7 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
+  "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
 augroup END
 
 "--------------------------------------------------------------------------

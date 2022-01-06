@@ -67,6 +67,7 @@ if status --is-interactive
     abbr -a -g ... "cd ../.."
     abbr -a -g .... "cd ../../.."
     abbr -a -g ..... "cd ../../../.."
+    abbr -a -g - "cd -"
 
     abbr -a -g pkm "pkill mono"
 

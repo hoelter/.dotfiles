@@ -78,6 +78,13 @@
                 "hidden": false,
                 "name": "Git Bash",
                 "source": "Git"
+            },
+            {
+                "guid": "{ac0abd26-976d-415c-92df-25e5a9068311}",
+                "hidden": false,
+                "name": "Bash-git",
+                "commandline": "\"C:\\Dev\\Program Files\\Git\\bin\\bash.exe\" -i -l",
+                "suppressApplicationTitle": true
             }
         ]
     },
