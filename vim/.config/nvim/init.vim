@@ -187,7 +187,7 @@ nnoremap <leader>gb :G blame<CR>
 nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
 " toggle local spell check
-nnoremap <F6> :setlocal spell! spell?<CR>
+nnoremap <F7> :setlocal spell! spell?<CR>
 
 " Remove search highlight
 nnoremap <leader>/ :nohlsearch<CR>
@@ -291,7 +291,7 @@ colorscheme nord
 " https://github.com/francoiscabrol/ranger.vim
 let g:ranger_replace_netrw = 1
 let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
-nnoremap <leader>ld :Ranger<CR>
+nnoremap <leader>lD :Ranger<CR>
 
 
 
@@ -383,7 +383,7 @@ nnoremap <leader>lt <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_
 nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
-nnoremap <leader>lD <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
 " End Telescope config --------------------------------
 
