@@ -4,6 +4,7 @@
 " [ripgrep](https://github.com/BurntSushi/ripgrep)
 " [FD](https://github.com/sharkdp/fd)
 "
+"
 "--------------------------------------------------------------------------
 " General settings
 "--------------------------------------------------------------------------
@@ -42,24 +43,27 @@ set list
 set listchars=eol:↲,tab:»\ ,trail:.,extends:<,precedes:>,conceal:┊,nbsp:␣,space:.
 
 "" Nice menu when tab completing `:find *.py`
-"set wildmode=longest,list,full
-"set path+=** " Allow recursive searching of entire project dir using :find
-"
-"" Ignore files
-"set wildignore+=*_build/*
-"set wildignore+=**/coverage/*
-"set wildignore+=**/node_modules/*
-"set wildignore+=**/android/*
-"set wildignore+=**/ios/*
-"set wildignore+=**/.git/*
-"set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-"set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-"set wildignore+=*.spl                            " compiled spelling word lists
-"set wildignore+=*.DS_Store                       " OSX bullshit
-"set wildignore+=*.luac                           " Lua byte code
-"set wildignore+=*.pyc                            " Python byte code
-"set wildignore+=*.orig                           " Merge resolution files
+set wildmode=longest,list,full
+set path+=** " Allow recursive searching of entire project dir using :find
 
+"" Ignore files
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.DS_Store                       " OSX bullshit
+set wildignore+=*.luac                           " Lua byte code
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.orig                           " Merge resolution files
+
+if has('mouse')
+  set mouse=a
+endif
 
 " Neovim built in quick highlight on yank
 augroup highlight_yank
@@ -249,10 +253,6 @@ call plug#end()
 " Filetype settings
 augroup filetype_settings
   autocmd!
-  "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-  "autocmd BufNewFile,BufRead *.yml,*.yaml,*.txt,*.md,*.csproj,*.json setlocal expandtab ts=2 sw=2
-  autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
-
   autocmd Filetype xml,vim setlocal expandtab ts=2 sw=2
   autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal spell expandtab ts=2 sw=2
@@ -266,13 +266,15 @@ augroup filetype_settings
   " spell chek for git commits
   autocmd FileType gitcommit setlocal spell
 
-  " Jump to previous,next method name
+  " C# Filetype bindings
   autocmd FileType cs noremap <buffer> [m k?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd FileType cs nnoremap <buffer> <leader>{ o{<esc>o}<esc>O
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
+  autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
+
 augroup END
 
 "--------------------------------------------------------------------------
@@ -444,28 +446,12 @@ lua <<EOF
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
-      { name = 'buffer' },
-    })
+      { name = 'path' },
+      { name = 'buffer', keyword_length = 5 },
+    }),
   })
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
- --  cmp.setup.cmdline('/', {
- --    sources = {
- --      { name = 'buffer' }
- --    }
- --  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-
-
+vim.opt.spelllang = { 'en_us' }
 
 -- Setup LSP Config
 local nvim_lsp = require('lspconfig')
@@ -517,15 +503,6 @@ end
   })
 
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-  -- Csharp-ls (Maybe use in the future, omnisharp is better right now)
-  --nvim_lsp['csharp_ls'].setup {
-  --  on_attach = on_attach,
-  --  flags = {
-  --    debounce_text_changes = 150,
-  --  },
-  --  capabilities = capabilities
-  --}
 
   -- Omnisharp
   local pid = vim.fn.getpid()
