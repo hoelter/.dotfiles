@@ -1,6 +1,6 @@
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "unbound",
@@ -19,7 +19,7 @@
             "keys": "ctrl+minus"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -33,7 +33,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "adjustFontSize",
                 "delta": 1
@@ -41,7 +41,7 @@
             "keys": "ctrl+shift+plus"
         },
        {
-            "command": 
+            "command":
             {
                 "action": "adjustFontSize",
                 "delta": -1
@@ -57,12 +57,14 @@
     "copyOnSelect": false,
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
     "launchMode": "maximizedFocus",
-    "profiles": 
+    "profiles":
     {
         "defaults": {
-            "colorScheme": "Nord"
+            "colorScheme": "Nord",
+            "fontFace": "Iosevka"
+            //"fontFace": "agave NF r"
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "powershell.exe",
@@ -103,7 +105,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",

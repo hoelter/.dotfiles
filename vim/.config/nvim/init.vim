@@ -24,6 +24,8 @@ set nofoldenable
 set nowrap
 set colorcolumn=80
 set updatetime=50 " Unsure of the significance of this, default is 4000
+set showmatch " show matching brackets when indicator is over them
+set cursorline " experimenting with this, unsure if I like it
 
 " case insensitive search, unless upper case char in pattern
 set ignorecase
@@ -41,6 +43,9 @@ set undofile
 " Show white space and other chars
 set list
 set listchars=eol:↲,tab:»\ ,trail:.,extends:<,precedes:>,conceal:┊,nbsp:␣,space:.
+
+" Neovim semi transparent popup-menu: https://neovim.io/doc/user/options.html#%27pumblend%27
+set pumblend=25
 
 "" Nice menu when tab completing `:find *.py`
 set wildmode=longest,list,full
@@ -82,48 +87,10 @@ if executable(s:clip)
 endif
 
 
-" Quickfix list toggle support
-let g:hoelter_qf_l = 0
-let g:hoelter_qf_g = 0
-
-augroup fixlist
+augroup locallist
     autocmd!
-    autocmd BufWinEnter quickfix call SetQFControlVariable()
-    autocmd BufWinLeave * call UnsetQFControlVariable()
+	autocmd DiagnosticChanged * lua vim.diagnostic.setloclist({ open = false })
 augroup END
-
-fun! SetQFControlVariable()
-    if getwininfo(win_getid())[0]['loclist'] == 1
-        let g:hoelter_qf_l = 1
-    else
-        let g:hoelter_qf_g = 1
-    end
-endfun
-
-fun! UnsetQFControlVariable()
-    if getwininfo(win_getid())[0]['loclist'] == 1
-        let g:hoelter_qf_l = 0
-    else
-        let g:hoelter_qf_g = 0
-    end
-endfun
-
-fun! ToggleQFList(global)
-    if a:global
-        if g:hoelter_qf_g == 1
-            cclose
-        else
-            copen
-        end
-    else
-        echo 'Locallist toggled'
-        if g:hoelter_qf_l == 1
-            lclose
-        else
-            lopen
-        end
-    endif
-endfun
 
 "--------------------------------------------------------------------------
 " Key Maps
@@ -143,8 +110,12 @@ nnoremap <C-k> :cprev<CR>zz
 nnoremap <leader>j :lnext<CR>zz
 nnoremap <leader>k :lprev<CR>zz
 
-nnoremap <C-q> :call ToggleQFList(1)<CR>
-nnoremap <leader>q :call ToggleQFList(0)<CR>
+"nnoremap <C-q> :call ToggleQFList(1)<CR>
+"nnoremap <leader>q :call ToggleQFList(0)<CR>
+
+nnoremap <expr> <C-q> empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
+nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'
+
 
 " Replace selected section maintaining the original yank in the register
 xnoremap <leader>p "_dP
@@ -250,6 +221,9 @@ Plug 'mtdl9/vim-log-highlighting'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'pwntester/octo.nvim'
 
+" Align text into tables
+Plug 'junegunn/vim-easy-align'
+
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -298,6 +272,11 @@ colorscheme nord
 let g:ranger_replace_netrw = 1
 let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
 nnoremap <leader>lD :Ranger<CR>
+
+
+" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
 
 
 
@@ -432,9 +411,6 @@ lua <<EOF
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
       end,
     },
     mapping = {
@@ -446,21 +422,19 @@ lua <<EOF
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({
+          select = true,
+          behavior = cmp.ConfirmBehavior.Replace
+      }),
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       -- { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
     }, {
       { name = 'path' },
       { name = 'buffer', keyword_length = 5 },
     }),
   })
-
-vim.opt.spelllang = { 'en_us' }
 
 -- Setup LSP Config
 local nvim_lsp = require('lspconfig')
@@ -493,9 +467,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 

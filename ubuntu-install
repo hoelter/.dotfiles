@@ -6,7 +6,7 @@ echo 'Ubuntu install initiated.'
 ./update-bashrc
 
 # Only executes if in wsl
-./update-wslconfig
+./configure-wsl
 
 echo 'Ubuntu dotfiles install complete.'
 
