@@ -15,7 +15,7 @@ set scrolloff=8
 set number
 set relativenumber
 set signcolumn=yes:1 " more room for symbols left side of page numbers
-"set numberwidth=2 " make code more centered
+"set numberwidth=20 " make code more centered
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -110,12 +110,9 @@ nnoremap <C-k> :cprev<CR>zz
 nnoremap <leader>j :lnext<CR>zz
 nnoremap <leader>k :lprev<CR>zz
 
-"nnoremap <C-q> :call ToggleQFList(1)<CR>
-"nnoremap <leader>q :call ToggleQFList(0)<CR>
-
+" Toggle quickfix and local list
 nnoremap <expr> <C-q> empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
 nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen<CR>' : ':lclose<CR>'
-
 
 " Replace selected section maintaining the original yank in the register
 xnoremap <leader>p "_dP
@@ -168,7 +165,7 @@ nnoremap <leader>/ :nohlsearch<CR>
 " Automate vim.plug install if it's not yet installed
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -223,6 +220,8 @@ Plug 'pwntester/octo.nvim'
 
 " Align text into tables
 Plug 'junegunn/vim-easy-align'
+" Centering Vim
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -265,8 +264,6 @@ augroup END
 colorscheme nord
 
 
-
-
 " Ranger Settings
 " https://github.com/francoiscabrol/ranger.vim
 let g:ranger_replace_netrw = 1
@@ -274,11 +271,16 @@ let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
 nnoremap <leader>lD :Ranger<CR>
 
 
-" Easy Align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
+" Start interactive EasyAlign
 xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
-
+" Goyo
+" Consider removing height margins: https://github.com/junegunn/goyo.vim/issues/100#issuecomment-588226459
+let g:goyo_width=100
+let g:goyo_height=100
+let g:goyo_linenr=1
+nnoremap <leader>w :Goyo<CR>
 
 
 " Begin Telescope config ------------------------------
@@ -310,8 +312,10 @@ require("telescope").setup {
       -- Consider undoing in the future: https://github.com/nvim-telescope/telescope.nvim/issues/1616
       treesitter = false
     },
-    layout_strategy = 'vertical',
-    layout_config = { height = 0.99, preview_height = 0.7 },
+    --layout_strategy = 'vertical',
+    --layout_config = { height = 0.99, preview_height = 0.7 },
+    layout_strategy = 'horizontal',
+    layout_config = { height = 0.99, preview_width = 0.6, width = 0.9 },
     vimgrep_arguments = {
         "rg",
         "--color=never",
