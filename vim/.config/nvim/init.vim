@@ -152,6 +152,7 @@ nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
 nnoremap <leader>gb :G blame<CR>
 
+" Delete all buffers but current buffer
 nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
 " toggle local spell check
@@ -198,6 +199,8 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+" cmp-extra completion info
+Plug 'onsails/lspkind-nvim'
 
 " Git helper
 Plug 'tpope/vim-fugitive'
@@ -280,7 +283,7 @@ nmap ga <Plug>(EasyAlign)
 let g:goyo_width=100
 let g:goyo_height=100
 let g:goyo_linenr=1
-nnoremap <leader>w :Goyo<CR>
+nnoremap <leader>z :Goyo<CR>
 
 
 " Begin Telescope config ------------------------------
@@ -315,7 +318,7 @@ require("telescope").setup {
     --layout_strategy = 'vertical',
     --layout_config = { height = 0.99, preview_height = 0.7 },
     layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, preview_width = 0.6, width = 0.9 },
+    layout_config = { height = 0.99, preview_width = 0.5, width = 0.95 },
     vimgrep_arguments = {
         "rg",
         "--color=never",
@@ -374,6 +377,7 @@ nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
+nnoremap <leader>lm <cmd>lua require('telescope.builtin').keymaps()<cr>
 " End Telescope config --------------------------------
 
 
@@ -408,8 +412,10 @@ set completeopt=menu,menuone,noselect
 
 lua <<EOF
   -- Setup nvim-cmp.
-  local cmp = require'cmp'
+  local lspkind = require "lspkind"
+  lspkind.init()
 
+  local cmp = require'cmp'
   cmp.setup({
     snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -438,6 +444,16 @@ lua <<EOF
       { name = 'path' },
       { name = 'buffer', keyword_length = 5 },
     }),
+    formatting = {
+      format = lspkind.cmp_format({
+        with_text = true, -- do not show text alongside icons
+        menu = {
+          buffer = "[buf]",
+          nvim_lsp = "[LSP]",
+          path = "[path]",
+        }
+      })
+    }
   })
 
 -- Setup LSP Config
