@@ -151,6 +151,8 @@ nnoremap <leader>gs :G<CR>
 nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
 nnoremap <leader>gb :G blame<CR>
+" Better potential diffing
+" https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
 
 " Delete all buffers but current buffer
 nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
@@ -291,8 +293,8 @@ lua <<EOF
 
 local ignore_file = vim.fn.expand("~/.config/fd/ignore")
 
+local actions = require("telescope.actions")
 -- Wasn't working as an override
---local actions = require("telescope.actions")
 --local transform_mod = require('telescope.actions.mt').transform_mod
 --
 --local move_up = transform_mod({
@@ -315,10 +317,20 @@ require("telescope").setup {
       -- Consider undoing in the future: https://github.com/nvim-telescope/telescope.nvim/issues/1616
       treesitter = false
     },
+    mappings = {
+      i = {
+        ["<C-s>"] = actions.cycle_previewers_next,
+        ["<C-a>"] = actions.cycle_previewers_prev,
+      },
+      n = {
+        ["<C-s>"] = actions.cycle_previewers_next,
+        ["<C-a>"] = actions.cycle_previewers_prev,
+      },
+    },
     --layout_strategy = 'vertical',
     --layout_config = { height = 0.99, preview_height = 0.7 },
     layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, preview_width = 0.5, width = 0.95 },
+    layout_config = { height = 0.99, preview_width = 0.55, width = 0.95 },
     vimgrep_arguments = {
         "rg",
         "--color=never",
@@ -362,7 +374,6 @@ require('telescope').load_extension('fzf')
 EOF
 
 nnoremap <leader>lf <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>lg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>lj <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>lk <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
@@ -378,6 +389,9 @@ nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>lm <cmd>lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>lgf <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <leader>lgc <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>lgb <cmd>lua require('telescope.builtin').git_bcommits()<cr>
 " End Telescope config --------------------------------
 
 
