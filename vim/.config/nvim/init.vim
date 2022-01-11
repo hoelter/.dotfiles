@@ -332,22 +332,30 @@ require("telescope").setup {
     layout_strategy = 'horizontal',
     layout_config = { height = 0.99, preview_width = 0.55, width = 0.95 },
     vimgrep_arguments = {
-        "rg",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-        "--hidden",
-        "--ignore-file", -- showing hidden and using same ignore_file as fd
-        ignore_file
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+      "--ignore-file", -- showing hidden and using same ignore_file as fd
+      ignore_file
     } 
   },
   pickers = {
     find_files = {
-        -- including hidden and using custom ignore file, not built in ignores based on .gitignore
-        find_command = { "fd", "--type", "file", "--hidden", "--no-ignore", "--ignore-file", ignore_file } 
+      -- including hidden and using custom ignore file, not built in ignores based on .gitignore
+      find_command = {
+        "fd",
+        "--type",
+        "file",
+        "--hidden",
+        "--no-ignore",
+        "--ignore-file",
+        ignore_file
+      }
     },
     buffers = {
       mappings = {
