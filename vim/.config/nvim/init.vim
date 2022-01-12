@@ -330,7 +330,7 @@ require("telescope").setup {
     --layout_strategy = 'vertical',
     --layout_config = { height = 0.99, preview_height = 0.7 },
     layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, preview_width = 0.55, width = 0.95 },
+    layout_config = { height = 0.99, preview_width = 0.54, width = 0.99 },
     vimgrep_arguments = {
       "rg",
       "--color=never",
