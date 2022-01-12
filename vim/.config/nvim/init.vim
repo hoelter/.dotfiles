@@ -327,6 +327,7 @@ require("telescope").setup {
         ["<C-a>"] = actions.cycle_previewers_prev,
       },
     },
+    path_display = { 'smart' },
     --layout_strategy = 'vertical',
     --layout_config = { height = 0.99, preview_height = 0.7 },
     layout_strategy = 'horizontal',
@@ -366,7 +367,10 @@ require("telescope").setup {
           ["<C-k>"] = "delete_buffer",
         }
       }
-    }
+    },
+    --lsp_references = { -- doesn't work as expected
+    --  show_line = false
+    --},
   },
   extensions = {
     fzf = {
