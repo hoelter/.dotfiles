@@ -146,11 +146,12 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Git Status
-nnoremap <leader>gs :G<CR>
+nnoremap <leader>gs :Git<CR>
 " vim fugitive quickfix commits for current file
 nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
-nnoremap <leader>gb :G blame<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gp :Git -c push.default=current push<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
 
@@ -389,6 +390,7 @@ nnoremap <leader>lf <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>lb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>lj <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>lk <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+nnoremap <leader>lR <cmd>lua require('telescope.builtin').registers()<cr>
 " nnoremap <leader>lp <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>lh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>ll <cmd>lua require('telescope.builtin').resume()<cr>
@@ -404,6 +406,7 @@ nnoremap <leader>lm <cmd>lua require('telescope.builtin').keymaps()<cr>
 nnoremap <leader>lgf <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lgc <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>lgb <cmd>lua require('telescope.builtin').git_bcommits()<cr>
+nnoremap <leader>lga <cmd>lua require('telescope.builtin').git_branches()<cr>
 " End Telescope config --------------------------------
 
 
@@ -577,6 +580,7 @@ EOF
 
 
 "Octo config ----------------------------------------------
+"https://github.com/pwntester/octo.nvim
 lua <<EOF
 require"octo".setup({
   default_remote = {"upstream", "origin"}; -- order to try remotes
