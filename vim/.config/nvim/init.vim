@@ -151,7 +151,10 @@ nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
 nnoremap <leader>gb :Git blame<CR>
+" Git push to origin current branch
 nnoremap <leader>gp :Git -c push.default=current push<CR>
+" Git add all and commit
+nnoremap <leader>gc :Git ca<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
 
