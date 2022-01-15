@@ -138,9 +138,6 @@ nnoremap <leader>x :!chmod +x %<CR>
 " to quickly paste from clipboard without strange indents, automate in future
 set pastetoggle=<F10>
 
-" alt - s for new tmux window session picker
-nnoremap <silent> <M-s> :silent !tmux neww tmux-sessionizer<CR>
-
 " center screen while searching
 nnoremap n nzzzv
 nnoremap N Nzzzv

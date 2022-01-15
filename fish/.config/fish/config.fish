@@ -40,6 +40,8 @@ set -gx FZF_DEFAULT_OPTS "--ansi"
 set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 set -gx FZF_ALT_C_COMMAND "fd --type directory --hidden --follow --color=always --ignore-file $HOME/.config/fd/ignore"
 set -gx FZF_ALT_C_OPTS "--ansi"
+set -gx FZF_TMUX 1
+set -gx FZF_TMUX_OPTS "-p"
 
 set -gx BAT_THEME Nord
 
