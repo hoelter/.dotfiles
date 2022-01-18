@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo 'Updating .zshrc by appending or creating file with custom values.'
+
+# delete everything from mentioned line to end of file
+sed -i '/Appended to .bashrc by Chris/,$d' ~/.zshrc &> /dev/null
+
+# re-append to end of .bashrc
+cat ~/.dotfiles/.bashrc >> ~/.zshrc
+
