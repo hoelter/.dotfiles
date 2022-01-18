@@ -8,5 +8,7 @@
 	c = checkout
 	cb = checkout -b
 	m = merge --no-ff
+[core]
+	excludesFile = ~/.gitignore
 [user]
 	name = Christopher Hoelter
