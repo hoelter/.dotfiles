@@ -163,6 +163,11 @@ nnoremap <F7> :setlocal spell! spell?<CR>
 
 " Remove search highlight
 nnoremap <leader>/ :nohlsearch<CR>
+
+" Show crlf line endings
+" :e ++ff=unix
+" remove crlf line endings
+" :%s/\r//
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
