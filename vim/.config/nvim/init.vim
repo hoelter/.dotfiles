@@ -164,6 +164,10 @@ nnoremap <F7> :setlocal spell! spell?<CR>
 " Remove search highlight
 nnoremap <leader>/ :nohlsearch<CR>
 
+" Add empty lines, can prefix with number
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
 " Show crlf line endings
 " :e ++ff=unix
 " remove crlf line endings
@@ -243,10 +247,11 @@ call plug#end()
 " Filetype settings
 augroup filetype_settings
   autocmd!
-  autocmd Filetype xml,vim setlocal expandtab ts=2 sw=2
+  autocmd Filetype xml setlocal expandtab ts=2 sw=2
   autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal spell expandtab ts=2 sw=2
   autocmd Filetype text setlocal spell expandtab ts=2 sw=2
+  autocmd Filetype json setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
