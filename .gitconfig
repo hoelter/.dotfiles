@@ -4,6 +4,7 @@
 	ca = !"git add -A && git commit -av"
 	lg = log --graph --pretty=oneline --abbrev-commit --decorate
 	l = branch -a
+	lm = branch --merged
 	d = branch -D
 	c = checkout
 	cb = checkout -b

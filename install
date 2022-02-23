@@ -22,5 +22,5 @@ cp ./.gitconfig ~/.gitconfig
 
 # Just ignore error if directories don't exist
 cd ~/.dotfiles-personal 2> /dev/null && ./personal-install
-#cd ~/.dotfiles-work 2> /dev/null && ./work-install
+cd ~/.dotfiles-work 2> /dev/null && ./work-install
 
