@@ -572,9 +572,9 @@ end
       local ts_utils = require("nvim-lsp-ts-utils")
       ts_utils.setup({})
       ts_utils.setup_client(client)
-      buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-      buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
-      buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+      buf_map(bufnr, "n", "go", ":TSLspOrganize<CR>")
+      buf_map(bufnr, "n", "<leader>rN", ":TSLspRenameFile<CR>")
+      buf_map(bufnr, "n", "gp", ":TSLspImportAll<CR>")
       on_attach(client, bufnr)
     end,
     flags = {
