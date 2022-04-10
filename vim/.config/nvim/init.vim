@@ -190,7 +190,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Tree sitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'commit': 'f083b7bbfe9480df00a45ab5a0978cb2586dddf2'}
 
 " Ranger vim dependency
 Plug 'francoiscabrol/ranger.vim'
@@ -225,6 +225,9 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Typescript plugins
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+" Omnisharp Specific Decompilation Support
+Plug 'hoelter/omnisharp-extended-lsp.nvim'
 
 " Log File syntax highlighting
 Plug 'mtdl9/vim-log-highlighting'
@@ -267,6 +270,7 @@ augroup filetype_settings
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd FileType cs nnoremap <buffer> <leader>{ o{<esc>o}<esc>O
+  autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
 
@@ -425,7 +429,7 @@ nnoremap <leader>lga <cmd>lua require('telescope.builtin').git_branches()<cr>
 " Begin Treesitter config -----------------------------
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
     highlight = {
         enable = true,              -- false will disable the whole extension
         additional_vim_regex_highlighting = false,
@@ -549,6 +553,9 @@ end
   local pid = vim.fn.getpid()
   local omnisharp_bin = vim.fn.expand('~/.local/omnisharp/run')
   nvim_lsp['omnisharp'].setup {
+    handlers = {
+      ["textDocument/definition"] = require('omnisharp_extended').handler,
+    },
     cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
     on_attach = on_attach,
     flags = {
