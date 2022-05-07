@@ -2,14 +2,27 @@
 	s = status
 	pr = !"git fetch; git remote prune origin"
 	ca = !"git add -A && git commit -av"
-	lg = log --graph --pretty=oneline --abbrev-commit --decorate
+	lg = log --graph --date=relative --pretty='format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%C(auto)%d %Creset%s' --color=always
 	l = branch -a
 	lm = branch --merged
 	d = branch -D
 	c = checkout
 	cb = checkout -b
 	m = merge --no-ff
+	p = !"git -c push.default=current push -u"
+	files = !git diff --name-only $(git merge-base HEAD \"$REVIEW_BASE\")
+	stat = !git diff --stat $(git merge-base HEAD \"$REVIEW_BASE\")
 [core]
 	excludesFile = ~/.gitignore
+[color "branch"]
+	current = green reverse
+	remote = red bold
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+[color "status"]
+	untracked = red bold
+[diff]
+	renames = copies
 [user]
 	name = Christopher Hoelter

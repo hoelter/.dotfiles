@@ -26,6 +26,7 @@ set colorcolumn=80
 set updatetime=50 " Unsure of the significance of this, default is 4000
 set showmatch " show matching brackets when indicator is over them
 set cursorline " experimenting with this, unsure if I like it
+set nomodeline " turns off looking for vim commands in files to auto execute
 
 " case insensitive search, unless upper case char in pattern
 set ignorecase
@@ -156,7 +157,7 @@ nnoremap <leader>gc :Git ca<CR>
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
 
 " Delete all buffers but current buffer
-nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
+"nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
 " toggle local spell check
 nnoremap <F7> :setlocal spell! spell?<CR>
@@ -187,7 +188,7 @@ call plug#begin(stdpath('data') . '/plugged')
 " Telescope dependencies https://github.com/nvim-telescope/telescope.nvim
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
 Plug 'benfowler/telescope-luasnip.nvim'
 
 " Tree sitter
@@ -253,6 +254,9 @@ Plug 'ThePrimeagen/harpoon'
 " Plug 'ldelossa/litee.nvim'
 " Plug 'ldelossa/litee-calltree.nvim'
 
+" Nvim debugger
+" Plug 'mfussenegger/nvim-dap'
+
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -299,8 +303,8 @@ colorscheme nord
 " Ranger Settings
 " https://github.com/francoiscabrol/ranger.vim
 let g:ranger_replace_netrw = 1
-let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
-nnoremap <leader>lD :Ranger<CR>
+" let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
+" nnoremap <leader>f :Ranger<CR>
 
 
 " Start interactive EasyAlign
@@ -625,6 +629,35 @@ end
 
 EOF
 " End LSP and nvim cmp config -----------------------------
+
+
+
+" Begin nvim-dap config -----------------------------------
+"nnoremap <F5> <cmd>lua require('dap').continue()<cr>
+"nnoremap <leader>b <cmd>lua require('dap').toggle_breakpoint()<cr>
+"
+"lua <<EOF
+"local dap = require("dap")
+"local netcoredgb_bin = vim.fn.expand('~/.local/netcoredbg/netcoredbg')
+"
+"dap.adapters.coreclr = {
+"  type = 'executable',
+"  command = netcoredgb_bin,
+"  args = {'--interpreter=vscode'}
+"}
+"
+"dap.configurations.cs = {
+"  {
+"    type = "coreclr",
+"    name = "launch - netcoredbg",
+"    request = "launch",
+"    program = function()
+"        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+"    end,
+"  },
+"}
+"EOF
+" End nvim-dap config -------------------------------------
 
 
 

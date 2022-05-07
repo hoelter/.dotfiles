@@ -60,8 +60,9 @@ if status --is-interactive
     abbr -a -g g "git"
     abbr -a -g gsave "git add -A && git commit -m 'quick save' && git push"
     abbr -a -g gla "git config --global --list"
-    abbr -a -g dot "git -C $HOME/.dotfiles"
-    abbr -a -g dotsave "git -C $HOME/.dotfiles add -A && git -C $HOME/.dotfiles commit -m 'Dotfiles quick save.' && git -C $HOME/.dotfiles push"
+    abbr -a -g vdiff "nvim -p (git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")) +\"tabdo Gvdiffsplit $REVIEW_BASE\""
+    abbr -a -g gfiles "git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")"
+    abbr -a -g gstat "git diff --stat (git merge-base HEAD \"$REVIEW_BASE\")"
 
     abbr -a -g ll "ls -lAF"
     abbr -a -g bye "shutdown.exe -s -f -t 0"
@@ -72,6 +73,7 @@ if status --is-interactive
     abbr -a -g - "cd -"
 
     abbr -a -g pkm "pkill mono"
+    abbr -a -g rg "rg -M 100 -S "
 
     # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
     abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""
