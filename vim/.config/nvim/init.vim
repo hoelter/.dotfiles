@@ -1,6 +1,6 @@
 " Dependencies that should be installed for config to fully work
 " neovim
-" ranger
+" lf
 " [ripgrep](https://github.com/BurntSushi/ripgrep)
 " [FD](https://github.com/sharkdp/fd)
 "
@@ -119,7 +119,7 @@ nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen
 xnoremap <leader>p "_dP
 
 " Paste from clipboard, avoids autoindent issues
-nnoremap <leader>P "+p
+"nnoremap <leader>P "+p
 
 " Copy to clipboard
 vnoremap <leader>y "+y
@@ -169,6 +169,10 @@ nnoremap <leader>/ :nohlsearch<CR>
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
+" Open netrw
+nnoremap <leader>D :Ex<CR>
+
+
 " Show crlf line endings
 " :e ++ff=unix
 " remove crlf line endings
@@ -194,15 +198,15 @@ Plug 'benfowler/telescope-luasnip.nvim'
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Ranger vim dependency
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
+" Lf vim
+Plug 'ptzz/lf.vim'
+Plug 'voldikss/vim-floaterm'
 
 " honor .editorconfig file settings
 Plug 'editorconfig/editorconfig-vim'
 
-" Theme
-Plug 'arcticicestudio/nord-vim'
+" Theme  
+Plug 'arcticicestudio/nord-vim', {'branch': 'develop'}
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -212,9 +216,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
+"Plug 'hrsh7th/cmp-cmdline'
 " cmp-extra completion info
-Plug 'onsails/lspkind-nvim'
+Plug 'onsails/lspkind.nvim'
 " Snippet Plugin
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
@@ -240,7 +244,7 @@ Plug 'mtdl9/vim-log-highlighting'
 
 " Octo Github Interactions
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'pwntester/octo.nvim'
+" Plug 'pwntester/octo.nvim'
 
 " Align text into tables
 Plug 'junegunn/vim-easy-align'
@@ -256,6 +260,15 @@ Plug 'ThePrimeagen/harpoon'
 
 " Nvim debugger
 " Plug 'mfussenegger/nvim-dap'
+
+" Indentation guides
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Auto Indent
+Plug 'windwp/nvim-ts-autotag'
+
+" Surround Action
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
@@ -297,14 +310,17 @@ augroup END
 "--------------------------------------------------------------------------
 
 " Load color scheme after plugins
+let g:nord_uniform_diff_background = 1
 colorscheme nord
 
 
-" Ranger Settings
-" https://github.com/francoiscabrol/ranger.vim
-let g:ranger_replace_netrw = 1
-" let g:ranger_map_keys = 0 " unmap default ranger binding of <leader> f
-" nnoremap <leader>f :Ranger<CR>
+" Lf Settings
+" https://github.com/ptzz/lf.vim
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+"let g:lf_replace_netrw = 1
+let g:lf_map_keys = 0
+nnoremap <leader>d :Lf<CR>
 
 
 " Start interactive EasyAlign
@@ -318,6 +334,16 @@ let g:goyo_height=100
 let g:goyo_linenr=1
 nnoremap <leader>z :Goyo<CR>
 
+" Indent blankline settings
+lua <<EOF
+    require("indent_blankline").setup {
+    show_end_of_line = true,
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+EOF
+
 " Load luasnip vscode like snippets
 lua <<EOF
     require("luasnip.loaders.from_vscode").lazy_load()
@@ -329,6 +355,7 @@ lua <<EOF
 local ignore_file = vim.fn.expand("~/.config/fd/ignore")
 
 local actions = require("telescope.actions")
+local action_layout = require("telescope.actions.layout")
 -- Wasn't working as an override
 --local transform_mod = require('telescope.actions.mt').transform_mod
 --
@@ -349,24 +376,29 @@ local actions = require("telescope.actions")
 require("telescope").setup {
   defaults = {
     preview = {
-      -- Consider undoing in the future: https://github.com/nvim-telescope/telescope.nvim/issues/1616
-      treesitter = false
+      hide_on_startup = true,
+      filesize_limit = 5
     },
     mappings = {
       i = {
         ["<C-s>"] = actions.cycle_previewers_next,
         ["<C-a>"] = actions.cycle_previewers_prev,
+        ["<C-j>"] = action_layout.toggle_preview,
       },
       n = {
         ["<C-s>"] = actions.cycle_previewers_next,
         ["<C-a>"] = actions.cycle_previewers_prev,
+        ["<C-j>"] = action_layout.toggle_preview,
       },
     },
-    path_display = { 'smart' },
+    path_display = { 'truncate' },
+    -- wrap_results = true,
+    -- path_display = { shorten = 2 },
     --layout_strategy = 'vertical',
     --layout_config = { height = 0.99, preview_height = 0.7 },
     layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, preview_width = 0.54, width = 0.99 },
+    layout_config = { height = 0.99, preview_width = 0.8, width = 0.99 },
+    file_ignore_patterns = { "%.png", "%.jpg", "%.bmp", "%.gif", "%.jpeg" },
     vimgrep_arguments = {
       "rg",
       "--color=never",
@@ -375,6 +407,7 @@ require("telescope").setup {
       "--line-number",
       "--column",
       "--smart-case",
+      "--trim",
       "--hidden",
       "--ignore-file", -- showing hidden and using same ignore_file as fd
       ignore_file
@@ -387,6 +420,7 @@ require("telescope").setup {
         "fd",
         "--type",
         "file",
+        "--strip-cwd-prefix",
         "--hidden",
         "--no-ignore",
         "--ignore-file",
@@ -421,6 +455,9 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension('luasnip')
 EOF
 
+nnoremap <leader>lM <cmd>lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>lm <cmd>lua require('telescope.builtin').marks()<cr>
+
 nnoremap <leader>lf <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>lb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>lj <cmd>lua require('telescope.builtin').live_grep()<cr>
@@ -433,11 +470,10 @@ nnoremap <leader>ll <cmd>lua require('telescope.builtin').resume()<cr>
 nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>lt <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
-nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references { trim_text = true }<cr>
 nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
-nnoremap <leader>lm <cmd>lua require('telescope.builtin').keymaps()<cr>
 nnoremap <leader>lgf <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lgc <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>lgb <cmd>lua require('telescope.builtin').git_bcommits()<cr>
@@ -481,6 +517,10 @@ require'nvim-treesitter.configs'.setup {
     incremental_selection = { enable = true },
     textobjects = { enable = true },
     context_commentstring = {
+        enable = true
+    },
+    autotag = {
+        -- autoindent plugin setup
         enable = true
     }
  }
@@ -553,21 +593,21 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gsd', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>co', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 end
 
 
@@ -611,8 +651,9 @@ end
           })
       end
 
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
+
       local ts_utils = require("nvim-lsp-ts-utils")
       ts_utils.setup({})
       ts_utils.setup_client(client)
@@ -660,135 +701,3 @@ EOF
 " End nvim-dap config -------------------------------------
 
 
-
-
-"Octo config ----------------------------------------------
-"https://github.com/pwntester/octo.nvim
-lua <<EOF
-require"octo".setup({
-  default_remote = {"upstream", "origin"}; -- order to try remotes
-  reaction_viewer_hint_icon = "";         -- marker for user reactions
-  user_icon = " ";                        -- user icon
-  timeline_marker = "";                   -- timeline marker
-  timeline_indent = "2";                   -- timeline indentation
-  right_bubble_delimiter = "";            -- Bubble delimiter
-  left_bubble_delimiter = "";             -- Bubble delimiter
-  github_hostname = "";                    -- GitHub Enterprise host
-  snippet_context_lines = 4;               -- number or lines around commented lines
-  file_panel = {
-    size = 10,                             -- changed files panel rows
-    use_icons = true                       -- use web-devicons in file panel
-  },
-  mappings = {
-    issue = {
-      close_issue = "<space>ic",           -- close issue
-      reopen_issue = "<space>io",          -- reopen issue
-      list_issues = "<space>il",           -- list open issues on same repo
-      reload = "<C-r>",                    -- reload issue
-      open_in_browser = "<C-b>",           -- open issue in browser
-      copy_url = "<C-y>",                  -- copy url to system clipboard
-      add_assignee = "<space>aa",          -- add assignee
-      remove_assignee = "<space>ad",       -- remove assignee
-      create_label = "<space>lc",          -- create label
-      add_label = "<space>la",             -- add label
-      remove_label = "<space>ld",          -- remove label
-      goto_issue = "<space>gi",            -- navigate to a local repo issue
-      add_comment = "<space>ca",           -- add comment
-      delete_comment = "<space>cd",        -- delete comment
-      next_comment = "]c",                 -- go to next comment
-      prev_comment = "[c",                 -- go to previous comment
-      react_hooray = "<space>rp",          -- add/remove 🎉 reaction
-      react_heart = "<space>rh",           -- add/remove ❤️ reaction
-      react_eyes = "<space>re",            -- add/remove 👀 reaction
-      react_thumbs_up = "<space>r+",       -- add/remove 👍 reaction
-      react_thumbs_down = "<space>r-",     -- add/remove 👎 reaction
-      react_rocket = "<space>rr",          -- add/remove 🚀 reaction
-      react_laugh = "<space>rl",           -- add/remove 😄 reaction
-      react_confused = "<space>rc",        -- add/remove 😕 reaction
-    },
-    pull_request = {
-      checkout_pr = "<space>po",           -- checkout PR
-      merge_pr = "<space>pm",              -- merge PR
-      list_commits = "<space>pc",          -- list PR commits
-      list_changed_files = "<space>pf",    -- list PR changed files
-      show_pr_diff = "<space>pd",          -- show PR diff
-      add_reviewer = "<space>va",          -- add reviewer
-      remove_reviewer = "<space>vd",       -- remove reviewer request
-      close_issue = "<space>ic",           -- close PR
-      reopen_issue = "<space>io",          -- reopen PR
-      list_issues = "<space>il",           -- list open issues on same repo
-      reload = "<C-r>",                    -- reload PR
-      open_in_browser = "<C-b>",           -- open PR in browser
-      copy_url = "<C-y>",                  -- copy url to system clipboard
-      add_assignee = "<space>aa",          -- add assignee
-      remove_assignee = "<space>ad",       -- remove assignee
-      create_label = "<space>lc",          -- create label
-      add_label = "<space>la",             -- add label
-      remove_label = "<space>ld",          -- remove label
-      goto_issue = "<space>gi",            -- navigate to a local repo issue
-      add_comment = "<space>ca",           -- add comment
-      delete_comment = "<space>cd",        -- delete comment
-      next_comment = "]c",                 -- go to next comment
-      prev_comment = "[c",                 -- go to previous comment
-      react_hooray = "<space>rp",          -- add/remove 🎉 reaction
-      react_heart = "<space>rh",           -- add/remove ❤️ reaction
-      react_eyes = "<space>re",            -- add/remove 👀 reaction
-      react_thumbs_up = "<space>r+",       -- add/remove 👍 reaction
-      react_thumbs_down = "<space>r-",     -- add/remove 👎 reaction
-      react_rocket = "<space>rr",          -- add/remove 🚀 reaction
-      react_laugh = "<space>rl",           -- add/remove 😄 reaction
-      react_confused = "<space>rc",        -- add/remove 😕 reaction
-    },
-    review_thread = {
-      goto_issue = "<space>gi",            -- navigate to a local repo issue
-      add_comment = "<space>ca",           -- add comment
-      add_suggestion = "<space>sa",        -- add suggestion
-      delete_comment = "<space>cd",        -- delete comment
-      next_comment = "]c",                 -- go to next comment
-      prev_comment = "[c",                 -- go to previous comment
-      select_next_entry = "]q",            -- move to previous changed file
-      select_prev_entry = "[q",            -- move to next changed file
-      close_review_tab = "<C-c>",          -- close review tab
-      react_hooray = "<space>rp",          -- add/remove 🎉 reaction
-      react_heart = "<space>rh",           -- add/remove ❤️ reaction
-      react_eyes = "<space>re",            -- add/remove 👀 reaction
-      react_thumbs_up = "<space>r+",       -- add/remove 👍 reaction
-      react_thumbs_down = "<space>r-",     -- add/remove 👎 reaction
-      react_rocket = "<space>rr",          -- add/remove 🚀 reaction
-      react_laugh = "<space>rl",           -- add/remove 😄 reaction
-      react_confused = "<space>rc",        -- add/remove 😕 reaction
-    },
-    submit_win = {
-      approve_review = "<C-a>",            -- approve review
-      comment_review = "<C-m>",            -- comment review
-      request_changes = "<C-r>",           -- request changes review
-      close_review_tab = "<C-c>",          -- close review tab
-    },
-    review_diff = {
-      add_review_comment = "<space>ca",    -- add a new review comment
-      add_review_suggestion = "<space>sa", -- add a new review suggestion
-      focus_files = "<leader>e",           -- move focus to changed file panel
-      toggle_files = "<leader>b",          -- hide/show changed files panel
-      next_thread = "]t",                  -- move to next thread
-      prev_thread = "[t",                  -- move to previous thread
-      select_next_entry = "]q",            -- move to previous changed file
-      select_prev_entry = "[q",            -- move to next changed file
-      close_review_tab = "<C-c>",          -- close review tab
-      toggle_viewed = "<leader><space>",   -- toggle viewer viewed state
-    },
-    file_panel = {
-      next_entry = "j",                    -- move to next changed file
-      prev_entry = "k",                    -- move to previous changed file
-      select_entry = "<cr>",               -- show selected changed file diffs
-      refresh_files = "R",                 -- refresh changed files panel
-      focus_files = "<leader>e",           -- move focus to changed file panel
-      toggle_files = "<leader>b",          -- hide/show changed files panel
-      select_next_entry = "]q",            -- move to previous changed file
-      select_prev_entry = "[q",            -- move to next changed file
-      close_review_tab = "<C-c>",          -- close review tab
-      toggle_viewed = "<leader><space>",   -- toggle viewer viewed state
-    }
-  }
-})
-EOF
-"End Octo config ------------------------------------------
