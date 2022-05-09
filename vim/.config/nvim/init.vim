@@ -252,7 +252,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/goyo.vim'
 
 " Marks alternative
-Plug 'ThePrimeagen/harpoon'
+"Plug 'ThePrimeagen/harpoon'
+" TODO: Setup keybindings for harpoon
 
 " Call Hierarchy for LSP
 " Plug 'ldelossa/litee.nvim'

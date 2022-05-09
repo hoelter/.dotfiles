@@ -1,17 +1,26 @@
 [alias]
 	s = status
 	pr = !"git fetch; git remote prune origin"
-	ca = !"git add -A && git commit -av"
 	lg = log --graph --date=relative --pretty='format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%C(auto)%d %Creset%s' --color=always
 	l = branch -a
-	lm = branch --merged
 	d = branch -D
 	c = checkout
 	cb = checkout -b
 	m = merge --no-ff
 	p = !"git -c push.default=current push -u"
+
+	# From https://blog.jez.io/cli-code-review/
+	# List files changed against review base
 	files = !git diff --name-only $(git merge-base HEAD \"$REVIEW_BASE\")
+	# List files changed with line chnage info against review_base
 	stat = !git diff --stat $(git merge-base HEAD \"$REVIEW_BASE\")
+
+	# From or inspired by https://github.com/jessfraz/dotfiles/blob/master/.gitconfig
+	ca = !"git add -A && git commit -av"
+	am = !"git add -A && git commit --amend --reuse-message=HEAD"
+	contributors = shortlog --summary --numbered
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p" # delete branches merged into master
+
 [core]
 	excludesFile = ~/.gitignore
 [color "branch"]
