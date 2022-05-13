@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+read -p 'websearch> ' query
+query=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(\"$query\"))")
+fish -c "open 'https://www.google.com/search?q=$query'"

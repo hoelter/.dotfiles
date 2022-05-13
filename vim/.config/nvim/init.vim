@@ -396,7 +396,7 @@ require("telescope").setup {
     },
     path_display = { 'truncate' },
     layout_strategy = 'vertical',
-    layout_config = { height = 0.99, width = 0.99, preview_height = 0.75 },
+    layout_config = { height = 0.99, width = 0.99, preview_height = 0.7, preview_cutoff = 0 },
     -- wrap_results = true,
     -- path_display = { shorten = 2 },
     -- layout_strategy = 'horizontal',

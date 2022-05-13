@@ -1,5 +1,5 @@
 function pbcopy
-    read -z text
+    read -fz text
     echo "Copying input to clipboard."
 
     # WSL
