@@ -14,10 +14,10 @@ IFS=: read -ra selected < <(
       --bind "ctrl-r:unbind(ctrl-r)+change-prompt(1. ripgrep> )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)" \
       --bind "ctrl-u:preview-half-page-up" \
       --bind "ctrl-d:preview-half-page-down" \
-      --prompt '1. Ripgrep> ' \
+      --prompt '1. ripgrep> ' \
       --delimiter : \
-      --header '╱ CTRL-R (Ripgrep mode) ╱ CTRL-F (fzf mode)' \
+      --header '╱ CTRL-R (ripgrep mode) ╱ CTRL-F (fzf mode)' \
       --preview 'bat --color=always {1} --highlight-line {2}' \
       --preview-window 'up,40%,border-bottom,+{2}+3/3,~3'
 )
-[ -n "${selected[0]}" ] && tmux new-window nvim "${selected[0]}" "+${selected[1]}"
+[ -n "${selected[0]}" ] && tmux new-window nvim "${selected[0]}" "+${selected[1]}" "+cd %:p:h"
