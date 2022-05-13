@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 echo 'Ubuntu install initiated.'
 
-./install fd fish git tmux vim
-
 ./update-bashrc
 
 # Only executes if in wsl
 ./configure-wsl
+
+./install fd fish git tmux vim scripts
 
 echo 'Ubuntu dotfiles install complete.'
 

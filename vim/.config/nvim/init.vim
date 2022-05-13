@@ -23,9 +23,9 @@ set smartindent
 set nofoldenable
 set nowrap
 set colorcolumn=80
-set updatetime=50 " Unsure of the significance of this, default is 4000
+set updatetime=750 " Unsure of the significance of this, default is 4000
 set showmatch " show matching brackets when indicator is over them
-set cursorline " experimenting with this, unsure if I like it
+"set cursorline " highlights entire cursor line when turned on
 set nomodeline " turns off looking for vim commands in files to auto execute
 
 " case insensitive search, unless upper case char in pattern
@@ -169,14 +169,19 @@ nnoremap <leader>/ :nohlsearch<CR>
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-" Open netrw
-nnoremap <leader>D :Ex<CR>
-
-
 " Show crlf line endings
 " :e ++ff=unix
 " remove crlf line endings
 " :%s/\r//
+"
+" Open netrw
+nnoremap <leader>D :Ex<CR>
+"
+" Open word under cursor (primarily for urls)
+"nnoremap <leader>o "oyiW :!fish -c $'open "@o"'<CR><CR>
+nnoremap <leader>o "oyiW :exec("!fish -c 'open " . shellescape('<C-R>o', 1) . "'")<CR><CR>
+":exec("! clear && echo " . shellescape(g:input, 1))
+
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
@@ -338,10 +343,7 @@ nnoremap <leader>z :Goyo<CR>
 " Indent blankline settings
 lua <<EOF
     require("indent_blankline").setup {
-    show_end_of_line = true,
-    space_char_blankline = " ",
-    show_current_context = true,
-    show_current_context_start = true,
+    show_current_context = true
 }
 EOF
 
@@ -396,9 +398,9 @@ require("telescope").setup {
     -- wrap_results = true,
     -- path_display = { shorten = 2 },
     --layout_strategy = 'vertical',
-    --layout_config = { height = 0.99, preview_height = 0.7 },
-    layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, preview_width = 0.8, width = 0.99 },
+    layout_config = { height = 0.99, width = 0.99, preview_height = 0.8 },
+    -- layout_strategy = 'horizontal',
+    -- layout_config = { height = 0.99, preview_width = 0.8, width = 0.99 },
     file_ignore_patterns = { "%.png", "%.jpg", "%.bmp", "%.gif", "%.jpeg" },
     vimgrep_arguments = {
       "rg",
