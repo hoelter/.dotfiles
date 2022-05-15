@@ -8,6 +8,7 @@
 	cb = checkout -b
 	m = merge --no-ff
 	p = !"git -c push.default=current push -u"
+	u = pull
 	f = fetch
 	d = diff
 

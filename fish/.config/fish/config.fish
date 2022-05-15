@@ -35,10 +35,11 @@ fish_add_path $HOME/.local/bin
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
 
-set -gx FZF_DEFAULT_COMMAND "fd --type file --hidden --follow --color=always --ignore-file $HOME/.config/fd/ignore"
-set -gx FZF_DEFAULT_OPTS "--ansi"
+set -gx FZF_DEFAULT_COMMAND "fd --type file --hidden --follow --strip-cwd-prefix --ignore-file $HOME/.config/fd/ignore"
+set -gx FZF_DEFAULT_OPTS '--ansi --color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#A3BE8C,fg+:#eceff4,prompt:#81A1C1,hl+:#81A1C1'
+
 set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
-set -gx FZF_ALT_C_COMMAND "fd --type directory --hidden --follow --color=always --ignore-file $HOME/.config/fd/ignore"
+set -gx FZF_ALT_C_COMMAND "fd --type directory --hidden --follow --strip-cwd-prefix --ignore-file $HOME/.config/fd/ignore"
 set -gx FZF_ALT_C_OPTS "--ansi"
 set -gx FZF_TMUX 1
 set -gx FZF_TMUX_OPTS "-p"
@@ -58,13 +59,14 @@ if status --is-interactive
     abbr -a -g myip "curl ifconfig.me"
 
     abbr -a -g g "git"
-    abbr -a -g gp "git push"
+    abbr -a -g gp "git p"
+    abbr -a -g gu "git pull"
     abbr -a -g gs "git status"
     abbr -a -g gl "git lg"
     abbr -a -g gc "git ca"
     abbr -a -g gf "git fetch"
     abbr -a -g gd "git diff"
-    abbr -a -g gla "git config --global --list"
+    abbr -a -g gconfig "git config --global --list"
     abbr -a -g vdiff "nvim -p (git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")) +\"tabdo Gvdiffsplit $REVIEW_BASE\""
     abbr -a -g gfiles "git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")"
     abbr -a -g gstat "git diff --stat (git merge-base HEAD \"$REVIEW_BASE\")"

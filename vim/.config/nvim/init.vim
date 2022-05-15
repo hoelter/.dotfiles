@@ -276,6 +276,11 @@ Plug 'windwp/nvim-ts-autotag'
 " Surround Action
 Plug 'tpope/vim-surround'
 
+" Line diff
+Plug 'AndrewRadev/linediff.vim'
+
+" Color highlights, requires golang-go package installed for post install hook
+Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'}
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -339,6 +344,16 @@ let g:goyo_width=100
 let g:goyo_height=100
 let g:goyo_linenr=1
 nnoremap <leader>z :Goyo<CR>
+
+
+" Color highlighting
+let g:Hexokinase_highlighters = ['backgroundfull']
+"let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript']
+let g:Hexokinase_ftEnabled = []
+nnoremap <f8> :HexokinaseToggle<CR>
+
+
+
 
 " Indent blankline settings
 lua <<EOF
