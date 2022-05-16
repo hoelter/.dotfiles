@@ -21,7 +21,7 @@ else
     done
 
     # echo $dirs
-    session_dir_list="$(fd --type directory --hidden --color=always --follow --max-depth 1 . $dirs)$static_dirs"
+    session_dir_list="$(fd --type directory --hidden --follow --max-depth 1 . $dirs)$static_dirs"
     selected=$(echo -e "$session_dir_list" | fzf --reverse --tac)
     #selected=$(fd --type directory --hidden --color=always --max-depth 1 . $dirs | fzf)
 fi
