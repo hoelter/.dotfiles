@@ -368,6 +368,7 @@ lua <<EOF
 EOF
 
 " Begin Telescope config ------------------------------
+hi! link TelescopeMatching Label
 lua <<EOF
 
 local ignore_file = vim.fn.expand("~/.config/fd/ignore")
