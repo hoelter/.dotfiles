@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-read -p 'websearch> ' query
+prompt_name=$1
+target_url=$2
+
+read -p $'\e[34m'"$prompt_name>"$'\e[0m ' query
 query=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(\"$query\"))")
-fish -c "open 'https://www.google.com/search?q=$query'"
+fish -c "open '$target_url=$query'"

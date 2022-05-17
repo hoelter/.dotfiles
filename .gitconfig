@@ -22,7 +22,7 @@
 	ca = !"git add -A && git commit -av"
 	amend = !"git add -A && git commit --amend --reuse-message=HEAD"
 	contributors = shortlog --summary --numbered
-	delm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p" # delete branches merged into master
+	delm = "!git branch --merged | grep -v '\\*\\|+' | xargs -n 1 git branch -d; git remote -v update -p" # delete branches merged into master
 
 [core]
 	excludesFile = ~/.gitignore

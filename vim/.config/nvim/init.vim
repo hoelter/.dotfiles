@@ -368,7 +368,7 @@ lua <<EOF
 EOF
 
 " Begin Telescope config ------------------------------
-hi! link TelescopeMatching Label
+hi! link TelescopeMatching Label " Assigns label color to telesscope match highlighting
 lua <<EOF
 
 local ignore_file = vim.fn.expand("~/.config/fd/ignore")
@@ -620,7 +620,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>co', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)

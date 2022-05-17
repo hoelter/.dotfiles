@@ -1,6 +1,9 @@
 function pbcopy
-    read -fz text
-    echo "Copying input to clipboard."
+    if count $argv > /dev/null
+        set text $argv
+    else
+        read -fz text
+    end
 
     # WSL
     if type -q clip.exe
@@ -15,6 +18,7 @@ function pbcopy
     end
 
     # Add x-clip check in here
-    echo 'Clipboard command not found.'
+    echo 'Clipboard copy command not found.'
+    return 1
 end
 
