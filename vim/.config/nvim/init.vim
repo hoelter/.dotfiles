@@ -93,6 +93,29 @@ augroup locallist
 	autocmd DiagnosticChanged * lua vim.diagnostic.setloclist({ open = false })
 augroup END
 
+" https://github.com/OJFord/vim-quickfix-conflicts/blob/master/autoload/conflicts.vim
+" TODO: Make this auto jump to the first one and ensure it sets a new qflist,
+" and doesn't overridde the existing one
+function! PopulateGitConflicts()
+    let lines=split(system('git --no-pager diff --no-color --check --relative'), '\n')
+    call setqflist([])
+
+    for line in lines
+        let fname=split(line, ':')[0]
+        let lnum=split(line, ':')[1]
+        if split(system('head -n'.lnum.' '.fname.' | tail -n1'))[0] != '<<<<<<<'
+            continue
+        endif
+
+        exec 'badd +'.lnum.' '.fname
+        let bufnr=bufnr(fname)
+
+        call setqflist(getqflist() + [{'lnum': lnum, 'bufnr': bufnr, 'col': 1}])
+    endfor
+
+    return len(lines)
+endfunction
+
 "--------------------------------------------------------------------------
 " Key Maps
 "--------------------------------------------------------------------------
@@ -108,8 +131,8 @@ nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 " next and previous in quickfix list and local list
 nnoremap <C-j> :cnext<CR>zz
 nnoremap <C-k> :cprev<CR>zz
-nnoremap <leader>j :lnext<CR>zz
-nnoremap <leader>k :lprev<CR>zz
+nnoremap ]l :lnext<CR>zz
+nnoremap [l :lprev<CR>zz
 
 " Toggle quickfix and local list
 nnoremap <expr> <C-q> empty(filter(getwininfo(), 'v:val.quickfix')) ? ':copen<CR>' : ':cclose<CR>'
@@ -155,6 +178,7 @@ nnoremap <leader>gp :Git -c push.default=current push<CR>
 nnoremap <leader>gc :Git ca<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
+nnoremap <leader>gx :call PopulateGitConflicts()<CR>
 
 " Delete all buffers but current buffer
 "nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
@@ -257,8 +281,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/goyo.vim'
 
 " Marks alternative
-"Plug 'ThePrimeagen/harpoon'
-" TODO: Setup keybindings for harpoon
+Plug 'ThePrimeagen/harpoon'
 
 " Call Hierarchy for LSP
 " Plug 'ldelossa/litee.nvim'
@@ -309,7 +332,7 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd FileType cs nnoremap <buffer> <leader>{ o{<esc>o}<esc>O
+  autocmd FileType cs inoremap <buffer> { <esc>o{<esc>o}<esc>O
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
@@ -340,9 +363,9 @@ nmap ga <Plug>(EasyAlign)
 
 " Goyo
 " Consider removing height margins: https://github.com/junegunn/goyo.vim/issues/100#issuecomment-588226459
-let g:goyo_width=100
-let g:goyo_height=100
-let g:goyo_linenr=1
+let g:goyo_width='70%'
+let g:goyo_height='100%'
+let g:goyo_linenr=0
 nnoremap <leader>z :Goyo<CR>
 
 
@@ -361,6 +384,16 @@ lua <<EOF
     show_current_context = true
 }
 EOF
+
+" Harpoon Setup
+nnoremap <leader>jt <cmd>lua require('harpoon.mark').add_file()<cr>
+nnoremap <leader>jk <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
+nnoremap <leader>jl <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+nnoremap <leader>jf <cmd>lua require('harpoon.ui').nav_file(1)<cr>
+nnoremap <leader>jd <cmd>lua require('harpoon.ui').nav_file(2)<cr>
+nnoremap <leader>js <cmd>lua require('harpoon.ui').nav_file(3)<cr>
+nnoremap <leader>ja <cmd>lua require('harpoon.ui').nav_file(4)<cr>
+
 
 " Load luasnip vscode like snippets
 lua <<EOF
