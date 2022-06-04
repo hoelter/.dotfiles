@@ -235,7 +235,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme  
-Plug 'arcticicestudio/nord-vim', {'branch': 'develop'}
+Plug 'arcticicestudio/nord-vim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -381,11 +381,18 @@ nnoremap <f8> :HexokinaseToggle<CR>
 " Indent blankline settings
 lua <<EOF
     require("indent_blankline").setup {
-    show_current_context = true
-}
+        show_current_context = true
+    }
 EOF
 
 " Harpoon Setup
+lua <<EOF
+    require("harpoon").setup {
+        menu = {
+            width = vim.api.nvim_win_get_width(0) - 4,
+        }
+    }
+EOF
 nnoremap <leader>jt <cmd>lua require('harpoon.mark').add_file()<cr>
 nnoremap <leader>jk <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
 nnoremap <leader>jl <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
@@ -428,7 +435,7 @@ local action_layout = require("telescope.actions.layout")
 require("telescope").setup {
   defaults = {
     preview = {
-      hide_on_startup = true,
+      hide_on_startup = false,
       filesize_limit = 5
     },
     mappings = {
@@ -445,7 +452,7 @@ require("telescope").setup {
     },
     path_display = { 'truncate' },
     layout_strategy = 'vertical',
-    layout_config = { height = 0.99, width = 0.99, preview_height = 0.7, preview_cutoff = 0 },
+    layout_config = { height = 0.99, width = 0.99, preview_height = 0.5, preview_cutoff = 0 },
     -- wrap_results = true,
     -- path_display = { shorten = 2 },
     -- layout_strategy = 'horizontal',
@@ -523,7 +530,7 @@ nnoremap <leader>ls <cmd>lua require('telescope.builtin').lsp_document_symbols()
 nnoremap <leader>lt <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references { trim_text = true }<cr>
-nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+"nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr> (replace with telescope select)
 nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>lgf <cmd>lua require('telescope.builtin').git_files()<cr>
@@ -648,7 +655,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gsd', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)

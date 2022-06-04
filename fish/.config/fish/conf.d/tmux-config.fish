@@ -8,10 +8,14 @@ if status --is-interactive
         # Websearch script
         tmux unbind-key -T root M-f
         tmux bind -T root M-f switch-client -T websearch_table
+
         tmux bind-key -T websearch_table g display-popup -h 15% -E "websearch google 'https://www.google.com/search?q'"
 
         # Shortcuts
-        tmux unbind-key J
-        tmux bind-key -r J run-shell "~/.local/bin/tmux-sessionizer ~/personal/notes"
+        tmux unbind-key -T root M-j
+        tmux bind -T root M-j switch-client -T quick_nav_table
+
+        tmux bind-key -T quick_nav_table -r k run-shell "~/.local/bin/tmux-sessionizer ~/personal/notes"
+        tmux bind-key -T quick_nav_table -r M-k run-shell "~/.local/bin/tmux-sessionizer ~/personal/notes"
     end
 end
