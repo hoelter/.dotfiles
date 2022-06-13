@@ -11,6 +11,6 @@ function fish_user_key_bindings
 
     user_fzf_git_key_bindings
 
-    bind -M default \es 'tmux-sessionizer'
-    bind -M insert \es 'tmux-sessionizer'
+    bind -M default \es '~/.local/bin/tmux-sessionizer'
+    bind -M insert \es '~/.local/bin/tmux-sessionizer'
 end
