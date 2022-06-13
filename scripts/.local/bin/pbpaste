@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# WSL
+if  [ -x "$(command -v powershell.exe)" ]; then
+    powershell.exe Get-Clipboard
+    exit
+fi
+# Macos
+if  [ -x "$(command -v /usr/bin/pbpaste)" ]; then
+    /usr/bin/pbpaste
+    exit
+fi
+
+# Add x-clip check in here
+echo 'Clipboard paste command not found.'
+exit 1

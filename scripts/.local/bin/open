@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    target_url=$1
+else
+    read target_url
+fi
+
+# WSL
+if  [ -x "$(command -v wslview)" ]; then
+    wslview $target_url
+    exit
+fi
+
+# Macos
+if  [ -x "$(command -v /usr/bin/open)" ]; then
+    /usr/bin/open $target_url
+    exit
+fi
+
+echo 'Open command not found.'
+exit 1

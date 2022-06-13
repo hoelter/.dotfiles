@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    read selected
+fi
+
+# WSL
+if  [ -x "$(command -v clip.exe)" ]; then
+    echo $selected | clip.exe
+    exit
+fi
+
+# Macos
+if  [ -x "$(command -v /usr/bin/pbcopy)" ]; then
+    echo $selected | /usr/bin/pbcopy
+    exit
+fi
+
+# Add x-clip check in here
+echo 'Clipboard copy command not found.'
+exit 1

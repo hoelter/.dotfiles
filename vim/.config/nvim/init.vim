@@ -200,11 +200,9 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "
 " Open netrw
 nnoremap <leader>D :Ex<CR>
-"
+
 " Open word under cursor (primarily for urls)
-"nnoremap <leader>o "oyiW :!fish -c $'open "@o"'<CR><CR>
-nnoremap <leader>o "oyiW :exec("!fish -c 'open " . shellescape('<C-R>o', 1) . "'")<CR><CR>
-":exec("! clear && echo " . shellescape(g:input, 1))
+nnoremap <leader>o "oyiW :exec("!open " . shellescape('<C-R>o', 1) . "")<CR><CR>
 
 "--------------------------------------------------------------------------
 " Plugins
