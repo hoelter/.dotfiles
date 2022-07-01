@@ -330,7 +330,7 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd FileType cs inoremap <buffer> { <esc>o{<esc>o}<esc>O
+  autocmd FileType cs inoremap <space> { <esc>o{<esc>o}<esc>O
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
@@ -391,13 +391,13 @@ lua <<EOF
         }
     }
 EOF
-nnoremap <leader>jt <cmd>lua require('harpoon.mark').add_file()<cr>
-nnoremap <leader>jk <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
-nnoremap <leader>jl <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
-nnoremap <leader>jf <cmd>lua require('harpoon.ui').nav_file(1)<cr>
-nnoremap <leader>jd <cmd>lua require('harpoon.ui').nav_file(2)<cr>
-nnoremap <leader>js <cmd>lua require('harpoon.ui').nav_file(3)<cr>
-nnoremap <leader>ja <cmd>lua require('harpoon.ui').nav_file(4)<cr>
+nnoremap ,t <cmd>lua require('harpoon.mark').add_file()<cr>
+nnoremap ,j <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
+nnoremap ,l <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+nnoremap ,f <cmd>lua require('harpoon.ui').nav_file(1)<cr>
+nnoremap ,d <cmd>lua require('harpoon.ui').nav_file(2)<cr>
+nnoremap ,s <cmd>lua require('harpoon.ui').nav_file(3)<cr>
+nnoremap ,a <cmd>lua require('harpoon.ui').nav_file(4)<cr>
 
 
 " Load luasnip vscode like snippets
