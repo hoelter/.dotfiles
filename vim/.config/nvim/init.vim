@@ -2,7 +2,7 @@
 " neovim
 " lf
 " [ripgrep](https://github.com/BurntSushi/ripgrep)
-" [FD](https://github.com/sharkdp/fd)
+" [fd](https://github.com/sharkdp/fd)
 "
 "
 "--------------------------------------------------------------------------
@@ -48,11 +48,11 @@ set listchars=eol:↲,tab:»\ ,trail:.,extends:<,precedes:>,conceal:┊,nbsp:␣
 " Neovim semi transparent popup-menu: https://neovim.io/doc/user/options.html#%27pumblend%27
 set pumblend=25
 
-"" Nice menu when tab completing `:find *.py`
+" Nice menu when tab completing `:find *.py`
 set wildmode=longest,list,full
 set path+=** " Allow recursive searching of entire project dir using :find
 
-"" Ignore files
+" Ignore files
 set wildignore+=*_build/*
 set wildignore+=**/coverage/*
 set wildignore+=**/node_modules/*
@@ -74,7 +74,7 @@ endif
 " Neovim built in quick highlight on yank
 augroup highlight_yank
     autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 75})
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 100})
 augroup END
 
 
@@ -90,7 +90,7 @@ endif
 
 augroup locallist
     autocmd!
-	autocmd DiagnosticChanged * lua vim.diagnostic.setloclist({ open = false })
+    autocmd DiagnosticChanged * lua vim.diagnostic.setloclist({ open = false })
 augroup END
 
 " https://github.com/OJFord/vim-quickfix-conflicts/blob/master/autoload/conflicts.vim
@@ -224,6 +224,7 @@ Plug 'benfowler/telescope-luasnip.nvim'
 
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Lf vim
 Plug 'ptzz/lf.vim'
@@ -300,8 +301,8 @@ Plug 'tpope/vim-surround'
 " Line diff
 Plug 'AndrewRadev/linediff.vim'
 
-" Color highlights, requires golang-go package installed for post install hook
-Plug 'rrethy/vim-hexokinase', {'do': 'make hexokinase'}
+" Highlight color strings
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -330,10 +331,11 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd FileType cs inoremap <space> { <esc>o{<esc>o}<esc>O
+  autocmd FileType cs inoremap <buffer> <space>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
+  autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
 
 augroup END
 
@@ -367,13 +369,8 @@ let g:goyo_linenr=0
 nnoremap <leader>z :Goyo<CR>
 
 
-" Color highlighting
-let g:Hexokinase_highlighters = ['backgroundfull']
-"let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript']
-let g:Hexokinase_ftEnabled = []
-nnoremap <f8> :HexokinaseToggle<CR>
-
-
+" Color highlighting https://github.com/norcalli/nvim-colorizer.lua
+lua require'colorizer'.setup()
 
 
 " Indent blankline settings
@@ -385,15 +382,15 @@ EOF
 
 " Harpoon Setup
 lua <<EOF
-    require("harpoon").setup {
+    require("harpoon").setup({
         menu = {
             width = vim.api.nvim_win_get_width(0) - 4,
         }
-    }
+    })
 EOF
 nnoremap ,t <cmd>lua require('harpoon.mark').add_file()<cr>
 nnoremap ,j <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
-nnoremap ,l <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+nnoremap ,c <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
 nnoremap ,f <cmd>lua require('harpoon.ui').nav_file(1)<cr>
 nnoremap ,d <cmd>lua require('harpoon.ui').nav_file(2)<cr>
 nnoremap ,s <cmd>lua require('harpoon.ui').nav_file(3)<cr>
@@ -530,6 +527,7 @@ nnoremap <leader>lT <cmd>lua require('telescope.builtin').lsp_workspace_symbols(
 nnoremap <leader>lr <cmd>lua require('telescope.builtin').lsp_references { trim_text = true }<cr>
 "nnoremap <leader>lc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr> (replace with telescope select)
 nnoremap <leader>ld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>li <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
 nnoremap <leader>lq <cmd>lua require('telescope.builtin').diagnostics()<cr>
 nnoremap <leader>lgf <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>lgc <cmd>lua require('telescope.builtin').git_commits()<cr>
@@ -552,11 +550,13 @@ require'nvim-treesitter.configs'.setup {
         "dockerfile",
         "fish",
         "html",
+        "java",
         "javascript",
         "json",
         "lua",
         "python",
         "regex",
+        "scala",
         "scss",
         "tsx",
         "typescript",
@@ -727,8 +727,6 @@ end
 
 EOF
 " End LSP and nvim cmp config -----------------------------
-
-
 
 " Begin nvim-dap config -----------------------------------
 "nnoremap <F5> <cmd>lua require('dap').continue()<cr>

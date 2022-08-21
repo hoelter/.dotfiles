@@ -1,8 +1,9 @@
 [alias]
 	s = status
 	pr = !"git fetch; git remote prune origin"
-	lg = log --graph --date=relative --pretty='format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%C(auto)%d %Creset%s' --color=always
-	l = branch -a
+	l = log --graph --date=relative --pretty='format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%C(auto)%d %Creset%s' --color=always
+	b = branch -a
+	bl = branch -l
 	del = branch -D
 	c = checkout
 	cb = checkout -b
@@ -11,6 +12,7 @@
 	u = pull
 	f = fetch
 	d = diff
+	a = !"git add -A && git commit -m 'Quick commit'"
 
 	# From https://blog.jez.io/cli-code-review/
 	# List files changed against review base
@@ -23,6 +25,7 @@
 	amend = !"git add -A && git commit --amend --reuse-message=HEAD"
 	contributors = shortlog --summary --numbered
 	delm = "!git branch --merged | grep -v '\\*\\|+' | xargs -n 1 git branch -d; git remote -v update -p" # delete branches merged into master
+	who = !"git shortlog -s -n --all --no-merges -e"
 
 [core]
 	excludesFile = ~/.gitignore
