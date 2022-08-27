@@ -167,7 +167,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Git Status
-nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gs :0Git<CR>
 " vim fugitive quickfix commits for current file
 nnoremap <leader>gh :0Gclog<CR>
 " Git Blame
@@ -370,7 +370,17 @@ nnoremap <leader>z :Goyo<CR>
 
 
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
-lua require'colorizer'.setup()
+lua <<EOF
+require'colorizer'.setup {
+    'css'; 
+    'json'; 
+    'scss'; 
+    'javascript'; 
+    'typescript'; 
+    'typescriptreact'; 
+    'html'; 
+}
+EOF
 
 
 " Indent blankline settings
@@ -395,6 +405,10 @@ nnoremap ,f <cmd>lua require('harpoon.ui').nav_file(1)<cr>
 nnoremap ,d <cmd>lua require('harpoon.ui').nav_file(2)<cr>
 nnoremap ,s <cmd>lua require('harpoon.ui').nav_file(3)<cr>
 nnoremap ,a <cmd>lua require('harpoon.ui').nav_file(4)<cr>
+nnoremap ,r <cmd>lua require('harpoon.ui').nav_file(5)<cr>
+nnoremap ,e <cmd>lua require('harpoon.ui').nav_file(6)<cr>
+nnoremap ,w <cmd>lua require('harpoon.ui').nav_file(7)<cr>
+nnoremap ,q <cmd>lua require('harpoon.ui').nav_file(8)<cr>
 
 
 " Load luasnip vscode like snippets
@@ -515,9 +529,10 @@ nnoremap <leader>lm <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>lf <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>lb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>lj <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>lJ <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>lk <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 nnoremap <leader>lR <cmd>lua require('telescope.builtin').registers()<cr>
-" nnoremap <leader>lp <cmd>lua require('telescope.builtin').grep_string()<cr>
+
 nnoremap <leader>lh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>ll <cmd>lua require('telescope.builtin').resume()<cr>
 
@@ -534,7 +549,7 @@ nnoremap <leader>lgc <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>lgb <cmd>lua require('telescope.builtin').git_bcommits()<cr>
 nnoremap <leader>lga <cmd>lua require('telescope.builtin').git_branches()<cr>
 
-nnoremap <leader>lS <cmd>lua require('telescope').extensions.luasnip.luasnip{}<cr>
+nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<cr>
 " End Telescope config --------------------------------
 
 
@@ -615,7 +630,7 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'luasnip' },
+      { name = 'luasnip', keyword_length = 5 },
     }, {
       { name = 'path' },
       { name = 'buffer', keyword_length = 5 },
