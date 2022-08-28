@@ -21,15 +21,17 @@ if status --is-interactive
     abbr -a -g gstat "git diff --stat (git merge-base HEAD \"$REVIEW_BASE\")"
 
     abbr -a -g l "ls -lAF"
-    abbr -a -g bye "shutdown.exe -s -f -t 0"
     abbr -a -g .. "cd .."
     abbr -a -g ... "cd ../.."
     abbr -a -g .... "cd ../../.."
     abbr -a -g ..... "cd ../../../.."
     abbr -a -g - "cd -"
 
+    abbr -a -g bye "shutdown.exe -s -f -t 0"
     abbr -a -g pkm "pkill mono"
     abbr -a -g rg "rg -M 250 -Sp"
+
+    abbr -a -g c "bc -l"
 
     # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
     abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""

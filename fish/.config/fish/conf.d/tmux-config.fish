@@ -14,8 +14,10 @@ if status --is-interactive
         # Shortcuts
         tmux unbind-key -T root M-j
         tmux unbind-key -T root M-,
+        tmux unbind-key -T root M-k
         tmux bind -T root M-j switch-client -T quick_nav_table
         tmux bind -T root M-, switch-client -T quick_nav_table
+        tmux bind -T root M-k switch-client -T quick_nav_table
 
         tmux bind-key -T quick_nav_table -r k run-shell "~/.local/bin/tmux-sessionizer ~/personal/notes"
         tmux bind-key -T quick_nav_table -r M-k run-shell "~/.local/bin/tmux-sessionizer ~/personal/notes"
