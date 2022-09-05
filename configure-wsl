@@ -10,5 +10,8 @@ if [[ -x "$(command -v wslpath)" ]]; then
     echo 'Replacing the current windows terminal settings.json file with the .windows-terminal-config.json'
     cp ~/.dotfiles/.windows-terminal-config.json $WINHOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
     cp ~/.dotfiles/.windows-terminal-config.json $WINHOME/AppData/Local/Packages/Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe/LocalState/settings.json
+
+    echo 'Replacing the .vimrc file in the windows home directory.'
+    cp ~/.dotfiles/vim/.vimrc $WINHOME/.vimrc
 fi
 
