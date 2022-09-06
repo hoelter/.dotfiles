@@ -337,6 +337,9 @@ augroup filetype_settings
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
   autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
 
+  " Disable auto new line comments
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 augroup END
 
 "--------------------------------------------------------------------------
