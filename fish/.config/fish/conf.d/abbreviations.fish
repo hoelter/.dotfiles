@@ -14,7 +14,7 @@ if status --is-interactive
     abbr -a -g gc "git ca"
     abbr -a -g gf "git fetch"
     abbr -a -g gd "git diff"
-    abbr -a -g ga "git add -A && git commit -m 'Quick commit'"
+    abbr -a -g gq "git add -A && git commit -m 'Quick commit'"
     abbr -a -g gconfig "git config --global --list"
     abbr -a -g vdiff "nvim -p (git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")) +\"tabdo Gvdiffsplit $REVIEW_BASE\""
     abbr -a -g gfiles "git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")"

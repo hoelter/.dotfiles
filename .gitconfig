@@ -12,7 +12,7 @@
 	u = pull
 	f = fetch
 	d = diff
-	a = !"git add -A && git commit -m 'Quick commit'"
+	q = !"git add -A && git commit -m 'Quick commit'"
 
 	# From https://blog.jez.io/cli-code-review/
 	# List files changed against review base
