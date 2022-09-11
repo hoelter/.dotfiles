@@ -7,6 +7,10 @@ if [[ -x "$(command -v wslpath)" ]]; then
     # if interactive and stdin
     if [[ -t 0 && $- = *i* ]]
     then
+        # xserver setup
+        export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
+
+        # ssh setup
         eval `keychain --eval --agents ssh id_ed25519`
         stty -ixon
     fi

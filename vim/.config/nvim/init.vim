@@ -702,13 +702,27 @@ end
   })
 
   -- Omnisharp
-  local pid = vim.fn.getpid()
-  local omnisharp_bin = vim.fn.expand('~/.local/omnisharp/run')
+  -- local pid = vim.fn.getpid()
+  -- local omnisharp_bin = vim.fn.expand('~/.local/omnisharp/run')
+  -- nvim_lsp['omnisharp'].setup {
+  --   handlers = {
+  --     ["textDocument/definition"] = require('omnisharp_extended').handler,
+  --   },
+  --   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+  --   on_attach = on_attach,
+  --   flags = {
+  --     debounce_text_changes = 150,
+  --   },
+  --   capabilities = capabilities
+  -- }
+
+  -- local omnisharp_dll = vim.fn.expand('$HOME/.local/omnisharp/OmniSharp.dll')
+  local omnisharp_dll = '/usr/local/bin/OmniSharp.dll'
   nvim_lsp['omnisharp'].setup {
+    cmd = { "dotnet", omnisharp_dll },
     handlers = {
       ["textDocument/definition"] = require('omnisharp_extended').handler,
     },
-    cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,

@@ -1,4 +1,5 @@
 [wsl2]
-memory=4GB
+memory=8GB
 swap=0
+nestedVirtualization=true
 
