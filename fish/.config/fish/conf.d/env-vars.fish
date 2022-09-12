@@ -10,6 +10,11 @@ set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -gx GOPATH "$HOME/.go"
 fish_add_path $GOPATH/bin
 
+# X Server WSL 
+set -gx GDK_SCALE 2
+#set -gx GDK_SCALE '0.5'
+#set -gx GDK_DPI_SCALE '2'
+
 if status --is-interactive
     set -gx BAT_THEME Nord
     set -gx PISTOL_CHROMA_FORMATTER terminal256
