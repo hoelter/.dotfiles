@@ -93,6 +93,13 @@ augroup locallist
     autocmd DiagnosticChanged * lua vim.diagnostic.setloclist({ open = false })
 augroup END
 
+" Auto turn off hlsearch
+augroup vimrc_incsearch_highlight
+  autocmd!
+  autocmd CmdlineEnter /,\? :set hlsearch
+  autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END
+
 " https://github.com/OJFord/vim-quickfix-conflicts/blob/master/autoload/conflicts.vim
 " TODO: Make this auto jump to the first one and ensure it sets a new qflist,
 " and doesn't overridde the existing one
@@ -175,7 +182,9 @@ nnoremap <leader>gb :Git blame<CR>
 " Git push to origin current branch
 nnoremap <leader>gp :Git -c push.default=current push<CR>
 " Git add all and commit
-nnoremap <leader>gc :Git ca<CR>
+nnoremap <leader>gc :Git ca <bar> :only<CR>
+" Git diff
+nnoremap <leader>gd :Git diff <bar> :only<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
 nnoremap <leader>gx :call PopulateGitConflicts()<CR>
@@ -203,6 +212,9 @@ nnoremap <leader>D :Ex<CR>
 
 " Open word under cursor (primarily for urls)
 nnoremap <leader>o "oyiW :exec("!open " . shellescape('<C-R>o', 1) . "")<CR><CR>
+
+" Save and close current buffer
+nnoremap <leader>w :w<bar>:bd<CR>
 
 "--------------------------------------------------------------------------
 " Plugins
@@ -403,7 +415,7 @@ lua <<EOF
 EOF
 nnoremap ,t <cmd>lua require('harpoon.mark').add_file()<cr>
 nnoremap ,j <cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>
-nnoremap ,c <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+
 nnoremap ,f <cmd>lua require('harpoon.ui').nav_file(1)<cr>
 nnoremap ,d <cmd>lua require('harpoon.ui').nav_file(2)<cr>
 nnoremap ,s <cmd>lua require('harpoon.ui').nav_file(3)<cr>
@@ -412,6 +424,11 @@ nnoremap ,r <cmd>lua require('harpoon.ui').nav_file(5)<cr>
 nnoremap ,e <cmd>lua require('harpoon.ui').nav_file(6)<cr>
 nnoremap ,w <cmd>lua require('harpoon.ui').nav_file(7)<cr>
 nnoremap ,q <cmd>lua require('harpoon.ui').nav_file(8)<cr>
+
+nnoremap ,c <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+nnoremap ,v <cmd>lua require("harpoon.tmux").sendCommand(1, 1)<cr>
+nnoremap ,x <cmd>lua require("harpoon.tmux").sendCommand(2, 2)<cr>
+nnoremap ,z <cmd>lua require("harpoon.tmux").sendCommand(3, 3)<cr>
 
 
 " Load luasnip vscode like snippets
