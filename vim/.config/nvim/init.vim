@@ -343,11 +343,14 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
   autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
+
+  autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
+  autocmd FileType cpp nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
+
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -410,6 +413,9 @@ lua <<EOF
     require("harpoon").setup({
         menu = {
             width = vim.api.nvim_win_get_width(0) - 4,
+        },
+        global_settings = {
+            enter_on_sendcmd = true
         }
     })
 EOF
@@ -426,7 +432,7 @@ nnoremap ,w <cmd>lua require('harpoon.ui').nav_file(7)<cr>
 nnoremap ,q <cmd>lua require('harpoon.ui').nav_file(8)<cr>
 
 nnoremap ,c <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
-nnoremap ,v <cmd>lua require("harpoon.tmux").sendCommand(1, 1)<cr>
+nnoremap ,v :w <bar> lua require("harpoon.tmux").sendCommand(1, 1)<cr>
 nnoremap ,x <cmd>lua require("harpoon.tmux").sendCommand(2, 2)<cr>
 nnoremap ,z <cmd>lua require("harpoon.tmux").sendCommand(3, 3)<cr>
 
