@@ -397,6 +397,7 @@ require'colorizer'.setup {
     'typescript'; 
     'typescriptreact'; 
     'html'; 
+    'fish'; 
 }
 EOF
 

@@ -10,8 +10,8 @@ set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -gx GOPATH "$HOME/.go"
 fish_add_path $GOPATH/bin
 
-# X Server WSL 
-set -gx GDK_SCALE 2
+# X Server WSL (just first settings is enough)
+#set -gx GDK_SCALE 2
 #set -gx GDK_SCALE '0.5'
 #set -gx GDK_DPI_SCALE '2'
 
