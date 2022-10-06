@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# HDMI-0 3840x2160
+# DP-4 1920x1080
+
+if xrandr -q | grep 'HDMI-0 connected primary' > /dev/null; then
+    echo 'In dual monitor mode, setting single monitor mode'
+
+    xrandr --dpi 192 --fb 3840x2160 \
+        --output DP-4 --scale 2x2 --primary \
+        --output HDMI-0 --off
+else
+    echo 'In single monitor mode, setting dual mode.'
+
+    xrandr --dpi 192 --fb 7680x2160 \
+        --output DP-4 --scale 2x2 \
+        --output HDMI-0 --mode 3840x2160 --primary --pos 3840x0
+fi
+
+
+

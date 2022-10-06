@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# HDMI-0 3840x2160
+# DP-4 1920x1080
+
+xrandr --dpi 192 --fb 7680x2160 \
+    --output DP-4 --scale 2x2 \
+    --output HDMI-0 --mode 3840x2160 --primary --pos 3840x0
+
