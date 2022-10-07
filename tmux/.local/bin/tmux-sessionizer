@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     dirs=""
-    for dir in ~/dev ~/personal ~/work
+    for dir in $TMUX_SESSIONIZER_DIRS
     do
         if [ -d "$dir" ]; then
             dirs="$dirs $dir"

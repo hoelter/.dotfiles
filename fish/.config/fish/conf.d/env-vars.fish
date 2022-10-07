@@ -3,10 +3,11 @@ fish_add_path $HOME/.local/bin
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
 
-# Dev specific
+# Dotnet Dev specific
 set -gx ASPNETCORE_ENVIRONMENT "Development"
 set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 
+# golang setup
 set -gx GOPATH "$HOME/.go"
 fish_add_path $GOPATH/bin
 
