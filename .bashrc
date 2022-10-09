@@ -1,4 +1,5 @@
 # Appended to .bashrc by Chris
+source $HOME/.bash_functions
 
 # if interactive and stdin
 if [[ -t 0 && $- = *i* ]]; then

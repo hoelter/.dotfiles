@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source $HOME/.bash_functions
 
 if [[ $# -eq 1 ]]; then
     target_url=$1
@@ -13,10 +14,16 @@ if  [ -x "$(command -v wslview)" ]; then
 fi
 
 # Macos
-if  [ -x "$(command -v /usr/bin/open)" ]; then
+if [ "$(uname)" == "Darwin" ]; then
     /usr/bin/open $target_url
     exit
 fi
 
-echo 'Open command not found.'
+# Linux
+if [ "$(uname)" == "Linux" ]; then
+    xdg-open $target_url
+    exit
+fi
+
+echo 'Open command not supported.'
 exit 1

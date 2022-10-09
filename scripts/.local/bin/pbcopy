@@ -18,6 +18,11 @@ if  [ -x "$(command -v /usr/bin/pbcopy)" ]; then
     exit
 fi
 
-# Add x-clip check in here
+# Linux
+if  [ -x "$(command -v xclip)" ]; then
+    echo "$selected" | xclip -selection clipboard
+    exit
+fi
+
 echo 'Clipboard copy command not found.'
 exit 1
