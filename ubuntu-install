@@ -6,7 +6,7 @@ echo 'Ubuntu install initiated.'
 # Only executes if in wsl
 ./configure-wsl
 
-./install fd fish git tmux vim scripts lf bash
+./install fd fish git tmux vim scripts lf
 
 echo 'Ubuntu dotfiles install complete.'
 

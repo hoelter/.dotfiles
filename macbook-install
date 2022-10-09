@@ -4,7 +4,7 @@ fish -c 'set -U MACBOOK true'
 
 ./update-zshrc
 
-./install fd fish git tmux vim kitty scripts lf bash
+./install fd fish git tmux vim kitty scripts lf
 
 echo 'Macbook dotfiles install complete.'
 
