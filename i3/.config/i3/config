@@ -206,7 +206,7 @@ bindsym $mod+Shift+p exec ~/.config/i3/xrandr-scripts/toggle-monitors
 # move workspace to other monitor
 bindsym $mod+x move workspace to output next
 # lock screen shortcut
-bindsym $mod+c exec i3lock
+bindsym $mod+c exec i3lock --color=006180
 
 # On startup ---------------------
 exec --no-startup-id redshift
@@ -219,5 +219,5 @@ workspace 6 output DP-4
 
 # exec --no-startup-id i3-msg 'workspace 3; exec flatpak run com.spotify.Client;'
 # exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal;'
-exec --no-startup-id i3-msg 'workspace 1; exec flatpak run com.google.Chrome;'
+#exec --no-startup-id i3-msg 'workspace 1; exec flatpak run com.google.Chrome;'
 
