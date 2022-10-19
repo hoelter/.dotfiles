@@ -28,7 +28,7 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --color=006180
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -207,6 +207,8 @@ bindsym $mod+Shift+p exec ~/.config/i3/xrandr-scripts/toggle-monitors
 bindsym $mod+x move workspace to output next
 # lock screen shortcut
 bindsym $mod+c exec i3lock --color=006180
+# suspend
+bindsym $mod+Shift+s exec systemctl suspend
 
 # On startup ---------------------
 exec --no-startup-id redshift
@@ -216,6 +218,9 @@ exec --no-startup-id ~/.fehbg
 
 workspace 1 output primary
 workspace 6 output DP-4
+
+# Lock immediately after auto-login on startup
+exec --no-startup-id i3lock --color=006180
 
 # exec --no-startup-id i3-msg 'workspace 3; exec flatpak run com.spotify.Client;'
 # exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal;'

@@ -1,5 +1,5 @@
 if status --is-interactive
-    set -gx TMUX_SESSIONIZER_DIRS $HOME/dev $HOME/personal $HOME/work
+    set -gx TMUX_SESSIONIZER_DIRS $HOME/personal $HOME/work $HOME/my-repos $HOME/other-repos
 
     set tmux_running (pgrep tmux)
     if test -n "$tmux_running"
