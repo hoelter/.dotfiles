@@ -3,6 +3,6 @@
 # DP-4 1920x1080
 
 xrandr --dpi 192 --fb 7680x2160 \
-    --output DP-4 --scale 2x2 --mode 1920x1080 -r 119.98 \
-    --output HDMI-0 --mode 3840x2160 --primary --pos 3840x0
+    --output DP-1 --scale 2x2 --mode 1920x1080 -r 119.98 \
+    --output HDMI-1 --mode 3840x2160 --primary --pos 3840x0
 
