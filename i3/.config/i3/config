@@ -213,14 +213,20 @@ bindsym $mod+Shift+s exec systemctl suspend
 # On startup ---------------------
 exec --no-startup-id redshift
 
+# default to single monitor
 exec --no-startup-id ~/.config/i3/xrandr-scripts/set-single-monitor
+
+# Set wallpaper
 exec --no-startup-id ~/.fehbg
 
-workspace 1 output primary
-workspace 6 output DP-4
+# Change to workspace 1
+exec --no-startup-id i3-msg 'workspace 1;'
 
 # Lock immediately after auto-login on startup
 exec --no-startup-id i3lock --color=006180
+
+# workspace 1 output primary
+# workspace 6 output DP-4
 
 # exec --no-startup-id i3-msg 'workspace 3; exec flatpak run com.spotify.Client;'
 # exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal;'

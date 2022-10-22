@@ -275,9 +275,13 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Typescript plugins
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+" Auto Indent html and tsx files
+Plug 'windwp/nvim-ts-autotag'
 
 " Omnisharp Specific Decompilation Support
 Plug 'hoelter/omnisharp-extended-lsp.nvim'
+" Razor page syntax highlighting
+Plug 'hoelter/vim-razor'
 
 " Log File syntax highlighting
 Plug 'mtdl9/vim-log-highlighting'
@@ -303,9 +307,6 @@ Plug 'ThePrimeagen/harpoon'
 
 " Indentation guides
 Plug 'lukas-reineke/indent-blankline.nvim'
-
-" Auto Indent
-Plug 'windwp/nvim-ts-autotag'
 
 " Surround Action
 Plug 'tpope/vim-surround'
@@ -345,7 +346,7 @@ augroup filetype_settings
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd BufNewFile,BufRead *.cshtml setlocal filetype=html
+  autocmd BufNewFile,BufRead *.cshtml setlocal filetype=razor " Force filteype to use plugin defined syntax
   autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
 
   autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
