@@ -273,6 +273,7 @@ Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 " Typescript plugins
+" TODO: Consider replacing this ts stuff with https://github.com/jose-elias-alvarez/typescript.nvim
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 " Auto Indent html and tsx files
@@ -291,9 +292,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'pwntester/octo.nvim'
 
 " Align text into tables
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 " Centering Vim
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 
 " Marks alternative
 Plug 'ThePrimeagen/harpoon'
@@ -382,10 +383,10 @@ nmap ga <Plug>(EasyAlign)
 
 " Goyo
 " Consider removing height margins: https://github.com/junegunn/goyo.vim/issues/100#issuecomment-588226459
-let g:goyo_width='70%'
-let g:goyo_height='100%'
-let g:goyo_linenr=0
-nnoremap <leader>z :Goyo<CR>
+" let g:goyo_width='70%'
+" let g:goyo_height='100%'
+" let g:goyo_linenr=0
+" nnoremap <leader>z :Goyo<CR>
 
 
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
@@ -660,7 +661,7 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'luasnip', keyword_length = 5 },
+      -- { name = 'luasnip', keyword_length = 5 },
     }, {
       { name = 'path' },
       { name = 'buffer', keyword_length = 5 },

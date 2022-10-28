@@ -225,6 +225,7 @@ exec --no-startup-id i3-msg 'workspace 1;'
 # Lock immediately after auto-login on startup
 exec --no-startup-id i3lock --color=006180
 
+
 # workspace 1 output primary
 # workspace 6 output DP-4
 
