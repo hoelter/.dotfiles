@@ -29,4 +29,9 @@ if status --is-interactive
     set -gx FZF_ALT_C_OPTS "--ansi"
     #set -gx FZF_TMUX 1
     #set -gx FZF_TMUX_OPTS "-p"
+
+    # Setup for nvm auto changing to project node version
+    set -gx NODE_VERSIONS ~/.local/share/nvm
+    set -gx NODE_VERSION_PREFIX "v"
+    direnv hook fish | source
 end

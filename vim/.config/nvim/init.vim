@@ -83,7 +83,7 @@ let s:clip = '/mnt/c/Windows/System32/clip.exe'
 if executable(s:clip)
     augroup WSLYank
         autocmd!
-        autocmd TextYankPost * if v:event.regname ==# '+' | call system('cat |' . s:clip, @+) | endif
+        autocmd TextYankPost * if v:event.regname ==# 'c' | call system('cat |' . s:clip, @c) | endif
     augroup END
 endif
 
@@ -155,6 +155,12 @@ xnoremap <leader>p "_dP
 vnoremap <leader>y "+y
 " Ready to copy activated area to clipboard
 nnoremap <leader>y "+y
+
+if executable(s:clip)
+  " Override in wsl to work around bug
+  vnoremap <leader>y "cy
+  nnoremap <leader>y "cy
+endif
 
 " Copy whole file from normal mode to clipboard
 nnoremap <leader>Y gg"+yG
@@ -392,6 +398,7 @@ nmap ga <Plug>(EasyAlign)
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 lua <<EOF
 require'colorizer'.setup {
+    'html';
     'css'; 
     'json'; 
     'scss'; 
@@ -503,6 +510,7 @@ require("telescope").setup {
       "--with-filename",
       "--line-number",
       "--column",
+      "--max-columns=250",
       "--smart-case",
       "--trim",
       "--hidden",
@@ -524,6 +532,12 @@ require("telescope").setup {
         ignore_file
       }
     },
+    live_grep = {
+      previewer = false
+    },
+    lsp_references = {
+      show_line = false
+    },
     buffers = {
       mappings = {
         i = {
@@ -534,9 +548,6 @@ require("telescope").setup {
         }
       }
     },
-    --lsp_references = { -- doesn't work as expected
-    --  show_line = false
-    --},
   },
   extensions = {
     fzf = {
@@ -722,28 +733,13 @@ end
   local null_ls = require("null-ls")
   null_ls.setup({
     sources = {
-      null_ls.builtins.diagnostics.eslint_d,
+      null_ls.builtins.diagnostics.eslint_d.with({ extra_args = { "--quiet" } }),
       null_ls.builtins.code_actions.eslint_d,
       null_ls.builtins.formatting.prettier
     },
     on_attach = on_attach,
-    capabilities = capabilities
+    capabilities = capabilities,
   })
-
-  -- Omnisharp
-  -- local pid = vim.fn.getpid()
-  -- local omnisharp_bin = vim.fn.expand('~/.local/omnisharp/run')
-  -- nvim_lsp['omnisharp'].setup {
-  --   handlers = {
-  --     ["textDocument/definition"] = require('omnisharp_extended').handler,
-  --   },
-  --   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-  --   on_attach = on_attach,
-  --   flags = {
-  --     debounce_text_changes = 150,
-  --   },
-  --   capabilities = capabilities
-  -- }
 
   -- local omnisharp_dll = vim.fn.expand('$HOME/.local/omnisharp/OmniSharp.dll')
   local omnisharp_dll = '/usr/local/bin/OmniSharp.dll'
@@ -783,7 +779,12 @@ end
     flags = {
       debounce_text_changes = 150,
     },
-    capabilities = capabilities
+    capabilities = capabilities,
+    -- init_options = {
+    --   preferences = {
+    --     importModuleSpecifierPreference = "relative"
+    --   }
+    -- }
   })
 
 EOF

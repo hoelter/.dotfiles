@@ -61,3 +61,4 @@ node_modules
 *obj/Release/*
 /build
 Session.vim
+.envrc
