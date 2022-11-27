@@ -1,5 +1,10 @@
 # Appended to .bashrc by Chris
-source $HOME/.bash_functions
+for file in ~/.{bash_functions,bash_aliases}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
 
 # if interactive and stdin
 if [[ -t 0 && $- = *i* ]]; then
