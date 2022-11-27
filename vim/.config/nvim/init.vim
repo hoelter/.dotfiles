@@ -155,15 +155,16 @@ xnoremap <leader>p "_dP
 vnoremap <leader>y "+y
 " Ready to copy activated area to clipboard
 nnoremap <leader>y "+y
+" Copy whole file from normal mode to clipboard
+nnoremap <leader>Y gg"+yG
 
 if executable(s:clip)
   " Override in wsl to work around bug
   vnoremap <leader>y "cy
   nnoremap <leader>y "cy
+  nnoremap <leader>Y gg"cyG
 endif
 
-" Copy whole file from normal mode to clipboard
-nnoremap <leader>Y gg"+yG
 
 " move visually selected line of code up and down
 vnoremap J :m '>+1<CR>gv=gv
