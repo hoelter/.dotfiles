@@ -60,4 +60,12 @@ node_modules
 *obj/Debug/*
 *obj/Release/*
 /build
+
 .var/
+.nuget/
+.npm/
+.go/
+.local/share
+.local/go
+Zotero/
+.zotero/
