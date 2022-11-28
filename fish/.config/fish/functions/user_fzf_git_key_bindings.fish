@@ -11,6 +11,6 @@ function user_fzf_git_key_bindings
         commandline -f repaint
     end
 
-    bind -M insert \cgb fzf-select-branch-name
-    bind -M insert \cgl fzf-select-commit-hash
+    bind \cgb fzf-select-branch-name
+    bind \cgl fzf-select-commit-hash
 end

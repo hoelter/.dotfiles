@@ -7,10 +7,10 @@ function fish_user_key_bindings
     # end
 
     # ensure alt c triggers fzf cd function
-    bind -M insert "ç" fzf-cd-widget
+    bind "ç" fzf-cd-widget
 
     user_fzf_git_key_bindings
 
-    bind -M default \es '~/.local/bin/tmux-sessionizer'
-    bind -M insert \es '~/.local/bin/tmux-sessionizer'
+    bind \es '~/.local/bin/tmux-sessionizer'
+    bind \es '~/.local/bin/tmux-sessionizer'
 end
