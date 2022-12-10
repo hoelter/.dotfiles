@@ -6,3 +6,12 @@ xrandr --dpi 192 --fb 7680x2160 \
     --output DP-1 --scale 2x2 --mode 1920x1080 -r 119.98 \
     --output HDMI-1 --mode 3840x2160 --primary --pos 3840x0
 
+# xrandr --dpi 92 --fb 3840x1080 \
+#     --output DP-1 --mode 1920x1080 -r 119.98 \
+#     --output HDMI-1 --mode 1920x1080 --primary --pos 1920x0
+
+# xrandr --output DP-1 --mode 1920x1080 -r 119.98 \
+#     --output HDMI-1 --mode 1920x1080 --primary --right-of DP-1
+
+# xrandr --output DP-1 --auto --output HDMI-1 --primary --right-of DP-1
+
