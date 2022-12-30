@@ -2,12 +2,14 @@
 # HDMI-0 3840x2160
 # DP-4 1920x1080
 
+# Setting the scale just below the desired with 0.9999 seems to fix the cursor flashing in chrome 
+
 if xrandr -q | grep 'HDMI-1 connected primary' > /dev/null && xrandr -q | grep 'DP-1 connected 3840' > /dev/null; then
     echo 'In dual monitor mode, setting single main monitor mode'
 
     xrandr --dpi 192 --fb 3840x2160 \
         --output DP-1 --off \
-        --output HDMI-1 --mode 3840x2160 --primary --pos 3840x0
+        --output HDMI-1 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
 
     # xrandr \
     #     --output DP-1 --off \
@@ -17,7 +19,7 @@ elif xrandr -q | grep 'HDMI-1 connected primary' > /dev/null; then
     echo 'In single monitor 4k mode, setting single side mode.'
 
     xrandr --dpi 192 --fb 3840x2160 \
-        --output DP-1 --scale 2x2 --primary --mode 1920x1080 -r 119.98 \
+        --output DP-1 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 119.98 \
         --output HDMI-1 --off
 
     # xrandr \
@@ -28,8 +30,8 @@ else
     echo 'In single monitor on side, setting dual mode.'
 
     xrandr --dpi 192 --fb 7680x2160 \
-        --output DP-1 --scale 2x2 --mode 1920x1080 -r 119.98 \
-        --output HDMI-1 --mode 3840x2160 --primary --pos 3840x0
+        --output DP-1 --scale 1.9999x1.9999 --mode 1920x1080 -r 119.98 \
+        --output HDMI-1 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
 
     # xrandr \
     #     --output DP-1 --mode 1920x1080 -r 119.98 \
