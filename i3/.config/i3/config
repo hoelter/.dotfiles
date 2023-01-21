@@ -208,10 +208,13 @@ bindsym $mod+Shift+p exec ~/.config/i3/xrandr-scripts/toggle-monitors
 bindsym $mod+x move workspace to output next
 # lock screen shortcut
 bindsym $mod+c exec i3lock --color=006180
-# suspend
-#bindsym $mod+Shift+s exec systemctl suspend
-# poweroff
-bindsym $mod+Shift+Escape exec ~/.config/i3/powerdown-silverblue
+
+# # suspend
+# bindsym $mod+Shift+s exec systemctl suspend
+# # poweroff
+# bindsym $mod+Shift+Escape exec ~/.config/i3/powerdown-silverblue
+
+exec --no-startup-id podman start yacy_search_server
 
 exec --no-startup-id ~/.config/i3/post-config-i3
 

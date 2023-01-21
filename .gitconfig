@@ -23,9 +23,9 @@
 	# From or inspired by https://github.com/jessfraz/dotfiles/blob/master/.gitconfig
 	ca = !"git add -A && git commit -av"
 	amend = !"git add -A && git commit --amend --reuse-message=HEAD"
-	contributors = shortlog --summary --numbered
+	contributors = shortlog --summary --numbered --email
 	delm = "!git branch --merged | grep -v '\\*\\|+' | xargs -n 1 git branch -d; git remote -v update -p" # delete branches merged into master
-	who = !"git shortlog -s -n --all --no-merges -e"
+	contributors-by-refs = !"git shortlog --shortlog --numbered --email --all --no-merges"
 
 [core]
 	excludesFile = ~/.gitignore
