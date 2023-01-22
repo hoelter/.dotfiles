@@ -22,7 +22,7 @@ set expandtab
 set smartindent
 set nofoldenable
 set nowrap
-set colorcolumn=80
+set colorcolumn=120
 set updatetime=750 " Unsure of the significance of this, default is 4000
 set showmatch " show matching brackets when indicator is over them
 "set cursorline " highlights entire cursor line when turned on
@@ -377,8 +377,8 @@ colorscheme nord
 
 " Lf Settings
 " https://github.com/ptzz/lf.vim
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
+let g:lf_width = 0.99
+let g:lf_height = 0.99
 "let g:lf_replace_netrw = 1
 let g:lf_map_keys = 0
 nnoremap <leader>d :Lf<CR>
