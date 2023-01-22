@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH="${PATH:+${PATH}:}~/opt/bin"
+
 # export GDK_SCALE=1.5
 # export GDK_DPI_SCALE=0.5
 # export QT_DEVICE_PIXEL_RATIO=1.5

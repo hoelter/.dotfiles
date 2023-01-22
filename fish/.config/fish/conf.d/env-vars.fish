@@ -33,5 +33,8 @@ if status --is-interactive
     # Setup for nvm auto changing to project node version
     set -gx NODE_VERSIONS ~/.local/share/nvm
     set -gx NODE_VERSION_PREFIX "v"
+
     direnv hook fish | source
+
+    source ~/.asdf/asdf.fish 
 end

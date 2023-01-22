@@ -616,6 +616,7 @@ require'nvim-treesitter.configs'.setup {
         "regex",
         "scala",
         "scss",
+        "terraform",
         "tsx",
         "typescript",
         "vim",
