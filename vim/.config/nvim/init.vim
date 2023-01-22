@@ -377,8 +377,8 @@ colorscheme nord
 
 " Lf Settings
 " https://github.com/ptzz/lf.vim
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
+let g:lf_width = 0.99
+let g:lf_height = 0.99
 "let g:lf_replace_netrw = 1
 let g:lf_map_keys = 0
 nnoremap <leader>d :Lf<CR>
