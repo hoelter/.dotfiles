@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pkill gnome-terminal
+pkill chrome
+poweroff
