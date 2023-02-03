@@ -282,9 +282,9 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 " Typescript plugins
 " TODO: Consider replacing this ts stuff with https://github.com/jose-elias-alvarez/typescript.nvim
-Plug 'jose-elias-alvarez/null-ls.nvim'
-" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'jose-elias-alvarez/typescript.nvim'
+" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 " Auto Indent html and tsx files
 Plug 'windwp/nvim-ts-autotag'
@@ -350,6 +350,8 @@ augroup filetype_settings
   autocmd Filetype markdown setlocal expandtab ts=2 sw=2
   autocmd Filetype text setlocal expandtab ts=2 sw=2
   autocmd Filetype json setlocal expandtab ts=2 sw=2
+  autocmd Filetype typescriptreact setlocal expandtab ts=2 sw=2
+  autocmd Filetype typescript setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
@@ -627,6 +629,7 @@ require'nvim-treesitter.configs'.setup {
         "javascript",
         "json",
         "lua",
+        "prisma",
         "python",
         "regex",
         "ruby",
@@ -778,6 +781,7 @@ end
   }
 
 -- Typescript/linting
+
   -- nvim_lsp['tsserver'].setup({
   --   on_attach = function(client, bufnr)
 
