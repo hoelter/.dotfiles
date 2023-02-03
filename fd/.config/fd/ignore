@@ -69,3 +69,8 @@ node_modules
 .local/go
 Zotero/
 .zotero/
+
+# Ruby on rails
+/tmp/cache/*
+*.sqlite3
+

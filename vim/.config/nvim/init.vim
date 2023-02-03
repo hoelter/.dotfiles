@@ -244,6 +244,7 @@ Plug 'benfowler/telescope-luasnip.nvim'
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-treesitter/playground'
 
 " Lf vim
 Plug 'ptzz/lf.vim'
@@ -282,7 +283,9 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Typescript plugins
 " TODO: Consider replacing this ts stuff with https://github.com/jose-elias-alvarez/typescript.nvim
 Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'jose-elias-alvarez/typescript.nvim'
+
 " Auto Indent html and tsx files
 Plug 'windwp/nvim-ts-autotag'
 
@@ -324,6 +327,12 @@ Plug 'AndrewRadev/linediff.vim'
 
 " Highlight color strings
 Plug 'norcalli/nvim-colorizer.lua'
+
+" https://github.com/tpope/vim-abolish
+Plug 'tpope/vim-abolish'
+
+"https://github.com/tpope/vim-rails
+Plug 'tpope/vim-rails'
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -614,6 +623,7 @@ require'nvim-treesitter.configs'.setup {
         "lua",
         "python",
         "regex",
+        "ruby",
         "scala",
         "scss",
         "terraform",
@@ -625,10 +635,11 @@ require'nvim-treesitter.configs'.setup {
     highlight = {
         enable = true,              -- false will disable the whole extension
         additional_vim_regex_highlighting = false,
+        disable = { 'tsx', 'jsx' }
     },
     indent = {
         enable = true,
-        disable = { 'yaml' }
+        disable = { 'yaml', 'ruby' }
     },
     incremental_selection = { enable = true },
     textobjects = { enable = true },
@@ -739,7 +750,8 @@ end
       null_ls.builtins.code_actions.eslint_d,
       null_ls.builtins.formatting.prettier.with {
         disabled_filetypes ={"markdown"}
-      }
+      },
+      require("typescript.extensions.null-ls.code-actions")
     },
     on_attach = on_attach,
     capabilities = capabilities,
@@ -760,7 +772,38 @@ end
   }
 
 -- Typescript/linting
-  nvim_lsp['tsserver'].setup({
+  -- nvim_lsp['tsserver'].setup({
+  --   on_attach = function(client, bufnr)
+
+  --     local buf_map = function(bufnr, mode, lhs, rhs, opts)
+  --         vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+  --             silent = true,
+  --         })
+  --     end
+
+  --     client.server_capabilities.document_formatting = false
+  --     client.server_capabilities.document_range_formatting = false
+
+  --     local ts_utils = require("nvim-lsp-ts-utils")
+  --     ts_utils.setup({})
+  --     ts_utils.setup_client(client)
+  --     buf_map(bufnr, "n", "go", ":TSLspOrganize<CR>")
+  --     buf_map(bufnr, "n", "<leader>rN", ":TSLspRenameFile<CR>")
+  --     buf_map(bufnr, "n", "gp", ":TSLspImportAll<CR>")
+  --     on_attach(client, bufnr)
+  --   end,
+  --   flags = {
+  --     debounce_text_changes = 150,
+  --   },
+  --   capabilities = capabilities,
+  --   -- init_options = {
+  --   --   preferences = {
+  --   --     importModuleSpecifierPreference = "relative"
+  --   --   }
+  --   -- }
+  -- })
+
+  require('typescript').setup({
     on_attach = function(client, bufnr)
 
       local buf_map = function(bufnr, mode, lhs, rhs, opts)
@@ -772,12 +815,12 @@ end
       client.server_capabilities.document_formatting = false
       client.server_capabilities.document_range_formatting = false
 
-      local ts_utils = require("nvim-lsp-ts-utils")
-      ts_utils.setup({})
-      ts_utils.setup_client(client)
-      buf_map(bufnr, "n", "go", ":TSLspOrganize<CR>")
-      buf_map(bufnr, "n", "<leader>rN", ":TSLspRenameFile<CR>")
-      buf_map(bufnr, "n", "gp", ":TSLspImportAll<CR>")
+      -- local ts_utils = require("nvim-lsp-ts-utils")
+      -- ts_utils.setup({})
+      -- ts_utils.setup_client(client)
+      buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
+      buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
+      buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
       on_attach(client, bufnr)
     end,
     flags = {
@@ -790,6 +833,17 @@ end
     --   }
     -- }
   })
+
+
+
+-- Solargraph ruby lsp
+-- nvim_lsp['solargraph'].setup({
+--   on_attach = on_attach,
+--   flags = {
+--     debounce_text_changes = 150,
+--   },
+--   capabilities = capabilities
+-- })
 
 EOF
 " End LSP and nvim cmp config -----------------------------
