@@ -333,6 +333,9 @@ Plug 'tpope/vim-abolish'
 
 "https://github.com/tpope/vim-rails
 Plug 'tpope/vim-rails'
+
+" https://github.com/mbbill/undotree
+Plug 'mbbill/undotree'
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -455,6 +458,9 @@ nnoremap ,c <cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
 nnoremap ,v :w <bar> lua require("harpoon.tmux").sendCommand(1, 1)<cr>
 nnoremap ,x <cmd>lua require("harpoon.tmux").sendCommand(2, 2)<cr>
 nnoremap ,z <cmd>lua require("harpoon.tmux").sendCommand(3, 3)<cr>
+
+" Configure UndoTree
+nnoremap <leader>u :UndotreeToggle<cr>
 
 
 " Load luasnip vscode like snippets
