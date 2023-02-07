@@ -498,7 +498,7 @@ local action_layout = require("telescope.actions.layout")
 require("telescope").setup {
   defaults = {
     preview = {
-      hide_on_startup = false,
+      hide_on_startup = true,
       filesize_limit = 5
     },
     mappings = {

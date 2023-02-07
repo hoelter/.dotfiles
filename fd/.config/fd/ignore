@@ -70,7 +70,11 @@ node_modules
 Zotero/
 .zotero/
 
+
 # Ruby on rails
 /tmp/cache/*
 *.sqlite3
 
+
+# TODO: Consider breaking out much of this to a separate telescope-ignore file
+/public/build/*
