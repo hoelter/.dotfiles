@@ -254,7 +254,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme  
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -377,6 +377,9 @@ augroup filetype_settings
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+  " Support for astro treesitter syntax https://github.com/virchau13/tree-sitter-astro
+  autocmd BufRead,BufEnter *.astro set filetype=astro
 
 augroup END
 
@@ -616,6 +619,7 @@ nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<c
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
+        "astro",
         "bash",
         "comment",
         "c",
