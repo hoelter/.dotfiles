@@ -646,7 +646,7 @@ require'nvim-treesitter.configs'.setup {
         "yaml",
     },
     highlight = {
-        enable = true,              -- false will disable the whole extension
+        enable = false,              -- false will disable the whole extension
         additional_vim_regex_highlighting = false,
         disable = { 'tsx', 'jsx' }
     },
