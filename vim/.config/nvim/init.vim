@@ -253,7 +253,7 @@ Plug 'voldikss/vim-floaterm'
 " honor .editorconfig file settings
 Plug 'editorconfig/editorconfig-vim'
 
-" Theme  
+" Theme
 Plug 'arcticicestudio/nord-vim'
 
 " Neovim native lsp
@@ -332,7 +332,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-abolish'
 
 "https://github.com/tpope/vim-rails
-Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-rails'
 
 " https://github.com/mbbill/undotree
 Plug 'mbbill/undotree'
