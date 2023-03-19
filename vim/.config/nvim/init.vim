@@ -103,25 +103,25 @@ augroup END
 " https://github.com/OJFord/vim-quickfix-conflicts/blob/master/autoload/conflicts.vim
 " TODO: Make this auto jump to the first one and ensure it sets a new qflist,
 " and doesn't overridde the existing one
-function! PopulateGitConflicts()
-    let lines=split(system('git --no-pager diff --no-color --check --relative'), '\n')
-    call setqflist([])
+" function! PopulateGitConflicts()
+"     let lines=split(system('git --no-pager diff --no-color --check --relative'), '\n')
+"     call setqflist([])
 
-    for line in lines
-        let fname=split(line, ':')[0]
-        let lnum=split(line, ':')[1]
-        if split(system('head -n'.lnum.' '.fname.' | tail -n1'))[0] != '<<<<<<<'
-            continue
-        endif
+"     for line in lines
+"         let fname=split(line, ':')[0]
+"         let lnum=split(line, ':')[1]
+"         if split(system('head -n'.lnum.' '.fname.' | tail -n1'))[0] != '<<<<<<<'
+"             continue
+"         endif
 
-        exec 'badd +'.lnum.' '.fname
-        let bufnr=bufnr(fname)
+"         exec 'badd +'.lnum.' '.fname
+"         let bufnr=bufnr(fname)
 
-        call setqflist(getqflist() + [{'lnum': lnum, 'bufnr': bufnr, 'col': 1}])
-    endfor
+"         call setqflist(getqflist() + [{'lnum': lnum, 'bufnr': bufnr, 'col': 1}])
+"     endfor
 
-    return len(lines)
-endfunction
+"     return len(lines)
+" endfunction
 
 "--------------------------------------------------------------------------
 " Key Maps
@@ -194,7 +194,8 @@ nnoremap <leader>gc :Git ca <bar> :only<CR>
 nnoremap <leader>gd :Git diff <bar> :only<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
-nnoremap <leader>gx :call PopulateGitConflicts()<CR>
+
+" nnoremap <leader>gx :call PopulateGitConflicts()<CR>
 
 " Delete all buffers but current buffer
 "nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
@@ -374,6 +375,8 @@ augroup filetype_settings
   autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cpp nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
 
+  " Astro support
+  autocmd BufRead,BufEnter *.astro set filetype=astro
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -616,6 +619,7 @@ nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<c
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
+        "astro",
         "bash",
         "comment",
         "c",
