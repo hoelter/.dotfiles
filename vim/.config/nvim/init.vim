@@ -254,7 +254,8 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme  
-" Plug 'arcticicestudio/nord-vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ellisonleao/gruvbox.nvim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -379,7 +380,7 @@ augroup filetype_settings
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
   " Support for astro treesitter syntax https://github.com/virchau13/tree-sitter-astro
-  autocmd BufRead,BufEnter *.astro set filetype=astro
+  " autocmd BufRead,BufEnter *.astro set filetype=astro
 
 augroup END
 
@@ -388,8 +389,11 @@ augroup END
 "--------------------------------------------------------------------------
 
 " Load color scheme after plugins
-let g:nord_uniform_diff_background = 1
-colorscheme nord
+" let g:nord_uniform_diff_background = 1
+" colorscheme nordnew0
+
+" set background= dark
+colorscheme gruvbox
 
 
 " Lf Settings
@@ -619,7 +623,7 @@ nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<c
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
-        "astro",
+        -- "astro",
         "bash",
         "comment",
         "c",
@@ -646,7 +650,7 @@ require'nvim-treesitter.configs'.setup {
         "yaml",
     },
     highlight = {
-        enable = false,              -- false will disable the whole extension
+        enable = true,              -- false will disable the whole extension
         additional_vim_regex_highlighting = false,
         disable = { 'tsx', 'jsx' }
     },

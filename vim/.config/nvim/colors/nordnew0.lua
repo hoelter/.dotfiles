@@ -370,17 +370,21 @@ vim.cmd("hi! link dtTypeValue Keyword")
 
 -- +- Git -+
 -- Legacy groups for official git.vim and diff.vim syntax are the links
-if uniform_diff_background then
-    vim.api.nvim_set_hl(0, "DiffAdd", { fg = nord14_gui, bg = nord1_gui, ctermfg = nord14_term, ctermbg = nord1_term, link = "DiffAdded" })
-    vim.api.nvim_set_hl(0, "DiffChange", { fg = nord13_gui, bg = nord1_gui, ctermfg = nord13_term, ctermbg = nord1_term, link = "DiffChanged" })
-    vim.api.nvim_set_hl(0, "DiffDelete", { fg = nord11_gui, bg = nord1_gui, ctermfg = nord11_term, ctermbg = nord1_term, link = "DiffRemoved" })
-    vim.api.nvim_set_hl(0, "DiffText", { fg = nord9_gui, bg = nord1_gui, ctermfg = nord9_term, ctermbg = nord1_term })
-else
-    vim.api.nvim_set_hl(0, "DiffAdd", { fg = nord14_gui, bg = nord0_gui, ctermfg = nord14_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffAdded" })
-    vim.api.nvim_set_hl(0, "DiffChange", { fg = nord13_gui, bg = nord0_gui, ctermfg = nord13_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffChanged" })
-    vim.api.nvim_set_hl(0, "DiffDelete", { fg = nord11_gui, bg = nord0_gui, ctermfg = nord11_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffRemoved" })
-    vim.api.nvim_set_hl(0, "DiffText", { fg = nord9_gui, bg = nord0_gui, ctermfg = nord9_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true } })
-end
+vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#A3BE8C", bg = nord1_gui })
+vim.api.nvim_set_hl(0, "DiffChange", { fg = "#A3BE8C", bg = nord1_gui })
+vim.api.nvim_set_hl(0, "DiffDelete", { fg =  "#A3BE8C", bg = nord1_gui })
+vim.api.nvim_set_hl(0, "DiffText", { fg =   "#A3BE8C", bg = nord1_gui })
+-- if uniform_diff_background then
+    -- vim.api.nvim_set_hl(0, "DiffAdd", { fg = nord14_gui, bg = nord1_gui, ctermfg = nord14_term, ctermbg = nord1_term, link = "DiffAdded" })
+    -- vim.api.nvim_set_hl(0, "DiffChange", { fg = nord13_gui, bg = nord1_gui, ctermfg = nord13_term, ctermbg = nord1_term, link = "DiffChanged" })
+    -- vim.api.nvim_set_hl(0, "DiffDelete", { fg = nord11_gui, bg = nord1_gui, ctermfg = nord11_term, ctermbg = nord1_term, link = "DiffRemoved" })
+    -- vim.api.nvim_set_hl(0, "DiffText", { fg = nord9_gui, bg = nord1_gui, ctermfg = nord9_term, ctermbg = nord1_term })
+-- else
+--     vim.api.nvim_set_hl(0, "DiffAdd", { fg = nord14_gui, bg = nord0_gui, ctermfg = nord14_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffAdded" })
+--     vim.api.nvim_set_hl(0, "DiffChange", { fg = nord13_gui, bg = nord0_gui, ctermfg = nord13_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffChanged" })
+--     vim.api.nvim_set_hl(0, "DiffDelete", { fg = nord11_gui, bg = nord0_gui, ctermfg = nord11_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true }, link = "DiffRemoved" })
+--     vim.api.nvim_set_hl(0, "DiffText", { fg = nord9_gui, bg = nord0_gui, ctermfg = nord9_term, ctermbg = "NONE", reverse = true, cterm = { reverse = true } })
+-- end
 vim.api.nvim_set_hl(0, "gitconfigVariable", { fg = nord7_gui, ctermfg = nord7_term })
 -- END GIT
 
