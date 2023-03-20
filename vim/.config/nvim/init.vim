@@ -818,29 +818,28 @@ end
   -- })
 
   require('typescript').setup({
-    on_attach = function(client, bufnr)
+    server = {
+      on_attach = function(client, bufnr)
 
-      local buf_map = function(bufnr, mode, lhs, rhs, opts)
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-              silent = true,
-          })
-      end
+        local buf_map = function(bufnr, mode, lhs, rhs, opts)
+            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+                silent = false,
+            })
+        end
 
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
 
-      -- local ts_utils = require("nvim-lsp-ts-utils")
-      -- ts_utils.setup({})
-      -- ts_utils.setup_client(client)
-      buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
-      buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
-      buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
-      on_attach(client, bufnr)
-    end,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    capabilities = capabilities,
+        buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
+        buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
+        buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
+        on_attach(client, bufnr)
+      end,
+      flags = {
+        debounce_text_changes = 150,
+      },
+      capabilities = capabilities,
+      },
     -- init_options = {
     --   preferences = {
     --     importModuleSpecifierPreference = "relative"
