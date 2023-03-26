@@ -15,7 +15,7 @@ set scrolloff=8
 set number
 set relativenumber
 set signcolumn=yes:1 " more room for symbols left side of page numbers
-"set numberwidth=20 " make code more centered
+" set numberwidth=20 " make code more centered
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -271,7 +271,7 @@ Plug 'onsails/lspkind.nvim'
 " Snippet Plugin
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'rafamadriz/friendly-snippets'
+" Plug 'rafamadriz/friendly-snippets'
 
 " Git helper
 Plug 'tpope/vim-fugitive'
@@ -469,9 +469,10 @@ nnoremap <leader>u :UndotreeToggle<cr>
 
 
 " Load luasnip vscode like snippets
-lua <<EOF
-    require("luasnip.loaders.from_vscode").lazy_load()
-EOF
+" Used for friendly-snippets compatibility
+" lua <<EOF
+"    require("luasnip.loaders.from_vscode").lazy_load()
+"EOF
 
 " Begin Telescope config ------------------------------
 hi! link TelescopeMatching Label " Assigns label color to telesscope match highlighting
@@ -818,75 +819,36 @@ end
   -- })
 
   require('typescript').setup({
-    on_attach = function(client, bufnr)
+    server = {
+      on_attach = function(client, bufnr)
 
-      local buf_map = function(bufnr, mode, lhs, rhs, opts)
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-              silent = true,
-          })
-      end
+        local buf_map = function(bufnr, mode, lhs, rhs, opts)
+            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+                silent = false,
+            })
+        end
 
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
 
-      -- local ts_utils = require("nvim-lsp-ts-utils")
-      -- ts_utils.setup({})
-      -- ts_utils.setup_client(client)
-      buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
-      buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
-      buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
-      on_attach(client, bufnr)
-    end,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    capabilities = capabilities,
+        buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
+        buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
+        buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
+        on_attach(client, bufnr)
+      end,
+      flags = {
+        debounce_text_changes = 150,
+      },
+      capabilities = capabilities,
     -- init_options = {
     --   preferences = {
     --     importModuleSpecifierPreference = "relative"
     --   }
     -- }
+      },
   })
 
 
-
--- Solargraph ruby lsp
--- nvim_lsp['solargraph'].setup({
---   on_attach = on_attach,
---   flags = {
---     debounce_text_changes = 150,
---   },
---   capabilities = capabilities
--- })
-
 EOF
 " End LSP and nvim cmp config -----------------------------
-
-" Begin nvim-dap config -----------------------------------
-"nnoremap <F5> <cmd>lua require('dap').continue()<cr>
-"nnoremap <leader>b <cmd>lua require('dap').toggle_breakpoint()<cr>
-"
-"lua <<EOF
-"local dap = require("dap")
-"local netcoredgb_bin = vim.fn.expand('~/.local/netcoredbg/netcoredbg')
-"
-"dap.adapters.coreclr = {
-"  type = 'executable',
-"  command = netcoredgb_bin,
-"  args = {'--interpreter=vscode'}
-"}
-"
-"dap.configurations.cs = {
-"  {
-"    type = "coreclr",
-"    name = "launch - netcoredbg",
-"    request = "launch",
-"    program = function()
-"        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-"    end,
-"  },
-"}
-"EOF
-" End nvim-dap config -------------------------------------
-
 
