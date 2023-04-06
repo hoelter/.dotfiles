@@ -7,6 +7,7 @@
 if xrandr -q | grep 'HDMI-A-0 connected primary' > /dev/null && xrandr -q | grep 'DisplayPort-1 connected 3840' > /dev/null; then
     echo 'In dual monitor mode, setting single main monitor mode'
 
+    # Single Primary
     xrandr --dpi 192 --fb 3840x2160 \
         --output DisplayPort-1 --off \
         --output HDMI-A-0 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
@@ -18,6 +19,7 @@ if xrandr -q | grep 'HDMI-A-0 connected primary' > /dev/null && xrandr -q | grep
 elif xrandr -q | grep 'HDMI-A-0 connected primary' > /dev/null; then
     echo 'In single monitor 4k mode, setting single side mode.'
 
+    # Single Secondary
     xrandr --dpi 192 --fb 3840x2160 \
         --output DisplayPort-1 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 119.98 \
         --output HDMI-A-0 --off
@@ -29,6 +31,7 @@ elif xrandr -q | grep 'HDMI-A-0 connected primary' > /dev/null; then
 else
     echo 'In single monitor on side, setting dual mode.'
 
+    # Dual monitor
     xrandr --dpi 192 --fb 7680x2160 \
         --output DisplayPort-1 --scale 1.9999x1.9999 --mode 1920x1080 -r 119.98 \
         --output HDMI-A-0 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
