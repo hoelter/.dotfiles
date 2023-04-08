@@ -214,7 +214,7 @@ bindsym $mod+c exec i3lock --color=006180
 # # poweroff
 # bindsym $mod+Shift+Escape exec ~/.config/i3/powerdown-silverblue
 
-exec --no-startup-id podman start yacy_search_server
+# exec --no-startup-id podman start yacy_search_server
 
 exec --no-startup-id flatpak run com.dropbox.Client
 
