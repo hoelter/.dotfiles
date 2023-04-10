@@ -1,1 +1,7 @@
 set previewer ~/.go/bin/pistol
+
+map <delete> delete
+
+cmd copycontents ${{ cat $fx | pbcopy }}
+
+map Y copycontents
