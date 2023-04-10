@@ -21,7 +21,7 @@ elif xrandr -q | grep 'DisplayPort-2 connected primary' > /dev/null; then
 
     # Single Secondary
     xrandr --dpi 192 --fb 3840x2160 \
-        --output HDMI-A-0 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 144.00 \
+        --output HDMI-A-0 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 165.00 \
         --output DisplayPort-2 --off
 
     # xrandr \
@@ -33,7 +33,7 @@ else
 
     # Dual monitor
     xrandr --dpi 192 --fb 7680x2160 \
-        --output HDMI-A-0 --scale 1.9999x1.9999 --mode 1920x1080 -r 144.00 \
+        --output HDMI-A-0 --scale 1.9999x1.9999 --mode 1920x1080 -r 165.00 \
         --output DisplayPort-2 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
 
     # xrandr \
