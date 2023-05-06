@@ -346,6 +346,12 @@ call plug#end()
 " Filetype settings
 augroup filetype_settings
   autocmd!
+
+  " Astro support
+  autocmd BufRead,BufEnter *.astro set filetype=astro
+  autocmd Filetype astro setlocal expandtab ts=2 sw=2
+
+  " indentation changes
   autocmd Filetype xml setlocal expandtab ts=2 sw=2
   autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal expandtab ts=2 sw=2
@@ -374,9 +380,6 @@ augroup filetype_settings
 
   autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cpp nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
-
-  " Astro support
-  autocmd BufRead,BufEnter *.astro set filetype=astro
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
