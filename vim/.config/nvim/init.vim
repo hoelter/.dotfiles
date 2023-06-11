@@ -224,6 +224,9 @@ nnoremap <leader>o "oyiW :exec("!open " . shellescape('<C-R>o', 1) . "")<CR><CR>
 " Save and close current buffer
 nnoremap <leader>w :w<bar>:bd<CR>
 
+" re-highlight on yank
+vnoremap y ygv
+
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------

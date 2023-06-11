@@ -62,3 +62,5 @@ node_modules
 /build
 Session.vim
 .envrc
+
+docker-compose.db.yml
