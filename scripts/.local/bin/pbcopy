@@ -6,6 +6,15 @@ else
     selected=$(</dev/stdin)
 fi
 
+# If in an SSH session, send back to client clipboard
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo 'in ssh'
+    echo "$selected" | nc localhost 4876
+    exit
+fi
+
+echo 'not in ssh'
+
 # WSL
 if  [ -x "$(command -v clip.exe)" ]; then
     echo "$selected" | clip.exe
