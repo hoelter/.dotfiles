@@ -285,7 +285,6 @@ Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 " Typescript plugins
-" TODO: Consider replacing this ts stuff with https://github.com/jose-elias-alvarez/typescript.nvim
 Plug 'jose-elias-alvarez/typescript.nvim'
 " Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'jose-elias-alvarez/null-ls.nvim'
@@ -362,6 +361,7 @@ augroup filetype_settings
   autocmd Filetype json setlocal expandtab ts=2 sw=2
   autocmd Filetype typescriptreact setlocal expandtab ts=2 sw=2
   autocmd Filetype typescript setlocal expandtab ts=2 sw=2
+  autocmd Filetype lua setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
