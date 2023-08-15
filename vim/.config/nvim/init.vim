@@ -423,14 +423,15 @@ nmap ga <Plug>(EasyAlign)
 lua <<EOF
 require'colorizer'.setup {
     'html';
-    'css'; 
-    'json'; 
-    'scss'; 
-    'javascript'; 
-    'typescript'; 
-    'typescriptreact'; 
-    'html'; 
-    'fish'; 
+    'css';
+    'json';
+    'scss';
+    'javascript';
+    'typescript';
+    'typescriptreact';
+    'html';
+    'fish';
+    'lua';
 }
 EOF
 
