@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source $HOME/.bash_functions
+# source $HOME/.bash_functions
 
 if [[ $# -eq 1 ]]; then
     target_url=$1
