@@ -225,7 +225,7 @@ nnoremap <leader>o "oyiW :exec("!open " . shellescape('<C-R>o', 1) . "")<CR><CR>
 nnoremap <leader>w :w<bar>:bd<CR>
 
 " re-highlight on yank
-vnoremap y ygv
+vnoremap Y ygv
 
 "--------------------------------------------------------------------------
 " Plugins
@@ -286,7 +286,6 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 " Typescript plugins
 Plug 'jose-elias-alvarez/typescript.nvim'
-" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
 " Auto Indent html and tsx files
@@ -359,8 +358,10 @@ augroup filetype_settings
   autocmd Filetype markdown setlocal expandtab ts=2 sw=2
   autocmd Filetype text setlocal expandtab ts=2 sw=2
   autocmd Filetype json setlocal expandtab ts=2 sw=2
-  autocmd Filetype typescriptreact setlocal expandtab ts=2 sw=2
+  autocmd Filetype javascript setlocal expandtab ts=2 sw=2
   autocmd Filetype typescript setlocal expandtab ts=2 sw=2
+  autocmd Filetype typescriptreact setlocal expandtab ts=2 sw=2
+  autocmd Filetype terraform setlocal expandtab ts=2 sw=2
   autocmd Filetype lua setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
@@ -792,39 +793,6 @@ end
     capabilities = capabilities
   }
 
--- Typescript/linting
-
-  -- nvim_lsp['tsserver'].setup({
-  --   on_attach = function(client, bufnr)
-
-  --     local buf_map = function(bufnr, mode, lhs, rhs, opts)
-  --         vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-  --             silent = true,
-  --         })
-  --     end
-
-  --     client.server_capabilities.document_formatting = false
-  --     client.server_capabilities.document_range_formatting = false
-
-  --     local ts_utils = require("nvim-lsp-ts-utils")
-  --     ts_utils.setup({})
-  --     ts_utils.setup_client(client)
-  --     buf_map(bufnr, "n", "go", ":TSLspOrganize<CR>")
-  --     buf_map(bufnr, "n", "<leader>rN", ":TSLspRenameFile<CR>")
-  --     buf_map(bufnr, "n", "gp", ":TSLspImportAll<CR>")
-  --     on_attach(client, bufnr)
-  --   end,
-  --   flags = {
-  --     debounce_text_changes = 150,
-  --   },
-  --   capabilities = capabilities,
-  --   -- init_options = {
-  --   --   preferences = {
-  --   --     importModuleSpecifierPreference = "relative"
-  --   --   }
-  --   -- }
-  -- })
-
   require('typescript').setup({
     server = {
       on_attach = function(client, bufnr)
@@ -847,12 +815,13 @@ end
         debounce_text_changes = 150,
       },
       capabilities = capabilities,
-    -- init_options = {
-    --   preferences = {
-    --     importModuleSpecifierPreference = "relative"
-    --   }
-    -- }
-      },
+      init_options = {
+        preferences = {
+          importModuleSpecifierPreference = "non-relative"
+          -- importModuleSpecifierPreference = "relative"
+        }
+      }
+    },
   })
 
 

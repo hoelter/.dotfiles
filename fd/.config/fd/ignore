@@ -75,6 +75,12 @@ Zotero/
 /tmp/cache/*
 *.sqlite3
 
+# Terraform
+**/.terraform/
+
+# Labmda
+/tools/
 
 # TODO: Consider breaking out much of this to a separate telescope-ignore file
 /public/build/*
+
