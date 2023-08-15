@@ -7,6 +7,7 @@ done
 
 # Ensure dirs we don't want symlinked exist on the off chance they don't
 mkdir -p ~/.config/fish/functions
+mkdir -p ~/.config/fish/completions
 mkdir -p ~/.config/fish/conf.d
 mkdir -p ~/.local/bin/
 
