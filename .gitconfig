@@ -33,8 +33,11 @@
 	current = green reverse
 	remote = red bold
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
+	# https://git-scm.com/docs/git-config
+	old = red
+	new = green
+	meta = blue
+	frag = cyan
 [color "status"]
 	untracked = red bold
 [diff]
