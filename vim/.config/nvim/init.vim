@@ -15,7 +15,6 @@ set scrolloff=8
 set number
 set relativenumber
 set signcolumn=yes:1 " more room for symbols left side of page numbers
-" set numberwidth=20 " make code more centered
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -25,8 +24,10 @@ set nowrap
 set colorcolumn=120
 set updatetime=750 " Unsure of the significance of this, default is 4000
 set showmatch " show matching brackets when indicator is over them
-"set cursorline " highlights entire cursor line when turned on
 set nomodeline " turns off looking for vim commands in files to auto execute
+
+"set cursorline " highlights entire cursor line when turned on
+" set numberwidth=20 " make code more centered
 
 " case insensitive search, unless upper case char in pattern
 set ignorecase
@@ -100,29 +101,6 @@ augroup vimrc_incsearch_highlight
   autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
 
-" https://github.com/OJFord/vim-quickfix-conflicts/blob/master/autoload/conflicts.vim
-" TODO: Make this auto jump to the first one and ensure it sets a new qflist,
-" and doesn't overridde the existing one
-" function! PopulateGitConflicts()
-"     let lines=split(system('git --no-pager diff --no-color --check --relative'), '\n')
-"     call setqflist([])
-
-"     for line in lines
-"         let fname=split(line, ':')[0]
-"         let lnum=split(line, ':')[1]
-"         if split(system('head -n'.lnum.' '.fname.' | tail -n1'))[0] != '<<<<<<<'
-"             continue
-"         endif
-
-"         exec 'badd +'.lnum.' '.fname
-"         let bufnr=bufnr(fname)
-
-"         call setqflist(getqflist() + [{'lnum': lnum, 'bufnr': bufnr, 'col': 1}])
-"     endfor
-
-"     return len(lines)
-" endfunction
-
 "--------------------------------------------------------------------------
 " Key Maps
 "--------------------------------------------------------------------------
@@ -149,7 +127,7 @@ nnoremap <expr> <leader>q empty(filter(getwininfo(), 'v:val.loclist')) ? ':lopen
 xnoremap <leader>p "_dP
 
 " Paste from clipboard, avoids autoindent issues
-"nnoremap <leader>P "+p
+nnoremap <leader>P "+p
 
 " Copy to clipboard
 vnoremap <leader>y "+y
@@ -164,7 +142,6 @@ if executable(s:clip)
   nnoremap <leader>y "cy
   nnoremap <leader>Y gg"cyG
 endif
-
 
 " move visually selected line of code up and down
 vnoremap J :m '>+1<CR>gv=gv
@@ -194,11 +171,6 @@ nnoremap <leader>gc :Git ca <bar> :only<CR>
 nnoremap <leader>gd :Git diff <bar> :only<CR>
 " Better potential diffing
 " https://github.com/tpope/vim-fugitive/issues/132#issuecomment-649516204
-
-" nnoremap <leader>gx :call PopulateGitConflicts()<CR>
-
-" Delete all buffers but current buffer
-"nnoremap <leader>bd :%bd <bar> e# <bar> bd#<CR> <bar> '"
 
 " toggle local spell check
 nnoremap <F7> :setlocal spell! spell?<CR>
@@ -248,7 +220,6 @@ Plug 'benfowler/telescope-luasnip.nvim'
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'nvim-treesitter/playground'
 
 " Lf vim
 Plug 'ptzz/lf.vim'
@@ -258,7 +229,8 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
+Plug '~/personal/nord.nvim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -268,13 +240,11 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
-"Plug 'hrsh7th/cmp-cmdline'
 " cmp-extra completion info
 Plug 'onsails/lspkind.nvim'
 " Snippet Plugin
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-" Plug 'rafamadriz/friendly-snippets'
 
 " Git helper
 Plug 'tpope/vim-fugitive'
@@ -301,22 +271,9 @@ Plug 'mtdl9/vim-log-highlighting'
 
 " Octo Github Interactions
 Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'pwntester/octo.nvim'
-
-" Align text into tables
-" Plug 'junegunn/vim-easy-align'
-" Centering Vim
-" Plug 'junegunn/goyo.vim'
 
 " Marks alternative
 Plug 'ThePrimeagen/harpoon'
-
-" Call Hierarchy for LSP
-" Plug 'ldelossa/litee.nvim'
-" Plug 'ldelossa/litee-calltree.nvim'
-
-" Nvim debugger
-" Plug 'mfussenegger/nvim-dap'
 
 " Indentation guides
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -330,14 +287,13 @@ Plug 'AndrewRadev/linediff.vim'
 " Highlight color strings
 Plug 'norcalli/nvim-colorizer.lua'
 
+" --------- Start under evaluation
 " https://github.com/tpope/vim-abolish
 Plug 'tpope/vim-abolish'
-
-"https://github.com/tpope/vim-rails
-" Plug 'tpope/vim-rails'
-
 " https://github.com/mbbill/undotree
 Plug 'mbbill/undotree'
+" --------- End under evaluation
+
 call plug#end()
 
 "--------------------------------------------------------------------------
@@ -408,18 +364,6 @@ let g:lf_map_keys = 0
 nnoremap <leader>d :Lf<CR>
 
 
-" Start interactive EasyAlign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" Goyo
-" Consider removing height margins: https://github.com/junegunn/goyo.vim/issues/100#issuecomment-588226459
-" let g:goyo_width='70%'
-" let g:goyo_height='100%'
-" let g:goyo_linenr=0
-" nnoremap <leader>z :Goyo<CR>
-
-
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 lua <<EOF
 require'colorizer'.setup {
@@ -475,13 +419,6 @@ nnoremap ,z <cmd>lua require("harpoon.tmux").sendCommand(3, 3)<cr>
 " Configure UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
 
-
-" Load luasnip vscode like snippets
-" Used for friendly-snippets compatibility
-" lua <<EOF
-"    require("luasnip.loaders.from_vscode").lazy_load()
-"EOF
-
 " Begin Telescope config ------------------------------
 hi! link TelescopeMatching Label " Assigns label color to telesscope match highlighting
 lua <<EOF
@@ -490,22 +427,6 @@ local ignore_file = vim.fn.expand("~/.config/fd/ignore")
 
 local actions = require("telescope.actions")
 local action_layout = require("telescope.actions.layout")
--- Wasn't working as an override
---local transform_mod = require('telescope.actions.mt').transform_mod
---
---local move_up = transform_mod({
---  move_up = function(_)
---    return vim.cmd ":normal! zt"
---  end
---})
---    mappings = {
---      i = {
---        ["<CR>"] = actions.select_default + move_up
---      },
---      n = {
---        ["<CR>"] = actions.select_default + move_up
---      },
---    },
 
 require("telescope").setup {
   defaults = {
@@ -528,10 +449,6 @@ require("telescope").setup {
     path_display = { 'truncate' },
     layout_strategy = 'vertical',
     layout_config = { height = 0.99, width = 0.99, preview_height = 0.5, preview_cutoff = 0 },
-    -- wrap_results = true,
-    -- path_display = { shorten = 2 },
-    -- layout_strategy = 'horizontal',
-    -- layout_config = { height = 0.99, preview_width = 0.8, width = 0.99 },
     file_ignore_patterns = { "%.png", "%.jpg", "%.bmp", "%.gif", "%.jpeg" },
     vimgrep_arguments = {
       "rg",
@@ -683,46 +600,46 @@ EOF
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-  -- Setup nvim-cmp.
-  local lspkind = require "lspkind"
-  lspkind.init()
+-- Setup nvim-cmp.
+local lspkind = require "lspkind"
+lspkind.init()
 
-  local cmp = require'cmp'
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body)
-      end,
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-d>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({
-          select = true,
-          behavior = cmp.ConfirmBehavior.Replace
-      }),
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({
+        select = true,
+        behavior = cmp.ConfirmBehavior.Replace
     }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'luasnip', keyword_length = 5 },
-    }, {
-      { name = 'path' },
-      { name = 'buffer', keyword_length = 5 },
-    }),
-    formatting = {
-      format = lspkind.cmp_format({
-        with_text = true, -- do not show text alongside icons
-        menu = {
-          buffer = "[buf]",
-          nvim_lsp = "[LSP]",
-          path = "[path]",
-        }
-      })
-    },
-  })
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    -- { name = 'luasnip', keyword_length = 5 },
+  }, {
+    { name = 'path' },
+    { name = 'buffer', keyword_length = 5 },
+  }),
+  formatting = {
+    format = lspkind.cmp_format({
+      with_text = true, -- do not show text alongside icons
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        path = "[path]",
+      }
+    })
+  },
+})
 
 -- Setup LSP Config
 local nvim_lsp = require('lspconfig')
@@ -754,75 +671,70 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>co', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 end
 
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()) old nvim-cmp setup
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-  -- Setup null ls
-  local null_ls = require("null-ls")
-  null_ls.setup({
-    sources = {
-      null_ls.builtins.diagnostics.eslint_d.with({ extra_args = { "--quiet" } }),
-      null_ls.builtins.code_actions.eslint_d,
-      null_ls.builtins.formatting.prettier.with {
-        disabled_filetypes ={"markdown"}
-      },
-      require("typescript.extensions.null-ls.code-actions")
+-- Setup null ls
+local null_ls = require("null-ls")
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.eslint_d.with({ extra_args = { "--quiet" } }),
+    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.formatting.prettier.with {
+      disabled_filetypes ={"markdown"}
     },
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
+    require("typescript.extensions.null-ls.code-actions")
+  },
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
-  -- local omnisharp_dll = vim.fn.expand('$HOME/.local/omnisharp/OmniSharp.dll')
-  local omnisharp_dll = '/usr/local/bin/OmniSharp.dll'
-  nvim_lsp['omnisharp'].setup {
-    cmd = { "dotnet", omnisharp_dll },
-    handlers = {
-      ["textDocument/definition"] = require('omnisharp_extended').handler,
-    },
-    on_attach = on_attach,
+-- local omnisharp_dll = vim.fn.expand('$HOME/.local/omnisharp/OmniSharp.dll')
+local omnisharp_dll = '/usr/local/bin/OmniSharp.dll'
+nvim_lsp['omnisharp'].setup {
+  cmd = { "dotnet", omnisharp_dll },
+  handlers = {
+    ["textDocument/definition"] = require('omnisharp_extended').handler,
+  },
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
+}
+
+require('typescript').setup({
+  server = {
+    on_attach = function(client, bufnr)
+
+      local buf_map = function(bufnr, mode, lhs, rhs, opts)
+          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+              silent = false,
+          })
+      end
+
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
+
+      buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
+      buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
+      buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
+      on_attach(client, bufnr)
+    end,
     flags = {
       debounce_text_changes = 150,
     },
-    capabilities = capabilities
-  }
-
-  require('typescript').setup({
-    server = {
-      on_attach = function(client, bufnr)
-
-        local buf_map = function(bufnr, mode, lhs, rhs, opts)
-            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-                silent = false,
-            })
-        end
-
-        client.server_capabilities.document_formatting = false
-        client.server_capabilities.document_range_formatting = false
-
-        buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
-        buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
-        buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
-        on_attach(client, bufnr)
-      end,
-      flags = {
-        debounce_text_changes = 150,
-      },
-      capabilities = capabilities,
-      init_options = {
-        preferences = {
-          importModuleSpecifierPreference = "non-relative"
-          -- importModuleSpecifierPreference = "relative"
-        }
+    capabilities = capabilities,
+    init_options = {
+      preferences = {
+        importModuleSpecifierPreference = "non-relative"
+        -- importModuleSpecifierPreference = "relative"
       }
-    },
-  })
+    }
+  },
+})
 
 
 EOF
