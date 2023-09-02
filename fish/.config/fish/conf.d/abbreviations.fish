@@ -1,6 +1,5 @@
 if status --is-interactive
     abbr -a -g v "nvim"
-    abbr -a -g vim "nvim"
 
     abbr -a -g rfish "source ~/.config/fish/config.fish"
     abbr -a -g weather "curl wttr.in"

@@ -101,6 +101,16 @@ augroup vimrc_incsearch_highlight
   autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
 
+" :call SynStack()
+" Identifies highlight group under cursor
+" https://stackoverflow.com/a/9464929
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
 "--------------------------------------------------------------------------
 " Key Maps
 "--------------------------------------------------------------------------
@@ -198,6 +208,10 @@ nnoremap <leader>w :w<bar>:bd<CR>
 
 " re-highlight on yank
 vnoremap Y ygv
+
+" Inspect highlight groups under cursor
+nnoremap <leader>i :Inspect<CR>
+nnoremap <leader>I :call SynStack()<CR>
 
 "--------------------------------------------------------------------------
 " Plugins
