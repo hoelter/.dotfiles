@@ -1,4 +1,5 @@
 fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.local/fishbin
 
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
