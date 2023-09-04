@@ -750,6 +750,15 @@ require('typescript').setup({
   },
 })
 
+-- Run `go install golang.org/x/tools/gopls@latest` to install lang server
+nvim_lsp['gopls'].setup {
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
+}
+
 
 EOF
 " End LSP and nvim cmp config -----------------------------
