@@ -368,6 +368,9 @@ augroup END
 let g:nord_uniform_diff_background = 1
 colorscheme nord
 
+" No longer need this telescope hilight, second line is for search override highligth
+" hi! link TelescopeMatching Label " Assigns label color to telesscope match highlighting
+" hi! Search guifg=#88C0D0 guibg=#3B4252 ctermfg=6 ctermbg=0 gui=reverse term=reverse
 
 " Lf Settings
 " https://github.com/ptzz/lf.vim
