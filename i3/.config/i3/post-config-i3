@@ -6,7 +6,6 @@ if env | grep 'XRDP' > /dev/null; then
     $HOME/.fehbg
 else
     # default to single monitor
-    # ~/.config/i3/xrandr-scripts/set-dp-single-monitor
     ~/.config/i3/xrandr-scripts/set-single-monitor
 
     # Set wallpaper

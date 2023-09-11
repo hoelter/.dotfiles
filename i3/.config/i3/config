@@ -216,7 +216,7 @@ bindsym $mod+c exec i3lock --color=006180
 
 # exec --no-startup-id podman start yacy_search_server
 
-exec --no-startup-id flatpak run com.dropbox.Client
+# exec --no-startup-id flatpak run com.dropbox.Client
 
 exec --no-startup-id ~/.config/i3/post-config-i3
 
