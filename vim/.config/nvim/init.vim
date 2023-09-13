@@ -306,6 +306,8 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-abolish'
 " https://github.com/mbbill/undotree
 Plug 'mbbill/undotree'
+" https://github.com/stevearc/oil.nvim
+Plug 'stevearc/oil.nvim'
 " --------- End under evaluation
 
 call plug#end()
@@ -404,6 +406,12 @@ lua <<EOF
         show_current_context = true
     }
 EOF
+
+" Oil Nvim setup
+lua <<EOF
+    require("oil").setup()
+EOF
+nnoremap <leader>D :Oil<CR>
 
 " Harpoon Setup
 lua <<EOF
