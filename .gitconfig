@@ -2,7 +2,8 @@
 	s = status
 	pr = !"git fetch; git remote prune origin"
 	l = log --graph --date=relative --pretty='format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%C(auto)%d %Creset%s' --color=always
-	b = branch -a
+	b = branch
+	ba = branch -a
 	bl = branch -l
 	del = branch -D
 	c = checkout
