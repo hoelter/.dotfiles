@@ -84,3 +84,5 @@ Zotero/
 # TODO: Consider breaking out much of this to a separate telescope-ignore file
 /public/build/*
 
+# Redwoodjs ignore build output
+api/dist

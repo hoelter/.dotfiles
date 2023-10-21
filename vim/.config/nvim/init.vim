@@ -400,14 +400,6 @@ require'colorizer'.setup {
 }
 EOF
 
-
-" Indent blankline settings
-lua <<EOF
-    require("indent_blankline").setup {
-        show_current_context = true
-    }
-EOF
-
 " Oil Nvim setup
 lua <<EOF
     require("oil").setup()
