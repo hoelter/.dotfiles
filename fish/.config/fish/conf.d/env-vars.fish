@@ -12,11 +12,6 @@ set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -gx GOPATH "$HOME/.go"
 fish_add_path $GOPATH/bin
 
-# X Server WSL (just first settings is enough)
-#set -gx GDK_SCALE 2
-#set -gx GDK_SCALE '0.5'
-#set -gx GDK_DPI_SCALE '2'
-
 if status --is-interactive
     # Set theme
     set -gx BAT_THEME Nord
@@ -32,16 +27,12 @@ if status --is-interactive
     set -gx FZF_ALT_C_COMMAND "fd --type directory --hidden --follow --strip-cwd-prefix --ignore-file $HOME/.config/fd/ignore"
     set -gx FZF_ALT_C_OPTS "--ansi"
 
-    # Setup for nvm auto changing to project node version
-    # set -gx NODE_VERSIONS ~/.local/share/nvm
-    # set -gx NODE_VERSION_PREFIX "v"
+    # Setup tmux-sessionizer directories
+    set -gx TMUX_SESSIONIZER_DIRS $HOME/personal $HOME/work $HOME/my-repos $HOME/other-repos
 
     # Init direnv
     direnv hook fish | source
 
     # Init asdf
     source ~/.asdf/asdf.fish 
-
-    # Init zoxide https://github.com/ajeetdsouza/zoxide (install with asdf)
-    zoxide init fish | source
 end

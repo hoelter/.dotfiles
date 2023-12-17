@@ -403,7 +403,11 @@ EOF
 
 " Oil Nvim setup
 lua <<EOF
-    require("oil").setup()
+    require("oil").setup({
+        view_options = {
+            show_hidden = true
+        }
+    })
 EOF
 nnoremap <leader>D :Oil<CR>
 
