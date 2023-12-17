@@ -1,6 +1,7 @@
 if not set -q GENERAL_SETTINGS
     set -U GENERAL_SETTINGS true
     set -U fish_greeting "🐟"
+    set -U fish_greeting ""
     set -U fish_color_autosuggestion FFC473
     set -U fish_color_cancel \x2dr
     set -U fish_color_command FF9400
