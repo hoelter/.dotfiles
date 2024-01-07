@@ -236,7 +236,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Lf vim
-Plug 'ptzz/lf.vim'
+" Plug 'ptzz/lf.vim'
+Plug 'hoelter/lf.vim'
 Plug 'voldikss/vim-floaterm'
 
 " honor .editorconfig file settings
@@ -380,7 +381,9 @@ colorscheme nord
 " https://github.com/ptzz/lf.vim
 let g:lf_width = 0.99
 let g:lf_height = 0.99
-"let g:lf_replace_netrw = 1
+" Show hidden files by default
+let g:lf_command_override = 'lf -command "set hidden"'
+" Disable default mapping and remap
 let g:lf_map_keys = 0
 nnoremap <leader>d :Lf<CR>
 

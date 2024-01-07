@@ -1,7 +1,15 @@
+# Turn on hidden files by default
+set hidden on
+
+# Sets previers as pistol, installed through the golang package. Pistol has a separate config file
 set previewer ~/.go/bin/pistol
 
-map <delete> delete
-
+# Copy contents done using other scripts setup for the pbcopy function in this repo
 cmd copycontents ${{ cat $fx | pbcopy }}
 
+# Opening a file defaults to vim
+# cmd open-file $IFS=':'; $EDITOR $fx
+
+map <delete> delete
 map Y copycontents
+
