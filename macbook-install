@@ -6,9 +6,6 @@ fish -c 'set -U MACBOOK true'
 
 ./install fd fish git tmux vim kitty scripts lf javascript
 
-mkdir -p ~/Library/Preferences/pistol
-cp ~/.config/pistol/pistol.conf ~/Library/Preferences/pistol/pistol.conf
-
 echo 'Macbook dotfiles install complete.'
 
 

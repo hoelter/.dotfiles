@@ -1,8 +1,7 @@
 # Turn on hidden files by default
-set hidden on
+set hidden true
 
-# Sets previers as pistol, installed through the golang package. Pistol has a separate config file
-set previewer ~/.go/bin/pistol
+set previewer ~/.config/lf/lf-previewer.sh
 
 # Copy contents done using other scripts setup for the pbcopy function in this repo
 cmd copycontents ${{ cat $fx | pbcopy }}
