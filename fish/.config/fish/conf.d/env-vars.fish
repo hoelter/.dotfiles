@@ -3,7 +3,7 @@ fish_add_path $HOME/.local/fishbin
 
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
-set -gx PAGER "bat"
+set -gx PAGER "bat --style=plain,grid"
 
 # Dotnet Dev specific
 set -gx ASPNETCORE_ENVIRONMENT "Development"
