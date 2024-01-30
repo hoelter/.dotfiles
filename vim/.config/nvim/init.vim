@@ -244,8 +244,8 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme
-" Plug 'arcticicestudio/nord-vim'
-Plug '~/personal/nord.nvim'
+Plug 'hoelter/nord.nvim'
+"Plug '~/personal/nord.nvim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
