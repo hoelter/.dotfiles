@@ -28,7 +28,9 @@ if status --is-interactive
     set -gx TMUX_SESSIONIZER_DIRS $HOME/personal $HOME/work $HOME/my-repos $HOME/other-repos
 
     # Init direnv
-    direnv hook fish | source
+    if type -q direnv
+        direnv hook fish | source
+    end
 
     # Init asdf
     source ~/.asdf/asdf.fish 
