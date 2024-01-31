@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo 'Server dotfiles install initiated.'
+
+fish -c 'set -U HOMESERVER true'
+
+./update-bashrc
+
+./install fd fish git tmux vim scripts lf
+
+echo 'Server dotfiles install complete.'
+

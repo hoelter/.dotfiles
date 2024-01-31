@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo 'Macbook dotfiles install initiated.'
+
 fish -c 'set -U MACBOOK true'
 
 ./update-zshrc
