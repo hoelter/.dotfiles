@@ -566,9 +566,10 @@ nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<c
 " End Telescope config --------------------------------
 
 
-
 " Begin Treesitter config -----------------------------
 lua <<EOF
+vim.g.skip_ts_context_commentstring_module = true
+
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "astro",
@@ -608,9 +609,6 @@ require'nvim-treesitter.configs'.setup {
     },
     incremental_selection = { enable = true },
     textobjects = { enable = true },
-    context_commentstring = {
-        enable = true
-    },
     autotag = {
         -- autoindent plugin setup
         enable = true
