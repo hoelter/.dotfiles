@@ -51,5 +51,18 @@ Xft.hintstyle: hintfull
 ! End nord theme configuration
 
 URxvt.lineSpace: 2
+URxvt.letterSpace: 0
 URxvt.searchable-scrollback: Meta-Shift-S
 
+URxvt.font: xft:Source Code Pro:style=Regular:pixelsize=24:antialias=true:hinting=full,\
+            xft:Noto Color Emoji,\
+            xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.boldFont: xft:Source Code Pro:style=Bold:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.italicFont: xft:Source Code Pro:style=Italic:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
