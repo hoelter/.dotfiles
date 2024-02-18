@@ -64,5 +64,10 @@ XTerm*metaSendsEscape: true
 XTerm*scaleHeight: 1.25
 XTerm*renderFont: true
 XTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
+UXTerm.termName: xterm-256color
+UXTerm*metaSendsEscape: true
+UXTerm*scaleHeight: 1.25
+UXTerm*renderFont: true
+UXTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
 /* XTerm*faceSize: 12 */
 
