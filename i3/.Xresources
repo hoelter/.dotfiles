@@ -63,6 +63,7 @@ UXTerm.termName: xterm-256color
 UXTerm*metaSendsEscape: true
 UXTerm*scaleHeight: 1.25
 UXTerm*renderFont: true
-UXTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
+UXTerm*faceName: SauceCodePro Nerd Font Mono Regular:style=Regular:antialias=true:hinting=full
+/* UXTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full */
 /* UXTerm*faceName: xft:Source Code Pro:style=Regular:antialias=true:hinting=full,xft:Noto Color Emoji,xft:Symbola:antialias=true:hinting=full */
 
