@@ -64,5 +64,4 @@ UXTerm*metaSendsEscape: true
 UXTerm*scaleHeight: 1.25
 UXTerm*renderFont: true
 UXTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
-UXTerm*faceSize: 12
 
