@@ -33,7 +33,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --color=0
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+# chris: Changed from nm-applet to nm-tray 
+exec --no-startup-id nm-tray
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -199,45 +200,27 @@ bar {
 # # assign [class="spotify"] $ws3
 
 # keybindings ---------------------
+
 # terminal that goes into ubuntu distrobox
-bindsym $mod+u exec gnome-terminal --profile=Ubuntu
-bindsym $mod+t exec gnome-terminal --profile=Fedora36
+# bindsym $mod+u exec gnome-terminal --profile=Ubuntu
+# bindsym $mod+t exec gnome-terminal --profile=Fedora36
+
 # toggle between dual and single monitor setup
 bindsym $mod+Shift+p exec ~/.config/i3/xrandr-scripts/toggle-monitors
+
 # move workspace to other monitor
 bindsym $mod+x move workspace to output next
+
 # lock screen shortcut
 bindsym $mod+c exec i3lock --color=006180
-
-# # suspend
-# bindsym $mod+Shift+s exec systemctl suspend
-# # poweroff
-# bindsym $mod+Shift+Escape exec ~/.config/i3/powerdown-silverblue
-
-# exec --no-startup-id podman start yacy_search_server
-
-# exec --no-startup-id flatpak run com.dropbox.Client
 
 exec --no-startup-id ~/.config/i3/post-config-i3
 
 # Start redshift
 # exec --no-startup-id redshift
 
-# Lock immediately after auto-login on startup
-# exec --no-startup-id i3lock --color=006180
+# # suspend
+# bindsym $mod+Shift+s exec systemctl suspend
+# # poweroff
+# bindsym $mod+Shift+Escape exec ~/.config/i3/powerdown-silverblue
 
-# default to single monitor
-# exec --no-startup-id ~/.config/i3/xrandr-scripts/set-single-monitor
-
-# Set wallpaper
-# exec --no-startup-id ~/.fehbg
-
-# Change to workspace 1
-# exec --no-startup-id i3-msg 'workspace 1;'
-
-# workspace 1 output primary
-# workspace 6 output DP-4
-
-# exec --no-startup-id i3-msg 'workspace 3; exec flatpak run com.spotify.Client;'
-# exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal;'
-#exec --no-startup-id i3-msg 'workspace 1; exec flatpak run com.google.Chrome;'
