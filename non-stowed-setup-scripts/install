@@ -12,7 +12,6 @@ mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fish/completions
 mkdir -p ~/.config/fish/conf.d
 mkdir -p ~/.local/bin/
-mkdir -p ~/.local/fishbin/
 
 # Create the symlinks
 for dir in "$@"; do
