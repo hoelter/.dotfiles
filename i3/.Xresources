@@ -50,5 +50,6 @@ Xft.hintstyle: hintfull
 *.color15: nord6
 ! End nord theme configuration
 
-URxvt.lineSpace: 1.25
-URxvt.meta8: true
+URxvt.lineSpace: 2
+URxvt.searchable-scrollback: Meta-Shift-S
+
