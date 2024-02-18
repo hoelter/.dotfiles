@@ -6,5 +6,5 @@ echo 'Updating .zshrc by appending or creating file with custom values.'
 gsed -i '/Appended to .bashrc by Chris/,$d' ~/.zshrc &> /dev/null
 
 # re-append to end of .bashrc
-cat ~/.dotfiles/.bashrc >> ~/.zshrc
+cat ~/.dotfiles/non-stowed-copied-files/.bashrc >> ~/.zshrc
 
