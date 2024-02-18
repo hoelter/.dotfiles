@@ -61,3 +61,5 @@ Xft.hintstyle: hintfull
 
 XTerm.termName: xterm-256color
 XTerm.vt100.metaSendsEscape: true
+UXTerm*vt100.scaleHeight: 1.25
+
