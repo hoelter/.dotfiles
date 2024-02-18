@@ -51,3 +51,4 @@ Xft.hintstyle: hintfull
 ! End nord theme configuration
 
 URxvt.lineSpace: 1.25
+URxvt.meta8: true
