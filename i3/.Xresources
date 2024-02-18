@@ -61,5 +61,7 @@ Xft.hintstyle: hintfull
 
 XTerm.termName: xterm-256color
 XTerm.vt100.metaSendsEscape: true
-UXTerm*vt100.scaleHeight: 1.25
+XTerm.vt100.scaleHeight: 1.25
+XTerm*faceName: Source Code Pro
+XTerm*faceSize: 12
 
