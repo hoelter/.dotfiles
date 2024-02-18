@@ -285,7 +285,7 @@ Plug 'hoelter/vim-razor'
 Plug 'mtdl9/vim-log-highlighting'
 
 " Octo Github Interactions
-Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'kyazdani42/nvim-web-devicons'
 
 " Marks alternative
 Plug 'ThePrimeagen/harpoon'
@@ -390,8 +390,6 @@ nnoremap <leader>d :Lf<CR>
 
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 lua <<EOF
-require'nvim-web-devicons'.get_icon(filename, extension, { default = true })
-
 require'colorizer'.setup {
     'html';
     'css';
