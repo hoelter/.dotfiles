@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+xrdb ~/.Xresources
+
 if env | grep 'XRDP' > /dev/null; then
     # override default xrdp resources
     xrdb -merge ~/.Xresources-xrdp
