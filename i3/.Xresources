@@ -59,15 +59,10 @@ Xft.hintstyle: hintfull
 /* URxvt.italicFont: xft:Source Code Pro:style=Italic:pixelsize=12:antialias=true:hinting=full,xft:Noto Color Emoji:pixelsize=6,xft:Symbola:pixelsize=6:antialias=true:hinting=full */
 /* URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:pixelsize=12:antialias=true:hinting=full,xft:Noto Color Emoji:pixelsize=6,xft:Symbola:pixelsize=6:antialias=true:hinting=full */
 
-XTerm.termName: xterm-256color
-XTerm*metaSendsEscape: true
-XTerm*scaleHeight: 1.25
-XTerm*renderFont: true
-XTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
 UXTerm.termName: xterm-256color
 UXTerm*metaSendsEscape: true
 UXTerm*scaleHeight: 1.25
 UXTerm*renderFont: true
 UXTerm*faceName: Source Code Pro:style=Regular:antialias=true:hinting=full
-/* XTerm*faceSize: 12 */
+UXTerm*faceSize: 12
 
