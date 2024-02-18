@@ -390,6 +390,8 @@ nnoremap <leader>d :Lf<CR>
 
 " Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 lua <<EOF
+require'nvim-web-devicons'.get_icon(filename, extension, { default = true })
+
 require'colorizer'.setup {
     'html';
     'css';
