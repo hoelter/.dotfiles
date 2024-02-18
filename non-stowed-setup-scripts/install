@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+cd $HOME/.dotfiles
+
 # Clean symlinks if they exist
 for dir in "$@"; do
-    stow -v --delete "$HOME/.dotfiles/$dir"
+    stow -v --delete $dir
 done
 
 # Ensure dirs we don't want symlinked exist on the off chance they don't
@@ -14,7 +16,7 @@ mkdir -p ~/.local/fishbin/
 
 # Create the symlinks
 for dir in "$@"; do
-    stow -v "$HOME/.dotfiles/$dir"
+    stow -v $dir
 done
 
 echo 'Replacing the .gitconfig in the home directory.'
