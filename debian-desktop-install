@@ -4,7 +4,7 @@ echo 'Debian dotfiles install initiated.'
 
 ./update-bashrc
 
-./install fd fish git tmux vim scripts lf javascript #i3
+./install fd fish git tmux vim scripts lf javascript i3
 
 echo 'Debian dotfiles install complete.'
 
