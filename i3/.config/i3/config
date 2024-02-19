@@ -213,7 +213,7 @@ bindsym $mod+x move workspace to output next
 # lock screen shortcut
 bindsym $mod+c exec i3lock --color=006180
 
-# exec --no-startup-id ~/.config/i3/post-config-i3
+exec --no-startup-id ~/.config/i3/post-config-i3
 
 # Start redshift
 # exec --no-startup-id redshift

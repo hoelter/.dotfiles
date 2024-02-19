@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
+# default to single monitor
+~/.config/i3/xrandr-scripts/set-single-monitor
+
 #If in an XRDP session
-if env | grep 'XRDP' > /dev/null; then
-    # Set wallpaper
-    $HOME/.fehbg
-else
-    # default to single monitor
-    ~/.config/i3/xrandr-scripts/set-single-monitor
+# if env | grep 'XRDP' > /dev/null; then
+#     # Set wallpaper
+#     $HOME/.fehbg
+# else
+#     # default to single monitor
+#     ~/.config/i3/xrandr-scripts/set-single-monitor
 
-    # Set wallpaper
-    $HOME/.fehbg
+#     # Set wallpaper
+#     $HOME/.fehbg
 
-    # Lock immediately after auto-login on startup
-    i3lock --color=006180
-fi
+#     # Lock immediately after auto-login on startup
+#     i3lock --color=006180
+# fi
