@@ -8,6 +8,8 @@ fish -c 'set -U MACBOOK true'
 
 ./install fd fish git tmux vim kitty scripts lf javascript
 
+cd ~/.dotfiles-personal 2> /dev/null && ./install-macbook.sh
+
 echo 'Macbook dotfiles install complete.'
 
 

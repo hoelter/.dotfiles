@@ -8,5 +8,7 @@ fish -c 'set -U HOMESERVER true'
 
 ./install fd fish git tmux vim scripts lf
 
+cd ~/.dotfiles-personal 2> /dev/null && ./install-server.sh
+
 echo 'Server dotfiles install complete.'
 
