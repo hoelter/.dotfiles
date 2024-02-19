@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-echo 'Silverblue install initiated.'
-
-./update-bashrc
-
-./install fd fish git tmux vim scripts lf i3 bash silverblue
-
-echo 'Silverblue-ubuntu dotfiles install complete.'
-

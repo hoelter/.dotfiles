@@ -25,7 +25,8 @@ if status --is-interactive
     set -gx FZF_ALT_C_OPTS "--ansi"
 
     # Setup tmux-sessionizer directories
-    set -gx TMUX_SESSIONIZER_DIRS $HOME/personal $HOME/work $HOME/my-repos $HOME/other-repos
+    set -gx TMUX_SESSIONIZER_DIRS ~/my-repos
+    set -gx TMUX_SESSIONIZER_SINGLE_DIRS ~/.dotfiles ~/.dotfiles-personal
 
     # Init direnv
     if type -q direnv

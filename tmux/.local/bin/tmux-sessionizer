@@ -13,7 +13,7 @@ else
     done
 
     static_dirs="\n$HOME"
-    for dir in ~/.dotfiles ~/.dotfiles-personal ~/.dotfiles-work
+    for dir in $TMUX_SESSIONIZER_SINGLE_DIRS
     do
         if [ -d "$dir" ]; then
             static_dirs="\n$dir $static_dirs"

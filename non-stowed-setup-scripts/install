@@ -21,7 +21,3 @@ done
 echo 'Replacing the .gitconfig in the home directory.'
 cp ~/.dotfiles/non-stowed-copied-files/.gitconfig ~/.gitconfig
 
-# Just ignore error if directories don't exist
-cd ~/.dotfiles-personal 2> /dev/null && ./personal-install
-cd ~/.dotfiles-work 2> /dev/null && ./work-install
-
