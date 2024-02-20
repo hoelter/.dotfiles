@@ -20,8 +20,9 @@ set $mod Mod4
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 8
 
-# Make titlebars invisible
-# for_window [class=".*"] title_format "<span alpha='1'>%title</span>"
+# Hide titlebars
+default_border pixel 0
+default_floating_border pixel 0
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
