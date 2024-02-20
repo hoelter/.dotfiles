@@ -13,5 +13,11 @@ if [[ -x "$(command -v wslpath)" ]]; then
 
     echo 'Replacing the .vimrc file in the windows home directory.'
     cp ~/.dotfiles/vim/.vimrc $WINHOME/.vimrc
+
+    echo 'Replacing the .gitconfig in the windows home directory'
+    cp ~/.gitconfig $WINHOME/.gitconfig
+
+    echo 'Replacing the .bashrc in the windows home directory'
+    cp ~/.bashrc $WINHOME/.bashrc
 fi
 
