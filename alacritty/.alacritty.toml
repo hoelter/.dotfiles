@@ -83,5 +83,8 @@ style = "Italic"
 family = "SauceCodePro Nerd Font Mono"
 style = "Regular"
 
-
+[keyboard]
+bindings = [
+    { key = "Key6", mods = "Control", chars = "\u001e" }
+]
 
