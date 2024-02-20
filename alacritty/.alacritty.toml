@@ -3,6 +3,7 @@ TERM = "alacritty-direct"
 
 [window]
 option_as_alt = "Both"
+decorations = "None"
 
 [colors]
 [colors.bright]
@@ -60,6 +61,12 @@ text = "CellForeground"
 cursor = "#d8dee9"
 text = "#2e3440"
 
+
+[font]
+# size=12
+[font.offset]
+y = 8
+
 [font.bold]
 family = "SauceCodePro Nerd Font Mono"
 style = "Bold"
@@ -75,3 +82,6 @@ style = "Italic"
 [font.normal]
 family = "SauceCodePro Nerd Font Mono"
 style = "Regular"
+
+
+
