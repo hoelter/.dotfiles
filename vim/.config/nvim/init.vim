@@ -177,7 +177,7 @@ nnoremap <leader>gb :Git blame<CR>
 " nnoremap <leader>gp :Git -c push.default=current push<CR>
 " Git quick commit and push
 " nnoremap <leader>gp :Git! add -A<CR>|Git! commit -m 'Quick commit'<CR>
-nnoremap <leader>gp :! git add -A && git commit -m 'Quick commit'<CR>
+nnoremap <leader>gp :! git add -A && git commit -m 'Quick commit' && git push<CR>
 " Git add all and commit
 nnoremap <leader>gc :Git ca <bar> :only<CR>
 " Git diff
