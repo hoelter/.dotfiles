@@ -338,6 +338,7 @@ augroup filetype_settings
   autocmd Filetype lua setlocal expandtab ts=2 sw=2
   autocmd Filetype css setlocal expandtab ts=2 sw=2
   autocmd Filetype prisma setlocal expandtab ts=2 sw=2
+  autocmd Filetype scss setlocal expandtab ts=2 sw=2
   
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
