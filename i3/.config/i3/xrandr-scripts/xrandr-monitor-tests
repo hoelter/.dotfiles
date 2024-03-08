@@ -2,8 +2,9 @@
 # HDMI-0 3840x2160
 # DP-4 1920x1080
 
-xrandr --dpi 192 --fb 3840x2160 \
-    --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x0
+# Testing difference between 0.9999 and 1x
+# xrandr --dpi 192 --fb 3840x2160 \
+#     --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x0
 
 # xrandr --output DisplayPort-2 --scale 1x1 --primary
 
@@ -13,10 +14,19 @@ xrandr --dpi 192 --fb 3840x2160 \
 
 
 
+# Testing toggle above and below
+    xrandr --dpi 192 --fb 3840x4320 \
+        --output HDMI-A-0 --scale 2x2 --mode 1920x1080 -r 165.00 --pos 3840x0 \
+        --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x2160
 
 
 
 
+
+
+
+
+# old tests
 
 # xrandr --dpi 192 --fb 7680x2160 \
 #     --output DP-4 --scale 2x2 \

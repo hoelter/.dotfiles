@@ -25,8 +25,8 @@ else
     echo 'In single monitor on side, setting dual mode.'
 
     # Dual monitor
-    xrandr --dpi 192 --fb 7680x2160 \
-        --output HDMI-A-0 --scale 2x2 --mode 1920x1080 -r 165.00 \
-        --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x0
+    xrandr --dpi 192 --fb 3840x4320 \
+        --output HDMI-A-0 --scale 2x2 --mode 1920x1080 -r 165.00 --pos 3840x0 \
+        --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x2160
 fi
 
