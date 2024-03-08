@@ -1,4 +1,10 @@
+! 96 is the 'default' text dpi at 1080p, 2x to 192 on 4k makes it appear the size it would be on 1080p monitor
+! 96 * 2.5 (250%) == 240, 225% == 216
+! consider 108 dpi the 'default' for 1440p, so 216 is twice that (720p?)
+! 133% is 720p on a 1080p monitor, so 96*1.33 == ~128, 128 * 2 == 256
 Xft.dpi: 192
+! Work on cursor size -- by default it scales in some apps but not others
+/* Xcursor.size: 32 */
 Xft.rgba: rgb
 Xft.antialias: 1
 Xft.lcdfilter: lcddefault
@@ -52,5 +58,6 @@ UXTerm*metaSendsEscape: true
 UXTerm*scaleHeight: 1.25
 UXTerm*renderFont: true
 UXTerm*faceName: SauceCodePro Nerd Font Mono:style=Regular:antialias=true:hinting=full
+UXTerm*faceSize: 10
 UXTerm*selectToClipboard: true
 

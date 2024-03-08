@@ -3,7 +3,6 @@
 # DP-4 1920x1080
 
 xrandr --dpi 192 --fb 3840x2160 \
-    --output HDMI-A-0 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 165.00 \
+    --output HDMI-A-0 --scale 2x2 --primary --mode 1920x1080 -r 165.00 \
     --output DisplayPort-2 --off
-
 

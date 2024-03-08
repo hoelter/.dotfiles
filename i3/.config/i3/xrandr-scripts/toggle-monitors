@@ -3,6 +3,7 @@
 # DP-4 1920x1080
 
 # Setting the scale just below the desired with 0.9999 seems to fix the cursor flashing in chrome 
+# 3-8-24 Noticed a slight amount of blur at 0.9999 with text, reverting this
 
 if xrandr -q | grep 'DisplayPort-2 connected primary' > /dev/null && xrandr -q | grep 'HDMI-A-0 connected 3840' > /dev/null; then
     echo 'In dual monitor mode, setting single main monitor mode'
@@ -10,35 +11,22 @@ if xrandr -q | grep 'DisplayPort-2 connected primary' > /dev/null && xrandr -q |
     # Single Primary
     xrandr --dpi 192 --fb 3840x2160 \
         --output HDMI-A-0 --off \
-        --output DisplayPort-2 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
-
-    # xrandr \
-    #     --output DisplayPort-1 --off \
-    #     --output HDMI-A-0 --mode 3840x2160 --scale 0.5x0.5 --primary
+        --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x0
 
 elif xrandr -q | grep 'DisplayPort-2 connected primary' > /dev/null; then
     echo 'In single monitor 4k mode, setting single side mode.'
 
     # Single Secondary
     xrandr --dpi 192 --fb 3840x2160 \
-        --output HDMI-A-0 --scale 1.9999x1.9999 --primary --mode 1920x1080 -r 165.00 \
+        --output HDMI-A-0 --scale 2x2 --primary --mode 1920x1080 -r 165.00 \
         --output DisplayPort-2 --off
-
-    # xrandr \
-    #     --output DisplayPort-1 --primary --mode 1920x1080 -r 119.98 \
-    #     --output HDMI-A-0 --off
 
 else
     echo 'In single monitor on side, setting dual mode.'
 
     # Dual monitor
     xrandr --dpi 192 --fb 7680x2160 \
-        --output HDMI-A-0 --scale 1.9999x1.9999 --mode 1920x1080 -r 165.00 \
-        --output DisplayPort-2 --scale 0.9999x0.9999 --mode 3840x2160 --primary --pos 3840x0
-
-    # xrandr \
-    #     --output DisplayPort-1 --mode 1920x1080 -r 119.98 \
-    #     --output HDMI-A-0 --mode 3840x2160 --scale 0.5x0.5 --primary --right-of DisplayPort-1
-
+        --output HDMI-A-0 --scale 2x2 --mode 1920x1080 -r 165.00 \
+        --output DisplayPort-2 --scale 1x1 --mode 3840x2160 --primary --pos 3840x0
 fi
 

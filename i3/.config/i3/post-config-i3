@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # default to single monitor
-~/.config/i3/xrandr-scripts/set-single-monitor
+# ~/.config/i3/xrandr-scripts/set-single-monitor
 
 #If in an XRDP session
 # if env | grep 'XRDP' > /dev/null; then
