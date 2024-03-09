@@ -61,12 +61,11 @@ text = "CellForeground"
 cursor = "#d8dee9"
 text = "#2e3440"
 
-
-# [font]
-# size= 11.5
+[font]
+size = 14
 
 [font.offset]
-y = 5
+y = 7
 
 [font.bold]
 family = "SauceCodePro Nerd Font Mono"
