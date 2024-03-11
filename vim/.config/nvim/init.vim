@@ -502,6 +502,7 @@ require("telescope").setup {
         "--strip-cwd-prefix",
         "--hidden",
         "--no-ignore",
+        "--follow",
         "--ignore-file",
         ignore_file
       }
