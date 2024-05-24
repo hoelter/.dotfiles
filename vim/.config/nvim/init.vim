@@ -244,8 +244,8 @@ Plug 'voldikss/vim-floaterm'
 Plug 'editorconfig/editorconfig-vim'
 
 " Theme
+"Plug '~/my-repos/nord.nvim'
 Plug 'hoelter/nord.nvim'
-"Plug '~/personal/nord.nvim'
 
 " Neovim native lsp
 Plug 'neovim/nvim-lspconfig'
@@ -265,7 +265,7 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'tpope/vim-fugitive'
 
 " Auto comement
-Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-commentary'
 "Context aware front-end comment help
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
@@ -363,6 +363,9 @@ augroup filetype_settings
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+  " Align .env.example with defaults for .env file
+  autocmd BufRead,BufEnter *.env.example set filetype=sh
 
 augroup END
 
@@ -672,7 +675,11 @@ local nvim_lsp = require('lspconfig')
 
   -- Mappings.
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+-- nvim 10 new defaults, [d and ]d in Normal mode map to vim.diagnostic.goto_prev() and vim.diagnostic.goto_next(), respectively. Use these to navigate between diagnostics in the current buffer.
+-- <C-W>d (and <C-W><C-D>) in Normal mode map to vim.diagnostic.open_float(). Use this to view information about any diagnostics under the cursor in a floating window.
+-- old bindings
+-- vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+-- Keeping these two mapping so that it opens the float by default when going to the diagnostic
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
@@ -685,7 +692,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts) nvim 10 default
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
