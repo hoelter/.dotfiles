@@ -3,6 +3,9 @@
 # default to single monitor
 ~/.config/i3/xrandr-scripts/set-single-monitor
 
+# Set mouse speed 
+xinput set-prop 'Kingsis Peripherals Evoluent VerticalMouse D' 'libinput Accel Speed' 0
+
 #If in an XRDP session
 # if env | grep 'XRDP' > /dev/null; then
 #     # Set wallpaper
