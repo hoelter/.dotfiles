@@ -302,13 +302,14 @@ Plug 'AndrewRadev/linediff.vim'
 " Highlight color strings
 Plug 'norcalli/nvim-colorizer.lua'
 
-" --------- Start under evaluation
-" https://github.com/tpope/vim-abolish
-Plug 'tpope/vim-abolish'
-" https://github.com/mbbill/undotree
-Plug 'mbbill/undotree'
 " https://github.com/stevearc/oil.nvim
 Plug 'stevearc/oil.nvim'
+
+" --------- Start under evaluation
+" https://github.com/tpope/vim-abolish
+" Plug 'tpope/vim-abolish'
+" https://github.com/mbbill/undotree
+Plug 'mbbill/undotree'
 " --------- End under evaluation
 
 call plug#end()
