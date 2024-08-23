@@ -1,3 +1,7 @@
+# [shell]
+# args = ["--login"]
+# program = "/bin/zsh"
+
 [env]
 TERM = "alacritty-direct"
 
