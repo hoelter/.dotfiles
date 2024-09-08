@@ -20,7 +20,7 @@ if status --is-interactive
     abbr -a -g gfiles "git diff --name-only (git merge-base HEAD \"$REVIEW_BASE\")"
     abbr -a -g gstat "git diff --stat (git merge-base HEAD \"$REVIEW_BASE\")"
 
-    abbr -a -g l "ls -lAF"
+    abbr -a -g l "ls -lAFh"
     abbr -a -g .. "cd .."
     abbr -a -g ... "cd ../.."
     abbr -a -g .... "cd ../../.."
