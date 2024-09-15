@@ -50,23 +50,23 @@ set listchars=eol:↲,tab:»\ ,trail:.,extends:<,precedes:>,conceal:┊,nbsp:␣
 set pumblend=25
 
 " Nice menu when tab completing `:find *.py`
-set wildmode=longest,list,full
-set path+=** " Allow recursive searching of entire project dir using :find
+"set wildmode=longest,list,full
+"set path+=** " Allow recursive searching of entire project dir using :find
 
 " Ignore files
-set wildignore+=*_build/*
-set wildignore+=**/coverage/*
-set wildignore+=**/node_modules/*
-set wildignore+=**/android/*
-set wildignore+=**/ios/*
-set wildignore+=**/.git/*
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.DS_Store                       " OSX bullshit
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.pyc                            " Python byte code
-set wildignore+=*.orig                           " Merge resolution files
+"set wildignore+=*_build/*
+"set wildignore+=**/coverage/*
+"set wildignore+=**/node_modules/*
+"set wildignore+=**/android/*
+"set wildignore+=**/ios/*
+"set wildignore+=**/.git/*
+"set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+"set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+"set wildignore+=*.spl                            " compiled spelling word lists
+"set wildignore+=*.DS_Store                       " OSX bullshit
+"set wildignore+=*.luac                           " Lua byte code
+"set wildignore+=*.pyc                            " Python byte code
+"set wildignore+=*.orig                           " Merge resolution files
 
 if has('mouse')
   set mouse=a
@@ -291,7 +291,7 @@ Plug 'mtdl9/vim-log-highlighting'
 Plug 'ThePrimeagen/harpoon'
 
 " Indentation guides
-Plug 'lukas-reineke/indent-blankline.nvim'
+"Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Surround Action
 Plug 'tpope/vim-surround'
