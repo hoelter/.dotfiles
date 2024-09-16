@@ -315,15 +315,17 @@ Plug 'mbbill/undotree'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 
-" https://github.com/pmizio/typescript-tools.nvim
-Plug 'pmizio/typescript-tools.nvim'
-
 " https://github.com/stevearc/conform.nvim
 Plug 'stevearc/conform.nvim'
 
+
+" Typescript related
+" https://github.com/pmizio/typescript-tools.nvim
+Plug 'pmizio/typescript-tools.nvim'
 " https://github.com/nvimtools/none-ls.nvim
 " replacement for 'jose-elias-alvarez/null-ls.nvim'
 Plug 'nvimtools/none-ls.nvim'
+Plug 'nvimtools/none-ls-extras.nvim'
 
 " --------- End under evaluation
 
@@ -639,7 +641,7 @@ EOF
 " End Treesitter config -------------------------------
 
 
-" Conform Setup
+" Conform Setup ---------------------------------------
 lua <<EOF
 require("conform").setup({
   formatters_by_ft = {
@@ -652,12 +654,12 @@ require("conform").setup({
     ["*"] = { "trim_whitespace" },
   },
 })
-
-vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua require("conform").format()<CR>', opts)
 EOF
+nnoremap <leader>f <cmd>lua require('conform').format()<cr>
+" End Conform Setup ---------------------------------
+
 
 " Begin LSP and nvim cmp config -----------------------------
-
 set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 
 lua <<EOF
@@ -723,8 +725,6 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', op
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -747,12 +747,12 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Setup none-ls
-local none_ls = require("none-ls")
-none_ls.setup({
+local null_ls = require("null-ls")
+null_ls.setup({
   sources = {
-    none_ls.builtins.diagnostics.eslint_d.with({ extra_args = { "--quiet" } }),
-    none_ls.builtins.code_actions.eslint_d,
-    none_ls.builtins.formatting.prettier.with {
+    require("none-ls.diagnostics.eslint_d").with({ extra_args = { "--quiet" } }),
+    require("none-ls.code_actions.eslint_d"),
+    null_ls.builtins.formatting.prettier.with { 
       disabled_filetypes ={"markdown"}
     },
   },
