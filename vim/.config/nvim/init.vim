@@ -31,7 +31,7 @@ set nomodeline " turns off looking for vim commands in files to auto execute
 
 " case insensitive search, unless upper case char in pattern
 set ignorecase
-set smartcase 
+set smartcase
 
 " Remove backup and swap files
 set nobackup
@@ -357,12 +357,12 @@ augroup filetype_settings
   autocmd Filetype css setlocal expandtab ts=2 sw=2
   autocmd Filetype prisma setlocal expandtab ts=2 sw=2
   autocmd Filetype scss setlocal expandtab ts=2 sw=2
-  
+
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
   autocmd Filetype gitconfig setlocal noexpandtab
   "autocmd BufNewFile,BufRead *.yml,*.yaml setlocal indentkeys-=0#
-  
+
   " spell chek for git commits
   autocmd FileType gitcommit setlocal spell
 
@@ -511,7 +511,7 @@ require("telescope").setup {
       "--hidden",
       "--ignore-file", -- showing hidden and using same ignore_file as fd
       ignore_file
-    } 
+    }
   },
   pickers = {
     find_files = {
@@ -752,7 +752,7 @@ null_ls.setup({
   sources = {
     require("none-ls.diagnostics.eslint_d").with({ extra_args = { "--quiet" } }),
     require("none-ls.code_actions.eslint_d"),
-    null_ls.builtins.formatting.prettier.with { 
+    null_ls.builtins.formatting.prettier.with {
       disabled_filetypes ={"markdown"}
     },
   },
