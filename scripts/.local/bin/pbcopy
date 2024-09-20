@@ -23,7 +23,7 @@ fi
 
 # Macos
 if  [ -x "$(command -v /usr/bin/pbcopy)" ]; then
-    echo "$selected" | /usr/bin/pbcopy
+    echo -n "$selected" | /usr/bin/pbcopy
     exit
 fi
 
