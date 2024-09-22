@@ -828,7 +828,7 @@ require("typescript-tools").setup {
 
     buf_map(bufnr, "n", "go", ":TSToolsOrganizeImports<CR>")
     buf_map(bufnr, "n", "<leader>rN", ":TSToolsRenameFile<CR>")
-    buf_map(bufnr, "n", "gp", ":TSToolsAddMissingImports<CR>")
+    buf_map(bufnr, "n", "gi", ":TSToolsAddMissingImports<CR>")
     on_attach(client, bufnr)
   end,
   settings = {
