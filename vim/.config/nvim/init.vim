@@ -723,6 +723,11 @@ nvim_lsp['gopls'].setup {
 nvim_lsp['eslint'].setup {
   on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gp', '<cmd>EslintFixAll<CR>', opts)
+
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
   end,
   flags = {
     debounce_text_changes = 150,
