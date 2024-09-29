@@ -49,25 +49,6 @@ set listchars=eol:↲,tab:»\ ,trail:.,extends:<,precedes:>,conceal:┊,nbsp:␣
 " Neovim semi transparent popup-menu: https://neovim.io/doc/user/options.html#%27pumblend%27
 set pumblend=25
 
-" Nice menu when tab completing `:find *.py`
-"set wildmode=longest,list,full
-"set path+=** " Allow recursive searching of entire project dir using :find
-
-" Ignore files
-"set wildignore+=*_build/*
-"set wildignore+=**/coverage/*
-"set wildignore+=**/node_modules/*
-"set wildignore+=**/android/*
-"set wildignore+=**/ios/*
-"set wildignore+=**/.git/*
-"set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-"set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-"set wildignore+=*.spl                            " compiled spelling word lists
-"set wildignore+=*.DS_Store                       " OSX bullshit
-"set wildignore+=*.luac                           " Lua byte code
-"set wildignore+=*.pyc                            " Python byte code
-"set wildignore+=*.orig                           " Merge resolution files
-
 if has('mouse')
   set mouse=a
 endif
@@ -269,10 +250,6 @@ Plug 'tpope/vim-fugitive'
 "Context aware front-end comment help
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
-" Typescript plugins
-"Plug 'jose-elias-alvarez/typescript.nvim'
-"Plug 'jose-elias-alvarez/null-ls.nvim'
-
 " Auto Indent html and tsx files
 Plug 'windwp/nvim-ts-autotag'
 
@@ -318,14 +295,9 @@ Plug 'williamboman/mason-lspconfig.nvim'
 " https://github.com/stevearc/conform.nvim
 Plug 'stevearc/conform.nvim'
 
-
 " Typescript related
 " https://github.com/pmizio/typescript-tools.nvim
 Plug 'pmizio/typescript-tools.nvim'
-" https://github.com/nvimtools/none-ls.nvim
-" replacement for 'jose-elias-alvarez/null-ls.nvim'
-Plug 'nvimtools/none-ls.nvim'
-Plug 'nvimtools/none-ls-extras.nvim'
 
 " --------- End under evaluation
 
@@ -641,31 +613,13 @@ EOF
 " End Treesitter config -------------------------------
 
 
-" Conform Setup ---------------------------------------
-lua <<EOF
-require("conform").setup({
-  formatters_by_ft = {
-    -- Conform will run the first available formatter
-    html = { "prettier" },
-    javascript = { "prettier" },
-    javascriptreact = { "prettier" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
-    ["*"] = { "trim_whitespace" },
-  },
-})
-EOF
-nnoremap <leader>f <cmd>lua require('conform').format()<cr>
-" End Conform Setup ---------------------------------
-
-
 " Begin LSP and nvim cmp config -----------------------------
 set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 
 lua <<EOF
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "gopls" },
+    ensure_installed = { "omnisharp", "gopls", "eslint" },
 }
 
 -- Setup nvim-cmp.
@@ -737,7 +691,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>co', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -746,24 +700,7 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Setup none-ls
-local null_ls = require("null-ls")
-null_ls.setup({
-  sources = {
-    require("none-ls.diagnostics.eslint_d").with({ extra_args = { "--quiet" } }),
-    require("none-ls.code_actions.eslint_d"),
-    null_ls.builtins.formatting.prettier.with {
-      disabled_filetypes ={"markdown"}
-    },
-  },
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
--- local omnisharp_dll = vim.fn.expand('$HOME/.local/omnisharp/OmniSharp.dll')
--- local omnisharp_dll = '/usr/local/bin/OmniSharp.dll'
 nvim_lsp['omnisharp'].setup {
-  -- cmd = { "dotnet", omnisharp_dll },
   handlers = {
     ["textDocument/definition"] = require('omnisharp_extended').handler,
   },
@@ -774,40 +711,19 @@ nvim_lsp['omnisharp'].setup {
   capabilities = capabilities
 }
 
--- require('typescript').setup({
---   server = {
---     on_attach = function(client, bufnr)
---
---       local buf_map = function(bufnr, mode, lhs, rhs, opts)
---           vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
---               silent = false,
---           })
---       end
---
---       client.server_capabilities.document_formatting = false
---       client.server_capabilities.document_range_formatting = false
---
---       buf_map(bufnr, "n", "go", ":TypescriptOrganizeImports<CR>")
---       buf_map(bufnr, "n", "<leader>rN", ":TypescriptRenameFile<CR>")
---       buf_map(bufnr, "n", "gp", ":TypescriptAddMissingImports<CR>")
---       on_attach(client, bufnr)
---     end,
---     flags = {
---       debounce_text_changes = 150,
---     },
---     capabilities = capabilities,
---     init_options = {
---       preferences = {
---         importModuleSpecifierPreference = "non-relative"
---         -- importModuleSpecifierPreference = "relative"
---       }
---     }
---   },
--- })
-
 -- Run `go install golang.org/x/tools/gopls@latest` to install lang server
 nvim_lsp['gopls'].setup {
   on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
+}
+
+nvim_lsp['eslint'].setup {
+  on_attach = function(client, bufnr)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gp', '<cmd>EslintFixAll<CR>', opts)
+  end,
   flags = {
     debounce_text_changes = 150,
   },
@@ -826,9 +742,9 @@ require("typescript-tools").setup {
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
 
-    buf_map(bufnr, "n", "go", ":TSToolsOrganizeImports<CR>")
-    buf_map(bufnr, "n", "<leader>rN", ":TSToolsRenameFile<CR>")
-    buf_map(bufnr, "n", "gi", ":TSToolsAddMissingImports<CR>")
+    buf_map(bufnr, "n", "go", "<cmd>TSToolsOrganizeImports<CR>")
+    buf_map(bufnr, "n", "<leader>rN", "<cmd>TSToolsRenameFile<CR>")
+    buf_map(bufnr, "n", "gi", "<cmd>TSToolsAddMissingImports<CR>")
     on_attach(client, bufnr)
   end,
   settings = {
@@ -845,4 +761,24 @@ require("typescript-tools").setup {
 
 EOF
 " End LSP and nvim cmp config -----------------------------
+
+" Conform Setup ---------------------------------------
+lua <<EOF
+require("conform").setup({
+  formatters_by_ft = {
+    -- Conform will run the first available formatter
+    html = { "prettier" },
+    javascript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescript = { "prettier" },
+    typescriptreact = { "prettier" },
+    ["*"] = { "trim_whitespace" },
+  },
+   default_format_opts = {
+    lsp_format = "first",
+  },
+})
+EOF
+nnoremap <leader>f <cmd>lua require('conform').format()<cr>
+" End Conform Setup ---------------------------------
 
