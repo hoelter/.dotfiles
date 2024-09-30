@@ -6,6 +6,7 @@ set -gx VISUAL "nvim"
 set -gx PAGER "bat --style=plain,grid"
 
 # Dotnet Dev specific
+set -gx DOTNET_ENVIRONMENT "Development"
 set -gx ASPNETCORE_ENVIRONMENT "Development"
 set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 
