@@ -769,7 +769,14 @@ nvim_lsp['vtsls'].setup {
   flags = {
     debounce_text_changes = 150,
   },
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    typescript = {
+      preferences = {
+        importModuleSpecifier = "non-relative"
+      }
+    }
+  }
 }
 
 -- require("typescript-tools").setup {
