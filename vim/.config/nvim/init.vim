@@ -299,6 +299,11 @@ Plug 'stevearc/conform.nvim'
 " https://github.com/pmizio/typescript-tools.nvim
 Plug 'pmizio/typescript-tools.nvim'
 
+" Alternative
+"Plug 'pmizio/typescript-tools.nvim'
+" https://github.com/yioneko/nvim-vtsls
+Plug 'yioneko/nvim-vtsls'
+
 " --------- End under evaluation
 
 call plug#end()
@@ -619,7 +624,7 @@ set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 lua <<EOF
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp" },
+    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls" },
 }
 
 -- Setup nvim-cmp.
@@ -743,33 +748,57 @@ nvim_lsp['eslint'].setup {
   capabilities = capabilities
 }
 
-require("typescript-tools").setup {
-  on_attach = function(client, bufnr)
-    local buf_map = function(bufnr, mode, lhs, rhs, opts)
-        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-            silent = false,
-        })
-    end
+require("lspconfig.configs").vtsls = require("vtsls").lspconfig
+nvim_lsp['vtsls'].setup {
+    on_attach = function(client, bufnr)
 
-    -- Neovim commands that are language server agnostic
-    client.server_capabilities.document_formatting = false
-    client.server_capabilities.document_range_formatting = false
+      local buf_map = function(bufnr, mode, lhs, rhs, opts)
+          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+              silent = true,
+          })
+      end
 
-    buf_map(bufnr, "n", "go", "<cmd>TSToolsOrganizeImports<CR>")
-    buf_map(bufnr, "n", "<leader>rN", "<cmd>TSToolsRenameFile<CR>")
-    buf_map(bufnr, "n", "gi", "<cmd>TSToolsAddMissingImports<CR>")
-    on_attach(client, bufnr)
-  end,
-  settings = {
-    tsserver_file_preferences = {
-      importModuleSpecifierPreference = "non-relative"
-    },
-    jsx_close_tag = {
-      enable = false,
-      filetypes = { "javascriptreact", "typescriptreact" },
-    }
-  }
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+
+      buf_map(bufnr, "n", "go", ":VtsExec organize_imports<CR>")
+      buf_map(bufnr, "n", "<leader>rN", ":VtsExec rename_file<CR>")
+      buf_map(bufnr, "n", "gp", ":VtsExec add_missing_imports<CR>")
+      on_attach(client, bufnr)
+    end,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
 }
+
+-- require("typescript-tools").setup {
+--   on_attach = function(client, bufnr)
+--     local buf_map = function(bufnr, mode, lhs, rhs, opts)
+--         vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+--             silent = false,
+--         })
+--     end
+--
+--     -- Neovim commands that are language server agnostic
+--     client.server_capabilities.document_formatting = false
+--     client.server_capabilities.document_range_formatting = false
+--
+--     buf_map(bufnr, "n", "go", "<cmd>TSToolsOrganizeImports<CR>")
+--     buf_map(bufnr, "n", "<leader>rN", "<cmd>TSToolsRenameFile<CR>")
+--     buf_map(bufnr, "n", "gi", "<cmd>TSToolsAddMissingImports<CR>")
+--     on_attach(client, bufnr)
+--   end,
+--   settings = {
+--     tsserver_file_preferences = {
+--       importModuleSpecifierPreference = "non-relative"
+--     },
+--     jsx_close_tag = {
+--       enable = false,
+--       filetypes = { "javascriptreact", "typescriptreact" },
+--     }
+--   }
+-- }
 
 
 EOF
