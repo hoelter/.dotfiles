@@ -593,6 +593,7 @@ require'nvim-treesitter.configs'.setup {
         "ruby",
         "scala",
         "scss",
+        "sql",
         "terraform",
         "tsx",
         "typescript",
