@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Copy these into a servers .bashrc
+
+alias l="ls -lAF"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+alias g="git"
+
+alias g="git"
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
