@@ -351,11 +351,12 @@ augroup filetype_settings
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
+  autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=razor " Force filteype to use plugin defined syntax
   autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
 
-  autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cpp nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
+  autocmd FileType typescript nnoremap <buffer> <leader>{ <esc>A {<esc>o}<esc>O
 
   " Disable auto new line comments
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
