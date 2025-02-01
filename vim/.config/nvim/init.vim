@@ -245,10 +245,8 @@ Plug 'L3MON4D3/LuaSnip'
 " Git helper
 Plug 'tpope/vim-fugitive'
 
-" Auto comement
-"Plug 'tpope/vim-commentary'
-"Context aware front-end comment help
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" Treesitter aware comments
+Plug 'folke/ts-comments.nvim',
 
 " Auto Indent html and tsx files
 Plug 'windwp/nvim-ts-autotag'
@@ -260,9 +258,6 @@ Plug 'hoelter/vim-razor'
 
 " Log File syntax highlighting
 Plug 'mtdl9/vim-log-highlighting'
-
-" Octo Github Interactions
- "Plug 'kyazdani42/nvim-web-devicons'
 
 " Marks alternative
 Plug 'ThePrimeagen/harpoon'
@@ -570,7 +565,7 @@ nnoremap <leader>lx <cmd>lua require('telescope').extensions.luasnip.luasnip{}<c
 
 " Begin Treesitter config -----------------------------
 lua <<EOF
-vim.g.skip_ts_context_commentstring_module = true
+-- vim.g.skip_ts_context_commentstring_module = true
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
@@ -617,6 +612,9 @@ require'nvim-treesitter.configs'.setup {
         enable = true
     }
  }
+
+-- Init better treesitter aware commenting
+require("ts-comments").setup()
 EOF
 " End Treesitter config -------------------------------
 
@@ -781,35 +779,6 @@ nvim_lsp['vtsls'].setup {
     }
   }
 }
-
--- require("typescript-tools").setup {
---   on_attach = function(client, bufnr)
---     local buf_map = function(bufnr, mode, lhs, rhs, opts)
---         vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
---             silent = false,
---         })
---     end
---
---     -- Neovim commands that are language server agnostic
---     client.server_capabilities.document_formatting = false
---     client.server_capabilities.document_range_formatting = false
---
---     buf_map(bufnr, "n", "go", "<cmd>TSToolsOrganizeImports<CR>")
---     buf_map(bufnr, "n", "<leader>rN", "<cmd>TSToolsRenameFile<CR>")
---     buf_map(bufnr, "n", "gi", "<cmd>TSToolsAddMissingImports<CR>")
---     on_attach(client, bufnr)
---   end,
---   settings = {
---     tsserver_file_preferences = {
---       importModuleSpecifierPreference = "non-relative"
---     },
---     jsx_close_tag = {
---       enable = false,
---       filetypes = { "javascriptreact", "typescriptreact" },
---     }
---   }
--- }
-
 
 EOF
 " End LSP and nvim cmp config -----------------------------
