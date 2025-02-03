@@ -299,6 +299,9 @@ Plug 'pmizio/typescript-tools.nvim'
 " https://github.com/yioneko/nvim-vtsls
 Plug 'yioneko/nvim-vtsls'
 
+"https://github.com/tpope/vim-rails
+" Plug 'tpope/vim-rails'
+
 " --------- End under evaluation
 
 call plug#end()
@@ -732,6 +735,10 @@ nvim_lsp['ruby_lsp'].setup {
     debounce_text_changes = 150,
   },
   capabilities = capabilities
+  -- https://shopify.github.io/ruby-lsp/editors.html
+  -- init_options = {
+  --   formatter = 'standard'
+  -- }
 }
 
 nvim_lsp['eslint'].setup {
@@ -793,6 +800,7 @@ require("conform").setup({
     javascriptreact = { "prettier" },
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
+    eruby = { "erb_format" },
     ["*"] = { "trim_whitespace" },
   },
    default_format_opts = {
