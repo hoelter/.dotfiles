@@ -793,6 +793,11 @@ EOF
 " Conform Setup ---------------------------------------
 lua <<EOF
 require("conform").setup({
+  formatters = {
+    erb_format = {
+      args = { "--stdin", "--print-width", "120" }
+    }
+  },
   formatters_by_ft = {
     -- Conform will run the first available formatter
     html = { "prettier" },
