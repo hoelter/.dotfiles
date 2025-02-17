@@ -805,6 +805,7 @@ require("conform").setup({
     javascriptreact = { "prettier" },
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
+    css = { "prettier" },
     eruby = { "erb_format" },
     ["*"] = { "trim_whitespace" },
   },
