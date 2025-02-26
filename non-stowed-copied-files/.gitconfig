@@ -42,6 +42,7 @@
 [color "status"]
 	untracked = red bold
 [diff]
+	external = difft
 	renames = copies
 [user]
 	name = Christopher Hoelter
