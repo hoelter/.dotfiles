@@ -44,5 +44,25 @@
 [diff]
 	external = difft
 	renames = copies
+	; renames = true -- possibly try this, been using copies for a while
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	; https://blog.gitbutler.com/how-git-core-devs-configure-git/
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 [user]
 	name = Christopher Hoelter
