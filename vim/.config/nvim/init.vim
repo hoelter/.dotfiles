@@ -333,6 +333,8 @@ augroup filetype_settings
   autocmd Filetype prisma setlocal expandtab ts=2 sw=2
   autocmd Filetype scss setlocal expandtab ts=2 sw=2
   autocmd Filetype sql setlocal expandtab ts=2 sw=2
+  autocmd Filetype c setlocal expandtab ts=2 sw=2
+  autocmd Filetype cpp setlocal expandtab ts=2 sw=2
 
   " Stop yaml comment causing indent
   autocmd Filetype yaml setlocal indentkeys-=0#
@@ -353,7 +355,11 @@ augroup filetype_settings
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=razor " Force filteype to use plugin defined syntax
   autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
 
+  " C and C++ bindings
+  autocmd FileType c nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd FileType cpp nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
+
+  " javascript and typescript bindings
   autocmd FileType typescript nnoremap <buffer> <leader>{ <esc>A {<esc>o}<esc>O
 
   " Disable auto new line comments
@@ -387,8 +393,8 @@ let g:lf_map_keys = 0
 nnoremap <leader>d :Lf<CR>
 
 
-" Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 lua <<EOF
+-- Color highlighting https://github.com/norcalli/nvim-colorizer.lua
 require'colorizer'.setup {
     'html';
     'css';
@@ -401,7 +407,12 @@ require'colorizer'.setup {
     'fish';
     'lua';
 }
+
+-- Autotagging setup
+require('nvim-ts-autotag').setup()
 EOF
+
+
 
 " Oil Nvim setup
 lua <<EOF
@@ -609,11 +620,7 @@ require'nvim-treesitter.configs'.setup {
         disable = { 'yaml', 'ruby' }
     },
     incremental_selection = { enable = true },
-    textobjects = { enable = true },
-    autotag = {
-        -- autoindent plugin setup
-        enable = true
-    }
+    textobjects = { enable = true }
  }
 
 -- Init better treesitter aware commenting
@@ -628,7 +635,7 @@ set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 lua <<EOF
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls" },
+    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd" },
 }
 
 -- Setup nvim-cmp.
@@ -708,6 +715,14 @@ end
 
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+nvim_lsp['clangd'].setup {
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
+}
 
 nvim_lsp['omnisharp'].setup {
   handlers = {
