@@ -594,6 +594,7 @@ require'nvim-treesitter.configs'.setup {
         "fish",
         "html",
         "java",
+        "go",
         "javascript",
         "json",
         "lua",

@@ -6,3 +6,6 @@ UseTab: Never
 ColumnLimit: 120
 BreakBeforeBraces: Allman
 AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortBlocksOnASingleLine: Never
+InsertBraces: true
