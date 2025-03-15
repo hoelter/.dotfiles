@@ -636,7 +636,7 @@ set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 lua <<EOF
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd" },
+    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd", "pyright" },
 }
 
 -- Setup nvim-cmp.
@@ -738,6 +738,14 @@ nvim_lsp['omnisharp'].setup {
 
 -- Run `go install golang.org/x/tools/gopls@latest` to install lang server
 nvim_lsp['gopls'].setup {
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities
+}
+
+nvim_lsp['pyright'].setup {
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,
