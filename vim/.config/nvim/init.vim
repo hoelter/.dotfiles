@@ -190,7 +190,11 @@ nnoremap <leader>w :w<bar>:bd<CR>
 " re-highlight on yank
 vnoremap Y ygv
 
-" Inspect highlight groups under cursor
+" Treesitter inspect highlight groups under cursor
+" https://github.com/nvim-treesitter/playground
+" :Inspect to show the highlight groups under the cursor
+" :InspectTree to show the parsed syntax tree ("TSPlayground")
+" :EditQuery to open the Live Query Editor (Nvim 0.10+)
 nnoremap <leader>i :Inspect<CR>
 nnoremap <leader>I :call SynStack()<CR>
 
