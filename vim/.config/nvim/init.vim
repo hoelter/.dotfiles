@@ -142,7 +142,7 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <leader>x :!chmod +x %<CR>
 
 " to quickly paste from clipboard without strange indents, automate in future
-set pastetoggle=<F10>
+" set pastetoggle=<F10>
 
 " center screen while searching
 nnoremap n nzzzv
@@ -218,7 +218,7 @@ Plug 'benfowler/telescope-luasnip.nvim'
 
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Lf vim
 " Plug 'ptzz/lf.vim'
@@ -353,7 +353,6 @@ augroup filetype_settings
   autocmd FileType cs noremap <buffer> ]m /\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b
   autocmd FileType cs nnoremap <buffer> <leader>lR ?\(public\<bar>private\)<cr><cmd>nohlsearch<cr>f(b<cmd>Telescope lsp_references<cr>
   autocmd FileType cs nnoremap <buffer> gI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
-  autocmd FileType cs nnoremap <leader>ld <cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>
   "autocmd FileType cs nnoremap <buffer> gmI ?\(public class\<bar>public interface\)<cr><cmd>nohlsearch<cr>$<cmd>:lua vim.lsp.buf.definition()<CR><C-o>
   autocmd FileType cs nnoremap <buffer> <leader>{ <esc>o{<esc>o}<esc>O
   autocmd BufNewFile,BufRead *.cshtml setlocal filetype=razor " Force filteype to use plugin defined syntax
@@ -639,8 +638,11 @@ set completeopt=menu,menuone,noselect " is this for nvim-cmp?
 
 lua <<EOF
 require('mason').setup()
+-- require("mason-lspconfig").setup {
+--     ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd", "pyright" },
+-- }
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd", "pyright" },
+    ensure_installed = { "omnisharp" },
 }
 
 -- Setup nvim-cmp.
@@ -730,10 +732,24 @@ nvim_lsp['clangd'].setup {
 }
 
 nvim_lsp['omnisharp'].setup {
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-  },
-  on_attach = on_attach,
+  -- handlers = {
+  --   ["textDocument/definition"] = require('omnisharp_extended').handler,
+  --   ["textDocument/typeDefinition"] = require('omnisharp_extended').type_definition_handler,
+  --   ["textDocument/references"] = require('omnisharp_extended').references_handler,
+  --   ["textDocument/implementation"] = require('omnisharp_extended').implementation_handler,
+  -- },
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua require("omnisharp_extended").lsp_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua require("omnisharp_extended").lsp_type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua require("omnisharp_extended").lsp_implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua require("omnisharp_extended").lsp_references()<CR>', opts)
+
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ld', '<cmd>lua require("omnisharp_extended").telescope_lsp_definitions()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>li', '<cmd>lua require("omnisharp_extended").telescope_lsp_implementations()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lr', '<cmd>lua require("omnisharp_extended").telescope_lsp_references({ trim_text = true })<CR>', opts)
+  end,
   flags = {
     debounce_text_changes = 150,
   },
