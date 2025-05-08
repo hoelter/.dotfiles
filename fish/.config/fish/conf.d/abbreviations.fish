@@ -12,7 +12,7 @@ if status --is-interactive
     abbr -a -g gl "git l"
     abbr -a -g gc "git ca"
     abbr -a -g gf "git fetch"
-    abbr -a -g gd "git diff"
+    abbr -a -g gd "git diff --no-ext-diff"
     abbr -a -g ga "git add -p"
     abbr -a -g gq "git add -A && git commit -m 'Quick commit'"
     abbr -a -g gconfig "git config --global --list"
