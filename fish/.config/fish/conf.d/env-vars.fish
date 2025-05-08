@@ -35,5 +35,5 @@ if status --is-interactive
     end
 
     # Init asdf
-    source ~/.asdf/asdf.fish 
+    # source ~/.asdf/asdf.fish 
 end

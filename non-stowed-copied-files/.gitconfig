@@ -42,7 +42,7 @@
 [color "status"]
 	untracked = red bold
 [diff]
-	external = difft
+	; external = difft
 	renames = copies
 	; renames = true -- possibly try this, been using copies for a while
 	algorithm = histogram
