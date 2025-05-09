@@ -5,6 +5,12 @@ set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
 set -gx PAGER "bat --style=plain,grid"
 
+# XDG paths
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_CONFIG_HOME  "$HOME/.config"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
+set -gx XDG_CACHE_HOME  "$HOME/.cache"
+
 # Dotnet Dev specific
 set -gx DOTNET_ENVIRONMENT "Development"
 set -gx ASPNETCORE_ENVIRONMENT "Development"
