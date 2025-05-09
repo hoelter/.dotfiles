@@ -30,9 +30,9 @@ if status --is-interactive
     set -gx TMUX_SESSIONIZER_SINGLE_DIRS ~/.dotfiles ~/.dotfiles-personal
 
     # Init direnv
-    if type -q direnv
-        direnv hook fish | source
-    end
+    # if type -q direnv
+    #     direnv hook fish | source
+    # end
 
     # Init asdf
     # source ~/.asdf/asdf.fish 

@@ -84,3 +84,6 @@ Zotero/
 
 # Redwoodjs ignore build output
 api/dist
+
+# misc
+/transferred
