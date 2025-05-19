@@ -326,6 +326,7 @@ augroup filetype_settings
   autocmd Filetype xml setlocal expandtab ts=2 sw=2
   autocmd Filetype vim setlocal expandtab ts=2 sw=2
   autocmd Filetype markdown setlocal expandtab ts=2 sw=2
+  autocmd Filetype html setlocal expandtab ts=2 sw=2
   autocmd Filetype text setlocal expandtab ts=2 sw=2
   autocmd Filetype json setlocal expandtab ts=2 sw=2
   autocmd Filetype javascript setlocal expandtab ts=2 sw=2
