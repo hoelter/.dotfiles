@@ -643,7 +643,7 @@ require('mason').setup()
 --     ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd", "pyright" },
 -- }
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp" },
+    ensure_installed = { "omnisharp", "eslint", "vtsls", "ruby_lsp" },
 }
 
 -- Setup nvim-cmp.
