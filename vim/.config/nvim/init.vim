@@ -289,7 +289,7 @@ Plug 'mbbill/undotree'
 
 " https://github.com/williamboman/mason.nvim
 Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'williamboman/mason-lspconfig.nvim', { commit: '1a31f824b9cd5bc6f342fc29e9a53b60d74af245' }
 
 " https://github.com/stevearc/conform.nvim
 Plug 'stevearc/conform.nvim'
