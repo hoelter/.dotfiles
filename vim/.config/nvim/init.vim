@@ -644,6 +644,7 @@ require('mason').setup()
 -- }
 require("mason-lspconfig").setup {
     ensure_installed = { "omnisharp", "eslint", "vtsls", "ruby_lsp" },
+    automatic_enable = false
 }
 
 -- Setup nvim-cmp.
@@ -702,7 +703,7 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', op
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach_lsp = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -740,7 +741,7 @@ nvim_lsp['omnisharp'].setup {
   --   ["textDocument/implementation"] = require('omnisharp_extended').implementation_handler,
   -- },
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    on_attach_lsp(client, bufnr)
 
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua require("omnisharp_extended").lsp_definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua require("omnisharp_extended").lsp_type_definition()<CR>', opts)
@@ -759,7 +760,7 @@ nvim_lsp['omnisharp'].setup {
 
 -- Run `go install golang.org/x/tools/gopls@latest` to install lang server
 nvim_lsp['gopls'].setup {
-  on_attach = on_attach,
+  on_attach = on_attach_lsp,
   flags = {
     debounce_text_changes = 150,
   },
@@ -767,7 +768,7 @@ nvim_lsp['gopls'].setup {
 }
 
 nvim_lsp['pyright'].setup {
-  on_attach = on_attach,
+  on_attach = on_attach_lsp,
   flags = {
     debounce_text_changes = 150,
   },
@@ -804,20 +805,14 @@ nvim_lsp['eslint'].setup {
 require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 nvim_lsp['vtsls'].setup {
     on_attach = function(client, bufnr)
-
-      local buf_map = function(bufnr, mode, lhs, rhs, opts)
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-              silent = true,
-          })
-      end
-
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
 
-      buf_map(bufnr, "n", "go", ":VtsExec organize_imports<CR>")
-      buf_map(bufnr, "n", "<leader>rN", ":VtsExec rename_file<CR>")
-      buf_map(bufnr, "n", "gp", ":VtsExec add_missing_imports<CR>")
-      on_attach(client, bufnr)
+      on_attach_lsp(client, bufnr)
+
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "go", ":VtsExec organize_imports<CR>", opts)
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rN", ":VtsExec rename_file<CR>", opts)
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "gp", ":VtsExec add_missing_imports<CR>", opts)
     end,
   flags = {
     debounce_text_changes = 150,
