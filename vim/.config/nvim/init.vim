@@ -198,6 +198,9 @@ vnoremap Y ygv
 nnoremap <leader>i :Inspect<CR>
 nnoremap <leader>I :call SynStack()<CR>
 
+" Copy buffer file path to clipboard
+nnoremap <leader>cP :let @+ = expand("%:p")<CR>
+
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
