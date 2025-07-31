@@ -1,17 +1,11 @@
 function fish_user_key_bindings
-    # fish_vi_key_bindings
-    # fzf_key_bindings
+    # Initialize fzf key bindings
     fzf --fish | source
-
-    # for mode in insert default visual
-    #     bind -M $mode \cf forward-char
-    # end
-
-    # ensure alt c triggers fzf cd function
-    bind "ç" fzf-cd-widget
-
+    
+    # Set up custom key bindings
+    bind "ç" fzf-cd-widget                    # Alt+C for fzf directory search
+    bind \es '~/.local/bin/tmux-sessionizer'  # Alt+S for tmux sessionizer
+    
+    # Initialize git-specific fzf bindings
     user_fzf_git_key_bindings
-
-    bind \es '~/.local/bin/tmux-sessionizer'
-    bind \es '~/.local/bin/tmux-sessionizer'
 end
