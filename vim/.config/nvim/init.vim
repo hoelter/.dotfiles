@@ -259,18 +259,15 @@ Plug 'folke/ts-comments.nvim',
 Plug 'windwp/nvim-ts-autotag'
 
 " Omnisharp Specific Decompilation Support
-Plug 'hoelter/omnisharp-extended-lsp.nvim'
+" Plug 'hoelter/omnisharp-extended-lsp.nvim'
 " Razor page syntax highlighting
-Plug 'hoelter/vim-razor'
+" Plug 'hoelter/vim-razor'
 
 " Log File syntax highlighting
 Plug 'mtdl9/vim-log-highlighting'
 
 " Marks alternative
 Plug 'ThePrimeagen/harpoon'
-
-" Indentation guides
-"Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Surround Action
 Plug 'tpope/vim-surround'
@@ -284,12 +281,6 @@ Plug 'norcalli/nvim-colorizer.lua'
 " https://github.com/stevearc/oil.nvim
 Plug 'stevearc/oil.nvim'
 
-" --------- Start under evaluation
-" https://github.com/tpope/vim-abolish
-" Plug 'tpope/vim-abolish'
-" https://github.com/mbbill/undotree
-Plug 'mbbill/undotree'
-
 " https://github.com/williamboman/mason.nvim
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
@@ -297,14 +288,16 @@ Plug 'williamboman/mason-lspconfig.nvim'
 " https://github.com/stevearc/conform.nvim
 Plug 'stevearc/conform.nvim'
 
-" Typescript related
-" https://github.com/pmizio/typescript-tools.nvim
-Plug 'pmizio/typescript-tools.nvim'
-
-" Alternative
-"Plug 'pmizio/typescript-tools.nvim'
 " https://github.com/yioneko/nvim-vtsls
 Plug 'yioneko/nvim-vtsls'
+
+Plug 'seblyng/roslyn.nvim'
+
+" --------- Start under evaluation
+" https://github.com/tpope/vim-abolish
+" Plug 'tpope/vim-abolish'
+" https://github.com/mbbill/undotree
+" Plug 'mbbill/undotree'
 
 "https://github.com/tpope/vim-rails
 " Plug 'tpope/vim-rails'
@@ -646,7 +639,7 @@ require('mason').setup()
 --     ensure_installed = { "omnisharp", "gopls", "eslint", "ruby_lsp", "vtsls", "clangd", "pyright" },
 -- }
 require("mason-lspconfig").setup {
-    ensure_installed = { "omnisharp", "eslint", "vtsls", "ruby_lsp" },
+    ensure_installed = { "eslint", "vtsls", "ruby_lsp" },
     automatic_enable = false
 }
 
@@ -736,30 +729,21 @@ nvim_lsp['clangd'].setup {
   capabilities = capabilities
 }
 
-nvim_lsp['omnisharp'].setup {
-  -- handlers = {
-  --   ["textDocument/definition"] = require('omnisharp_extended').handler,
-  --   ["textDocument/typeDefinition"] = require('omnisharp_extended').type_definition_handler,
-  --   ["textDocument/references"] = require('omnisharp_extended').references_handler,
-  --   ["textDocument/implementation"] = require('omnisharp_extended').implementation_handler,
-  -- },
-  on_attach = function(client, bufnr)
-    on_attach_lsp(client, bufnr)
-
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua require("omnisharp_extended").lsp_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua require("omnisharp_extended").lsp_type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua require("omnisharp_extended").lsp_implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua require("omnisharp_extended").lsp_references()<CR>', opts)
-
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ld', '<cmd>lua require("omnisharp_extended").telescope_lsp_definitions()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>li', '<cmd>lua require("omnisharp_extended").telescope_lsp_implementations()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lr', '<cmd>lua require("omnisharp_extended").telescope_lsp_references({ trim_text = true })<CR>', opts)
-  end,
+require("roslyn").setup()
+vim.lsp.config("roslyn", {
+  cmd = {
+    "dotnet",
+    vim.fn.expand("~/.lsp/csharp-lsp/content/LanguageServer/osx-arm64/Microsoft.CodeAnalysis.LanguageServer.dll"),
+    "--logLevel=information",
+    "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+    "--stdio"
+  },
+  on_attach = on_attach_lsp,
   flags = {
-    debounce_text_changes = 150,
+    debounce_text_changes = 150
   },
   capabilities = capabilities
-}
+})
 
 -- Run `go install golang.org/x/tools/gopls@latest` to install lang server
 nvim_lsp['gopls'].setup {
