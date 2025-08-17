@@ -4,7 +4,6 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    vim.g.nord_uniform_diff_background = 1
     vim.cmd.colorscheme("nord")
   end,
 }
