@@ -745,6 +745,31 @@ vim.lsp.config("roslyn", {
   capabilities = capabilities
 })
 
+-- nvim_lsp['omnisharp'].setup {
+--   -- handlers = {
+--   --   ["textDocument/definition"] = require('omnisharp_extended').handler,
+--   --   ["textDocument/typeDefinition"] = require('omnisharp_extended').type_definition_handler,
+--   --   ["textDocument/references"] = require('omnisharp_extended').references_handler,
+--   --   ["textDocument/implementation"] = require('omnisharp_extended').implementation_handler,
+--   -- },
+--   on_attach = function(client, bufnr)
+--     on_attach_lsp(client, bufnr)
+--
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua require("omnisharp_extended").lsp_definition()<CR>', opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua require("omnisharp_extended").lsp_type_definition()<CR>', opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua require("omnisharp_extended").lsp_implementation()<CR>', opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua require("omnisharp_extended").lsp_references()<CR>', opts)
+--
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ld', '<cmd>lua require("omnisharp_extended").telescope_lsp_definitions()<CR>', opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>li', '<cmd>lua require("omnisharp_extended").telescope_lsp_implementations()<CR>', opts)
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lr', '<cmd>lua require("omnisharp_extended").telescope_lsp_references({ trim_text = true })<CR>', opts)
+--   end,
+--   flags = {
+--     debounce_text_changes = 150,
+--   },
+--   capabilities = capabilities
+-- }
+
 -- Run `go install golang.org/x/tools/gopls@latest` to install lang server
 nvim_lsp['gopls'].setup {
   on_attach = on_attach_lsp,
