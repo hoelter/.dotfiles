@@ -32,5 +32,5 @@ require("config.autocmds")
 -- Plugin configuration
 require("lazy").setup("plugins", {
   install = { colorscheme = { "nord" } },
-  checker = { enabled = true },
+  checker = { enabled = false },
 })
