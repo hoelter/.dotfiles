@@ -16,6 +16,7 @@ return {
         "json",
         "lua",
         "markdown",
+        "prisma",
         "python",
         "ruby",
         "rust",
