@@ -4,12 +4,11 @@ local base = require('plugins.lsp._base')
 return {
   servers = { "clangd" },
   setup = function()
-    local lspconfig = require('lspconfig')
-    
-    lspconfig.clangd.setup({
+    vim.lsp.config('clangd', {
       on_attach = base.on_attach_lsp,
       flags = base.common_flags,
       capabilities = base.get_capabilities()
     })
+    vim.lsp.enable('clangd')
   end
 }

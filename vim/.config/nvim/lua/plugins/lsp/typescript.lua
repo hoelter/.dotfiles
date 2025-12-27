@@ -8,7 +8,7 @@ return {
     local capabilities = base.get_capabilities()
 
     -- eslint (JavaScript/TypeScript linting)
-    lspconfig.eslint.setup({
+    vim.lsp.config('eslint', {
       on_attach = function(client, bufnr)
         vim.keymap.set('n', 'gp', '<cmd>EslintFixAll<CR>', { buffer = bufnr })
 
@@ -20,8 +20,9 @@ return {
       flags = base.common_flags,
       capabilities = capabilities
     })
+    vim.lsp.enable('eslint')
 
-    -- vtsls (TypeScript)
+    -- vtsls (TypeScript) - use lspconfig since nvim-vtsls is designed for it
     require("lspconfig.configs").vtsls = require("vtsls").lspconfig
     lspconfig.vtsls.setup({
       on_attach = function(client, bufnr)

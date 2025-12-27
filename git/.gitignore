@@ -64,3 +64,5 @@ Session.vim
 .envrc
 
 docker-compose.db.yml
+
+.claude
