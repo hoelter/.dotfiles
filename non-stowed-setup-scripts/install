@@ -11,6 +11,7 @@ done
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fish/completions
 mkdir -p ~/.config/fish/conf.d
+mkdir -p ~/.config/mise/
 mkdir -p ~/.local/bin/
 
 # Create the symlinks
