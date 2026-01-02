@@ -7,4 +7,3 @@ gsed -i '/Appended to .bashrc by Chris/,$d' ~/.zshrc &> /dev/null
 
 # re-append to end of .bashrc
 cat ~/.dotfiles/non-stowed-copied-files/.bashrc >> ~/.zshrc
-

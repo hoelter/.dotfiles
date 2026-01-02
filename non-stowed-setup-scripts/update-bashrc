@@ -7,4 +7,3 @@ sed -i '/Appended to .bashrc by Chris/,$d' ~/.bashrc &> /dev/null
 
 # re-append to end of .bashrc
 cat ~/.dotfiles/non-stowed-copied-files/.bashrc >> ~/.bashrc
-

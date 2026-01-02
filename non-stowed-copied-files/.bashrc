@@ -1,9 +1,9 @@
 # Appended to .bashrc by Chris
 for file in ~/.{bash_functions,bash_aliases,exports}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
+    if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+        # shellcheck source=/dev/null
+        source "$file"
+    fi
 done
 
 # if interactive and stdin

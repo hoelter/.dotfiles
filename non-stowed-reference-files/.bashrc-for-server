@@ -10,7 +10,5 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 alias g="git"
 
-alias g="git"
-
 export VISUAL=vim
 export EDITOR="$VISUAL"
