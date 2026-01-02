@@ -12,4 +12,5 @@ terminal-notifier \
   -subtitle "$SESSION:$WINDOW_NAME" \
   -message "${1:-Waiting for input}" \
   -sound default \
-  -execute "osascript -e 'activate application \"Ghostty\"' && sleep 0.2 && /opt/homebrew/bin/tmux -S $SOCKET switch-client -c '$CLIENT' -t '$SESSION:$WINDOW'"
+  -activate com.mitchellh.ghostty \
+  -execute "/opt/homebrew/bin/tmux -S $SOCKET switch-client -c '$CLIENT' -t '$SESSION:$WINDOW'"
