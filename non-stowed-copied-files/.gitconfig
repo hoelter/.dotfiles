@@ -12,7 +12,8 @@
 	p = !"git -c push.default=current push -u"
 	u = pull
 	f = fetch
-	d = diff
+	# Consider setting up a ~/.config/difft/difft.toml with the line display = "shide-by-side-show-both" ; enabling the external difft ; and keeping this just 'diff'
+	d = -c diff.external='difft --display side-by-side-show-both' diff
 	q = !"git add -A && git commit -m 'Quick commit'"
 
 	# From https://blog.jez.io/cli-code-review/
@@ -42,7 +43,7 @@
 [color "status"]
 	untracked = red bold
 [diff]
-	external = difft
+	; external = difft
 	renames = copies
 	; renames = true -- possibly try this, been using copies for a while
 	algorithm = histogram
