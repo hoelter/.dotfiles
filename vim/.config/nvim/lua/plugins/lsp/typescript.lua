@@ -2,10 +2,11 @@
 local base = require('plugins.lsp._base')
 
 return {
-  servers = { "eslint", "vtsls" },
+  servers = { "eslint", "biome", "vtsls" },
   setup = function()
     local lspconfig = require('lspconfig')
     local capabilities = base.get_capabilities()
+    local linter = base.get_linter()
 
     -- eslint (JavaScript/TypeScript linting)
     vim.lsp.config('eslint', {
@@ -20,7 +21,27 @@ return {
       flags = base.common_flags,
       capabilities = capabilities
     })
-    vim.lsp.enable('eslint')
+
+    -- biome (JavaScript/TypeScript linting + formatting)
+    vim.lsp.config('biome', {
+      on_attach = function(client, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format({ async = false, name = "biome" })
+          end,
+        })
+      end,
+      flags = base.common_flags,
+      capabilities = capabilities
+    })
+
+    -- Only enable the linter that has a config present
+    if linter == "eslint" then
+      vim.lsp.enable('eslint')
+    elseif linter == "biome" then
+      vim.lsp.enable('biome')
+    end
 
     -- vtsls (TypeScript) - use lspconfig since nvim-vtsls is designed for it
     require("lspconfig.configs").vtsls = require("vtsls").lspconfig

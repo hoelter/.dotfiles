@@ -1,6 +1,34 @@
 -- Shared LSP utilities and configuration
 local M = {}
 
+-- Search up directory tree for any of the given config files
+local function find_config_upward(config_files)
+  local dir = vim.fn.getcwd()
+  while dir ~= "/" do
+    for _, config in ipairs(config_files) do
+      if vim.fn.filereadable(dir .. "/" .. config) == 1 then
+        return true
+      end
+    end
+    dir = vim.fn.fnamemodify(dir, ":h")
+  end
+  return false
+end
+
+-- Detect which linter config exists (biome takes priority)
+function M.get_linter()
+  local biome_configs = { "biome.json", "biome.jsonc" }
+  local eslint_configs = {
+    ".eslintrc", ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json",
+    ".eslintrc.yaml", ".eslintrc.yml", "eslint.config.js",
+    "eslint.config.mjs", "eslint.config.cjs"
+  }
+
+  if find_config_upward(biome_configs) then return "biome" end
+  if find_config_upward(eslint_configs) then return "eslint" end
+  return nil
+end
+
 -- Common LSP on_attach function
 function M.on_attach_lsp(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
