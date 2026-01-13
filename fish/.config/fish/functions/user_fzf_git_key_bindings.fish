@@ -6,15 +6,18 @@ function user_fzf_git_key_bindings
     end
 
     function fzf-select-commit-hash -d "Select git commit hash"
-        if set -q MACBOOK
-            git l | fzf --reverse --no-sort | gsed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
+            git l | fzf --reverse --no-sort | sed -E 's/.*\*[ |]*(\S*).*/\1/' | xargs | read -l result
             and commandline -it -- $result
             commandline -f repaint
-        else
-            git l | fzf --reverse --no-sort | sed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
-            and commandline -it -- $result
-            commandline -f repaint
-        end
+        # if set -q MACBOOK
+        #     git l | fzf --reverse --no-sort | gsed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
+        #     and commandline -it -- $result
+        #     commandline -f repaint
+        # else
+        #     git l | fzf --reverse --no-sort | sed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
+        #     and commandline -it -- $result
+        #     commandline -f repaint
+        # end
     end
 
     bind \cgb fzf-select-branch-name

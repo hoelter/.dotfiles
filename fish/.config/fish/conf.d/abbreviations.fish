@@ -28,7 +28,7 @@ if status --is-interactive
     abbr -a -g - "cd -"
 
     abbr -a -g bye "shutdown.exe -s -f -t 0"
-    abbr -a -g pkm "pkill mono"
+    # abbr -a -g pkm "pkill mono"
     abbr -a -g rg "rg -M 250 -Sp"
 
     abbr -a -g c "bc -l"
