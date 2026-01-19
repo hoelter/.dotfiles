@@ -6,7 +6,7 @@ fish -c 'set -U HOMESERVER true'
 
 ./update-bashrc
 
-./install fd fish git tmux vim scripts lf
+./install fd fish git tmux vim scripts lf javascript
 
 cd ~/.dotfiles-personal 2> /dev/null && ./install-server.sh
 
