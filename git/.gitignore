@@ -66,3 +66,4 @@ Session.vim
 docker-compose.db.yml
 
 .claude
+.agents

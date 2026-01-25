@@ -6,12 +6,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
     "onsails/lspkind.nvim",
-    {
-      "saadparwaiz1/cmp_luasnip",
-      dependencies = {
-        "L3MON4D3/LuaSnip",
-      },
-    },
   },
   config = function()
     local lspkind = require("lspkind")
@@ -21,7 +15,7 @@ return {
     cmp.setup({
       snippet = {
         expand = function(args)
-          require('luasnip').lsp_expand(args.body)
+          vim.snippet.expand(args.body)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -29,14 +23,13 @@ return {
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({
+        ['<CR>'] = cmp.mapping.confirm({ -- ctrl-y also confirms
           select = true,
-          behavior = cmp.ConfirmBehavior.Replace
+          behavior = cmp.ConfirmBehavior.Insert
         }),
       }),
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        -- { name = 'luasnip', keyword_length = 5 },
       }, {
         { name = 'path' },
         { name = 'buffer', keyword_length = 5 },

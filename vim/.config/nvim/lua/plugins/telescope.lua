@@ -89,7 +89,7 @@ return {
       })
 
       require('telescope').load_extension('fzf')
-      require('telescope').load_extension('luasnip')
+      -- require('telescope').load_extension('luasnip')
 
       -- Telescope keymaps
       local keymap = vim.keymap
@@ -114,6 +114,6 @@ return {
       keymap.set("n", "<leader>lgc", "<cmd>Telescope git_commits<cr>")
       keymap.set("n", "<leader>lgb", "<cmd>Telescope git_bcommits<cr>")
       keymap.set("n", "<leader>lga", "<cmd>Telescope git_branches<cr>")
-      keymap.set("n", "<leader>lx", "<cmd>Telescope luasnip<cr>")
+      -- keymap.set("n", "<leader>lx", "<cmd>Telescope luasnip<cr>")
     end,
 }
