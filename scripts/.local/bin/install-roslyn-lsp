@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# install-roslyn-lsp
+# Downloads Roslyn Language Server and Razor extension directly from
+# Microsoft's public Azure DevOps NuGet feeds and assembles them into
+# ~/.lsp/roslyn/ for use with roslyn.nvim.
+
+INSTALL_DIR="${HOME}/.lsp/roslyn"
+NUGET_ROSLYN="https://pkgs.dev.azure.com/azure-public/vside/_packaging/vs-impl/nuget/v3/index.json"
+NUGET_RAZOR="https://pkgs.dev.azure.com/azure-public/vside/_packaging/msft_consumption/nuget/v3/index.json"
+
+# Platform-specific NuGet package suffix
+case "$(uname -s)-$(uname -m)" in
+    Darwin-arm64)  RID="osx-arm64" ;;
+    Darwin-x86_64) RID="osx-x64" ;;
+    Linux-x86_64)  RID="linux-x64" ;;
+    Linux-aarch64) RID="linux-arm64" ;;
+    *)
+        echo "error: unsupported platform $(uname -s)-$(uname -m)" >&2
+        exit 1
+        ;;
+esac
+
+roslyn_version=""
+razor_version=""
+from_vscode=false
+
+ROSLYN_FLAT2="https://pkgs.dev.azure.com/azure-public/vside/_packaging/vs-impl/nuget/v3/flat2"
+RAZOR_FLAT2="https://pkgs.dev.azure.com/azure-public/vside/_packaging/msft_consumption/nuget/v3/flat2"
+
+usage() {
+    cat <<EOF
+Usage: install-roslyn-lsp [OPTIONS]
+
+Downloads and installs Roslyn LSP + Razor extension from Microsoft's NuGet feeds.
+
+Options:
+  --roslyn-version VERSION   Override Roslyn version
+  --razor-version VERSION    Override Razor version
+  --from-vscode              Use versions from dotnet/vscode-csharp's latest stable release
+                             (may fail if NuGet packages haven't been published yet)
+  --help                     Show this help message
+
+By default, fetches the Razor version from vscode-csharp's latest stable release
+(cached on the NuGet feed) and the Roslyn version from the NuGet feed directly
+(package.json uses a different version scheme that doesn't match the feed).
+
+Install directory: ${INSTALL_DIR}
+EOF
+    exit 0
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --roslyn-version) roslyn_version="$2"; shift 2 ;;
+        --razor-version)  razor_version="$2"; shift 2 ;;
+        --from-vscode)    from_vscode=true; shift ;;
+        --help)           usage ;;
+        *)
+            echo "error: unknown option: $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Version discovery
+if [[ "$from_vscode" == true && ( -z "$roslyn_version" || -z "$razor_version" ) ]]; then
+    echo "Fetching versions from dotnet/vscode-csharp latest stable release..."
+    # Use latest stable (non-prerelease) GitHub release, not main branch
+    release_tag=$(curl -fsSL "https://api.github.com/repos/dotnet/vscode-csharp/releases/latest" \
+        | python3 -c "import sys,json; print(json.load(sys.stdin)['tag_name'])")
+    echo "  vscode-csharp release: ${release_tag}"
+    package_json=$(curl -fsSL "https://raw.githubusercontent.com/dotnet/vscode-csharp/${release_tag}/package.json")
+    if [[ -z "$roslyn_version" ]]; then
+        roslyn_version=$(echo "$package_json" | python3 -c "import sys,json; print(json.load(sys.stdin)['defaults']['roslyn'])")
+    fi
+    if [[ -z "$razor_version" ]]; then
+        razor_version=$(echo "$package_json" | python3 -c "import sys,json; print(json.load(sys.stdin)['defaults']['razor'])")
+    fi
+elif [[ -z "$roslyn_version" || -z "$razor_version" ]]; then
+    # Razor: use package.json from the latest stable vscode-csharp release.
+    # These versions are cached on the msft_consumption feed (other versions return 401).
+    # Roslyn: the package.json version uses a different numbering scheme (e.g. 5.5.0)
+    # that doesn't exist on the NuGet feeds (which publish as 5.4.0), so we query the
+    # feed directly for the latest available version.
+    if [[ -z "$razor_version" ]]; then
+        echo "Fetching Razor version from dotnet/vscode-csharp latest stable release..."
+        release_tag=$(curl -fsSL "https://api.github.com/repos/dotnet/vscode-csharp/releases/latest" \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['tag_name'])")
+        echo "  vscode-csharp release: ${release_tag}"
+        razor_version=$(curl -fsSL "https://raw.githubusercontent.com/dotnet/vscode-csharp/${release_tag}/package.json" \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['defaults']['razor'])")
+    fi
+    if [[ -z "$roslyn_version" ]]; then
+        echo "Fetching latest Roslyn version from NuGet feed..."
+        # flat2 API returns versions in unpredictable order; sort by semver
+        roslyn_version=$(curl -fsSL "${ROSLYN_FLAT2}/microsoft.codeanalysis.languageserver.${RID}/index.json" \
+            | python3 -c '
+import sys, json
+versions = json.load(sys.stdin)["versions"]
+def key(v):
+    parts = v.replace("-", ".").split(".")
+    return tuple((0, int(p)) if p.isdigit() else (1, p) for p in parts)
+print(sorted(versions, key=key)[-1])
+')
+    fi
+fi
+
+echo "Roslyn version: ${roslyn_version}"
+echo "Razor version:  ${razor_version}"
+echo "Platform RID:   ${RID}"
+echo ""
+
+# Create temp working directory
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+# Generate NuGet.config
+cat > "${tmpdir}/NuGet.config" <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="vs-impl" value="${NUGET_ROSLYN}" />
+    <add key="msft_consumption" value="${NUGET_RAZOR}" />
+  </packageSources>
+</configuration>
+EOF
+
+# Generate .csproj using PackageDownload pattern
+cat > "${tmpdir}/Restore.csproj" <<EOF
+<Project Sdk="Microsoft.Build.NoTargets/1.0.80">
+    <PropertyGroup>
+        <RestorePackagesPath>out</RestorePackagesPath>
+        <TargetFramework>net8.0</TargetFramework>
+        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+        <AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageDownload Include="Microsoft.CodeAnalysis.LanguageServer.${RID}" Version="[${roslyn_version}]" />
+        <PackageDownload Include="Microsoft.VisualStudioCode.RazorExtension" Version="[${razor_version}]" />
+    </ItemGroup>
+</Project>
+EOF
+
+echo "Running dotnet restore..."
+dotnet restore "${tmpdir}/Restore.csproj" --verbosity quiet
+
+echo "Assembling install directory..."
+
+# Locate downloaded packages (lowercased per NuGet convention)
+roslyn_pkg="${tmpdir}/out/microsoft.codeanalysis.languageserver.${RID}/${roslyn_version}"
+razor_pkg="${tmpdir}/out/microsoft.visualstudiocode.razorextension/${razor_version}"
+
+if [[ ! -d "$roslyn_pkg" ]]; then
+    # Try case-insensitive fallback
+    roslyn_pkg=$(find "${tmpdir}/out" -maxdepth 2 -iname "${roslyn_version}" -path "*languageserver*" | head -1)
+fi
+if [[ ! -d "$razor_pkg" ]]; then
+    razor_pkg=$(find "${tmpdir}/out" -maxdepth 2 -iname "${razor_version}" -path "*razorextension*" | head -1)
+fi
+
+if [[ -z "$roslyn_pkg" || ! -d "$roslyn_pkg" ]]; then
+    echo "error: could not find Roslyn package after restore" >&2
+    exit 1
+fi
+if [[ -z "$razor_pkg" || ! -d "$razor_pkg" ]]; then
+    echo "error: could not find Razor package after restore" >&2
+    exit 1
+fi
+
+# Clear previous install
+if [[ -d "$INSTALL_DIR" ]]; then
+    echo "Removing previous install at ${INSTALL_DIR}..."
+    rm -rf "$INSTALL_DIR"
+fi
+mkdir -p "$INSTALL_DIR"
+
+# Copy Roslyn LSP files
+cp -R "${roslyn_pkg}/content/LanguageServer/${RID}/"* "$INSTALL_DIR/"
+
+# Copy Razor extension into .razorExtension subdirectory
+mkdir -p "${INSTALL_DIR}/.razorExtension"
+cp -R "${razor_pkg}/content/"* "${INSTALL_DIR}/.razorExtension/"
+
+# Write version tracking file
+cat > "${INSTALL_DIR}/.version" <<EOF
+roslyn=${roslyn_version}
+razor=${razor_version}
+rid=${RID}
+installed=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+EOF
+
+echo ""
+echo "Installed to ${INSTALL_DIR}/"
+echo "  Roslyn: ${roslyn_version}"
+echo "  Razor:  ${razor_version} (.razorExtension/)"
+echo ""
+echo "Version file: ${INSTALL_DIR}/.version"
