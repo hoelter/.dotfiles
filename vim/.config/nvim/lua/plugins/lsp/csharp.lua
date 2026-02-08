@@ -17,7 +17,14 @@ return {
         "--stdio"
       },
       on_attach = base.on_attach_lsp,
-      capabilities = base.get_capabilities()
+      capabilities = base.get_capabilities(),
+      settings = {
+        razor = {
+          language_server = {
+            cohosting_enabled = false,
+          },
+        },
+      },
     })
   end
 }

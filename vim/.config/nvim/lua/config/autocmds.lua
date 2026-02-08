@@ -104,12 +104,6 @@ autocmd("FileType", {
 
 autocmd({"BufNewFile", "BufRead"}, {
   group = "filetype_settings",
-  pattern = "*.cshtml",
-  command = "setlocal filetype=razor",
-})
-
-autocmd({"BufNewFile", "BufRead"}, {
-  group = "filetype_settings",
   pattern = "*.cake",
   command = "setlocal filetype=cs",
 })
