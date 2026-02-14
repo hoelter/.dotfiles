@@ -7,6 +7,15 @@ WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 SOCKET=$(echo "$TMUX" | cut -d',' -f1)
 CLIENT=$(tmux display-message -p '#{client_tty}')
 
+# Skip notification if the tmux window is already visible and terminal is focused
+WINDOW_ACTIVE=$(tmux display-message -t "$TMUX_PANE" -p '#{window_active}')
+CLIENT_SESSION=$(tmux display-message -p '#{client_session}')
+FOCUSED_APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')
+
+if [[ "$WINDOW_ACTIVE" == "1" && "$CLIENT_SESSION" == "$SESSION" && "$FOCUSED_APP" == "ghostty" ]]; then
+  exit 0
+fi
+
 terminal-notifier \
   -title "Claude Code" \
   -subtitle "$SESSION:$WINDOW_NAME" \
