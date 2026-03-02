@@ -5,7 +5,7 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes:1" -- more room for symbols left side of page numbers (default: auto)
 vim.opt.scrolloff = 8 -- keep 8 lines visible above/below cursor (default: 0)
 vim.opt.wrap = false -- don't wrap lines (default: true)
-vim.opt.colorcolumn = "120" -- visual guide at column 120 (default: empty)
+vim.opt.colorcolumn = "" -- visual guide at column 120 (default: empty)
 vim.opt.showmatch = true -- highlight matching brackets (default: false)
 vim.opt.pumblend = 25 -- semi-transparent popup menu (default: 0)
 
