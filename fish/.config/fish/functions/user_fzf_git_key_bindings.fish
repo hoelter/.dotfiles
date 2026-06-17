@@ -6,18 +6,9 @@ function user_fzf_git_key_bindings
     end
 
     function fzf-select-commit-hash -d "Select git commit hash"
-            git l | fzf --reverse --no-sort | sed -E 's/.*\*[ |]*(\S*).*/\1/' | xargs | read -l result
-            and commandline -it -- $result
-            commandline -f repaint
-        # if set -q MACBOOK
-        #     git l | fzf --reverse --no-sort | gsed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
-        #     and commandline -it -- $result
-        #     commandline -f repaint
-        # else
-        #     git l | fzf --reverse --no-sort | sed 's/.*\*[ |]*\(\S*\).*/\1/' | xargs | read -l result
-        #     and commandline -it -- $result
-        #     commandline -f repaint
-        # end
+        git l | fzf --reverse --no-sort | string replace -ra '\e\[[0-9;]*m' '' | string match -rg '([0-9a-f]{7,40})' | read -l result
+        and commandline -it -- $result
+        commandline -f repaint
     end
 
     bind \cgb fzf-select-branch-name
