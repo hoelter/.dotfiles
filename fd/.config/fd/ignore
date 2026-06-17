@@ -52,10 +52,10 @@ node_modules
 .Trash
 .cache
 
-*bin/Debug/*
-*bin/Release/*
-*obj/Debug/*
-*obj/Release/*
+**bin/Debug/
+**bin/Release/
+**obj/Debug/
+**obj/Release/
 /build
 /dist
 
