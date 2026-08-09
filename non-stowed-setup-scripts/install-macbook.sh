@@ -12,7 +12,7 @@ fish -c 'set -U MACBOOK true'
 # echo "Creating podman to docker alias"
 # ln -s /opt/homebrew/bin/podman ~/.local/bin/docker
 
-./install fd fish git tmux vim scripts lf javascript ghostty
+./install fd fish git tmux vim scripts lf javascript ghostty nono
 
 cd ~/.dotfiles-personal 2> /dev/null && ./install-macbook.sh
 

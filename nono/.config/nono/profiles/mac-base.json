@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "name": "mac-base",
+    "version": "1.0.0",
+    "description": "Local development: repos, runtimes, Docker/Colima; personal paths denied"
+  },
+  "extends": "default",
+
+  "groups": {
+    "include": [
+      "node_runtime",
+      "python_runtime",
+      "unlink_protection"
+    ],
+    "exclude": [
+      "dangerous_commands",
+      "dangerous_commands_macos"
+    ]
+  },
+
+  "filesystem": {
+    "read": [
+      "/usr/local/share/dotnet",
+      "/etc/dotnet",
+      "$HOME/.config/mise"
+    ],
+
+    "allow": [
+      "$HOME/my-repos",
+      "$HOME/other-repos",
+
+      "$HOME/.dotnet",
+      "$HOME/.nuget/packages",
+      "$HOME/.local/share/NuGet",
+      "$HOME/Library/Caches/NuGet",
+
+      "$HOME/.local/share/mise",
+      "$HOME/.local/state/mise",
+      "$HOME/.cache/mise",
+
+      "$HOME/.cache/uv",
+      "$HOME/.local/share/uv",
+      "$HOME/.npm",
+
+      "$HOME/.docker",
+      "$HOME/.colima"
+    ],
+
+    "bypass_protection": [
+      "$HOME/.docker",
+      "$HOME/.colima"
+    ],
+
+    "unix_socket": [
+      "$HOME/.colima/default/docker.sock"
+    ],
+
+    "deny": [
+      "$HOME/Documents",
+      "$HOME/Downloads",
+      "$HOME/Pictures",
+      "$HOME/Desktop",
+      "$HOME/Applications",
+      "$HOME/Music",
+      "$HOME/Library",
+      "$HOME/.notes"
+    ]
+  },
+
+  "network": {
+    "block": false
+  }
+}
