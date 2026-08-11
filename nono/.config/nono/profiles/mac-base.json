@@ -22,7 +22,8 @@
     "read": [
       "/usr/local/share/dotnet",
       "/etc/dotnet",
-      "$HOME/.config/mise"
+      "$HOME/.config/mise",
+      "$HOME/.gitignore"
     ],
 
     "allow": [
