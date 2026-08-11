@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo 'hi'
+
+node_version="$(mise ls -C "$HOME" --global --json node | jq -r '.[0].version // empty')"
+if [[ -z "$node_version" ]]; then
+    echo "pi: could not determine global mise node version" >&2
+    exit 1
+fi
+mise x "node@$node_version" -- pi "$@"
