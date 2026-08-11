@@ -1,8 +1,8 @@
 {
   "meta": {
-    "name": "mac-base",
+    "name": "mac-safe",
     "version": "1.0.0",
-    "description": "Local development: repos, runtimes, Docker/Colima; personal paths denied"
+    "description": "Local development: repos, runtimes, no docker/colima; personal paths denied"
   },
   "extends": "default",
 
@@ -40,19 +40,7 @@
 
       "$HOME/.cache/uv",
       "$HOME/.local/share/uv",
-      "$HOME/.npm",
-
-      "$HOME/.docker",
-      "$HOME/.colima"
-    ],
-
-    "bypass_protection": [
-      "$HOME/.docker",
-      "$HOME/.colima"
-    ],
-
-    "unix_socket": [
-      "$HOME/.colima/default/docker.sock"
+      "$HOME/.npm"
     ],
 
     "deny": [

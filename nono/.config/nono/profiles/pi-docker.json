@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "name": "pi-docker",
+    "version": "1.0.0",
+    "description": "Pi with local development and Docker/Colima access, run `nono pull nolabs-ai/pi`"
+  },
+  "extends": [
+    "mac-base",
+    "nolabs-ai/pi"
+  ]
+}
