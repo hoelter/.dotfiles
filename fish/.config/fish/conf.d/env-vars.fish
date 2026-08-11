@@ -1,5 +1,3 @@
-fish_add_path -m $HOME/.local/bin
-
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
 set -gx PAGER "bat --style=plain,grid"
