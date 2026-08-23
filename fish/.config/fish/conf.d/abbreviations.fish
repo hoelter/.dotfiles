@@ -33,6 +33,13 @@ if status --is-interactive
 
     abbr -a -g c "bc -l"
 
+    abbr -a -g buo "brew update && brew outdated"
+    # pass name of homebrew package to see what depends on it
+    abbr -a -g brew-uses "brew uses --installed"
+
+    abbr -a -g npi "nono run --profile pi --allow-cwd -- pi"
+    abbr -a -g nclaude "nono run --profile claude --allow-cwd -- claude --dangerously-skip-permissions"
+
     # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
     abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""
 end

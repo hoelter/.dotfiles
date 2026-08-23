@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "name": "claude",
+    "version": "1.0.0",
+    "description": "Claude with local development access and Claude settings"
+  },
+  "extends": [
+    "mac-base",
+    "nolabs-ai/claude"
+  ],
+
+  "filesystem": {
+    "allow": [
+      "$HOME/.claude"
+    ],
+    "allow_file": [
+      "$HOME/.claude.json"
+    ]
+  }
+}

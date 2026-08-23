@@ -1,6 +1,6 @@
 {
   "meta": {
-    "name": "pi-docker",
+    "name": "pi",
     "version": "1.0.0",
     "description": "Pi with local development and Docker/Colima access, run `nono pull nolabs-ai/pi`"
   },
