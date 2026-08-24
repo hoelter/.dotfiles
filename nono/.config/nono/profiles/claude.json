@@ -15,6 +15,15 @@
     ],
     "allow_file": [
       "$HOME/.claude.json"
+    ],
+    "suppress_save_prompt": [
+      "$HOME",
+      "/home",
+      "$HOME/Applications/Claude Code URL Handler.app"
     ]
-  }
+  },
+
+  "unsafe_macos_seatbelt_rules": [
+    "(allow file-write* (regex \"^/Users/chris/\\.claude\\.json\\.tmp\\.[^/]+$\"))"
+  ]
 }
