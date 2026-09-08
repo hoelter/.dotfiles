@@ -58,6 +58,13 @@
     ]
   },
 
+  "environment": {
+    "set_vars": {
+      "EDITOR": "$HOME/.local/bin/nvim-agent",
+      "VISUAL": "$HOME/.local/bin/nvim-agent"
+    }
+  },
+
   "network": {
     "block": false
   }

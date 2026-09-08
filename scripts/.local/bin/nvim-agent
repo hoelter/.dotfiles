@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Keep agent-edited prompts out of the user's Neovim config, plugins, ShaDa,
+# swap files, and persistent undo history.
+xdg_root="$(mktemp -d "${TMPDIR:-/tmp}/nvim-agent.XXXXXX")"
+cleanup() {
+    rm -rf -- "$xdg_root"
+}
+trap cleanup EXIT
+
+mkdir -p \
+    "$xdg_root/config" \
+    "$xdg_root/data" \
+    "$xdg_root/state" \
+    "$xdg_root/cache" \
+    "$xdg_root/runtime"
+
+XDG_CONFIG_HOME="$xdg_root/config" \
+XDG_DATA_HOME="$xdg_root/data" \
+XDG_STATE_HOME="$xdg_root/state" \
+XDG_CACHE_HOME="$xdg_root/cache" \
+XDG_RUNTIME_DIR="$xdg_root/runtime" \
+nvim --clean -i NONE -n \
+    --cmd 'set nobackup nowritebackup noswapfile noundofile' \
+    "$@"

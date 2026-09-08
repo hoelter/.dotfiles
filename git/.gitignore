@@ -67,3 +67,5 @@ docker-compose.db.yml
 
 .claude
 .agents
+
+**/.claude/settings.local.json
