@@ -87,3 +87,14 @@ api/dist
 
 # misc
 /transferred
+
+# python
+.venv/
+venv/
+__pycahce__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+*.egg-info/
