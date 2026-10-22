@@ -2,7 +2,7 @@
   "meta": {
     "name": "claude",
     "version": "1.0.0",
-    "description": "Claude with local development access and Claude settings"
+    "description": "Claude with local development, Docker/Colima access, and local environment files denied"
   },
   "extends": [
     "mac-base",

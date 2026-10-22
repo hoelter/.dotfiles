@@ -2,7 +2,7 @@
   "meta": {
     "name": "mac-dev-common",
     "version": "1.0.0",
-    "description": "Shared macOS local development access: repos, runtimes, caches; personal paths denied"
+    "description": "Shared macOS development access with local credentials, environment files, and personal paths denied"
   },
   "extends": "default",
 
@@ -31,7 +31,6 @@
       "$HOME/other-repos",
       "$HOME/.dotfiles",
       "$HOME/.dotfiles-personal",
-      "$HOME/.config/nono",
 
       "$HOME/.dotnet",
       "$HOME/.nuget/packages",
@@ -54,11 +53,29 @@
       "$HOME/Desktop",
       "$HOME/Applications",
       "$HOME/Music",
-      "$HOME/.notes"
+      "$HOME/.notes",
+
+      "$WORKDIR/.env",
+      "$WORKDIR/.env.local",
+      "$WORKDIR/.env.development.local",
+      "$WORKDIR/.env.test.local",
+      "$WORKDIR/.env.staging.local",
+      "$WORKDIR/.env.production.local"
     ]
   },
 
   "environment": {
+    "deny_vars": [
+      "AWS_ACCESS_KEY_ID",
+      "AWS_SECRET_ACCESS_KEY",
+      "AWS_SESSION_TOKEN",
+      "AZURE_CLIENT_SECRET",
+      "GH_TOKEN",
+      "GITHUB_TOKEN",
+      "GITLAB_TOKEN",
+      "NPM_TOKEN",
+      "DATABASE_URL"
+    ],
     "set_vars": {
       "EDITOR": "$HOME/.local/bin/nvim-agent",
       "VISUAL": "$HOME/.local/bin/nvim-agent"

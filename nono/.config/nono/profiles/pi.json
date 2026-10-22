@@ -2,7 +2,7 @@
   "meta": {
     "name": "pi",
     "version": "1.0.0",
-    "description": "Pi with local development and Docker/Colima access, run `nono pull nolabs-ai/pi`"
+    "description": "Pi with local development and Docker/Colima access; local environment files denied"
   },
   "extends": [
     "mac-base",

@@ -2,7 +2,7 @@
   "meta": {
     "name": "mac-safe",
     "version": "1.0.0",
-    "description": "Local development: repos, runtimes, no Docker/Colima; personal paths denied"
+    "description": "Local development without Docker/Colima; local secrets and personal paths denied"
   },
   "extends": "mac-dev-common"
 }
