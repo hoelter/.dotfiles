@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# nosleep — keep the Mac awake (lid closed, on battery) until killed or until a command exits.
+# Usage: nosleep              # block until Ctrl-C / kill
+#        nosleep <cmd> [args] # stay awake while cmd runs
+#        nosleep --reset      # force sleep back on
+#        nosleep --status
+set -euo pipefail
+
+pm() { sudo -n /usr/bin/pmset "$@" 2>/dev/null || sudo /usr/bin/pmset "$@"; }
+
+case "${1:-}" in
+  --reset)  pm -a disablesleep 0; exit ;;
+  --status) pmset -g | grep -i sleepdisabled; exit ;;
+esac
+
+cleanup() {
+  trap - EXIT INT TERM HUP
+  pm -a disablesleep 0 && echo "nosleep: sleep re-enabled" >&2
+}
+
+pm -a disablesleep 1
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM HUP
+echo "nosleep: sleep disabled (pid $$)" >&2
+
+if (($#)); then
+  "$@" &
+  wait $!
+else
+  while :; do sleep 3600 & wait $!; done
+fi
