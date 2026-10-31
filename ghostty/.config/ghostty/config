@@ -4,3 +4,5 @@ window-decoration = false
 theme = nord
 font-family = SauceCodePro Nerd Font Mono
 adjust-cell-height = 20%
+
+auto-update = download
