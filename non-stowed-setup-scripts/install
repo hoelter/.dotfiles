@@ -7,17 +7,12 @@ for dir in "$@"; do
     stow -v --delete $dir
 done
 
-# Ensure dirs we don't want symlinked exist on the off chance they don't
-mkdir -p ~/.config/fish/functions
-mkdir -p ~/.config/fish/completions
-mkdir -p ~/.config/fish/conf.d
-mkdir -p ~/.config/mise/
-mkdir -p ~/.config/nono/
-mkdir -p ~/.local/bin/
-
 # Create the symlinks
+# --no-folding stows files individually instead of symlinking whole
+# directories, so real dirs are created and nothing gets folded into a
+# single tree symlink.
 for dir in "$@"; do
-    stow -v $dir
+    stow -v --no-folding $dir
 done
 
 echo 'Replacing the .gitconfig in the home directory.'
