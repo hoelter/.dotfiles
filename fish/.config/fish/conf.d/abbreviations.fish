@@ -37,8 +37,9 @@ if status --is-interactive
     # pass name of homebrew package to see what depends on it
     abbr -a -g brew-uses "brew uses --installed"
 
-    abbr -a -g npi "nono run --profile pi --allow-cwd -- pi"
-    abbr -a -g nclaude "nono run --profile claude --allow-cwd -- claude --dangerously-skip-permissions"
+    abbr -a -g npi "nono run --profile agents --allow-cwd -- pi"
+    abbr -a -g nclaude "nono run --profile agents --allow-cwd -- claude --dangerously-skip-permissions"
+    abbr -a -g ncodex "nono run --profile agents --allow-cwd -- codex"
 
     # https://github.com/microsoft/WSL/issues/4166#issuecomment-628493643
     abbr -a -g wsl-drop-cache "sudo sh -c \"echo 3 >'/proc/sys/vm/drop_caches' && printf '\n%s\n' 'Ram-cache Cleared'\""

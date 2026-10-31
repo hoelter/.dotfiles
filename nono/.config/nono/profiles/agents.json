@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "name": "agents",
+    "version": "3.0.0",
+    "description": "Any coding agent (Claude, Codex, Pi, ...): repos, toolchains (global + mise), Colima Docker; everything else denied"
+  },
+  "extends": [
+    "nolabs-ai/claude",
+    "nolabs-ai/pi",
+    "nolabs-ai/codex"
+  ],
+  "groups": {
+    "include": [
+      "mise_manager",
+      "go_runtime",
+      "go_runtime_macos"
+    ]
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/my-repos",
+      "$HOME/other-repos",
+      "$HOME/.local/share/mise",
+      "$HOME/.local/state/mise",
+      "$HOME/.npm",
+      "$HOME/.local/share/uv",
+      "$HOME/.cargo",
+      "$HOME/.go",
+      "$HOME/.gem",
+      "$HOME/.bundle",
+      "$HOME/.dotnet",
+      "$HOME/.nuget/packages",
+      "$HOME/.local/share/NuGet",
+      "$HOME/.docker"
+    ],
+    "read": [
+      "$HOME/.config/mise",
+      "$HOME/.gitignore",
+      "/usr/local/share/dotnet",
+      "/etc/dotnet"
+    ],
+    "bypass_protection": [
+      "$HOME/.docker"
+    ],
+    "unix_socket": [
+      "$HOME/.config/colima/default/docker.sock"
+    ],
+    "deny": [
+      "**/.env",
+      "**/.env.local",
+      "**/.env.*.local"
+    ],
+    "suppress_save_prompt": [
+      "$HOME",
+      "/home",
+      "$HOME/Applications/Claude Code URL Handler.app"
+    ]
+  },
+  "environment": {
+    "deny_vars": [
+      "AWS_ACCESS_KEY_ID",
+      "AWS_SECRET_ACCESS_KEY",
+      "AWS_SESSION_TOKEN",
+      "AZURE_CLIENT_SECRET",
+      "GH_TOKEN",
+      "GITHUB_TOKEN",
+      "GITLAB_TOKEN",
+      "NPM_TOKEN",
+      "DATABASE_URL"
+    ],
+    "set_vars": {
+      "EDITOR": "$HOME/.local/bin/nvim-agent",
+      "VISUAL": "$HOME/.local/bin/nvim-agent",
+      "DOCKER_HOST": "unix://$HOME/.config/colima/default/docker.sock"
+    }
+  },
+  "unsafe_macos_seatbelt_rules": [
+    "(allow file-write* (regex \"^/Users/chris/\\.claude\\.json\\.tmp\\.[^/]+$\"))"
+  ]
+}

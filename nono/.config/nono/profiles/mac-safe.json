@@ -1,8 +1,0 @@
-{
-  "meta": {
-    "name": "mac-safe",
-    "version": "1.0.0",
-    "description": "Local development without Docker/Colima; local secrets and personal paths denied"
-  },
-  "extends": "mac-dev-common"
-}
