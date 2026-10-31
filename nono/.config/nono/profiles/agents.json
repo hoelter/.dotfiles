@@ -31,13 +31,19 @@
       "$HOME/.dotnet",
       "$HOME/.nuget/packages",
       "$HOME/.local/share/NuGet",
-      "$HOME/.docker"
+      "$HOME/.docker",
+      "$HOME/.dotfiles-personal/macbook/.claude"
     ],
     "read": [
       "$HOME/.config/mise",
-      "$HOME/.gitignore",
       "/usr/local/share/dotnet",
-      "/etc/dotnet"
+      "/etc/dotnet",
+      "$HOME/.dotfiles",
+      "$HOME/.dotfiles-personal",
+      "$HOME/.config/fd"
+    ],
+    "read_file": [
+      "$HOME/.gitignore"
     ],
     "bypass_protection": [
       "$HOME/.docker"
