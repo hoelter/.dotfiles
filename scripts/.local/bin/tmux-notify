@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Send a macOS notification that, when clicked, focuses Ghostty and switches the
+# tmux client to the target pane. Never fails the caller: always exits 0.
+#
+# Usage: tmux-notify [-t title] [-s sound] [-p pane] [-f] [message]
+#   -t  notification title (default: tmux)
+#   -s  notification sound (default: default)
+#   -p  target pane id; defaults to $TMUX_PANE, empty means no navigation
+#   -f  notify even if the target pane's window is already visible
+
+TITLE="tmux"
+SOUND="default"
+PANE="${TMUX_PANE-}"
+FORCE=0
+
+while getopts "t:s:p:f" opt; do
+  case "$opt" in
+    t) TITLE="$OPTARG" ;;
+    s) SOUND="$OPTARG" ;;
+    p) PANE="$OPTARG" ;;
+    f) FORCE=1 ;;
+    *) exit 0 ;;
+  esac
+done
+shift $((OPTIND - 1))
+MESSAGE="${1:-Waiting for input}"
+
+command -v terminal-notifier >/dev/null || exit 0
+
+# $TMUX can be inherited from a long-lived parent whose server is gone, so only
+# trust its socket if it still exists
+SOCKET="${TMUX%%,*}"
+if [[ -n "$SOCKET" && -S "$SOCKET" ]]; then
+  TMUX_CMD=(tmux -S "$SOCKET")
+else
+  TMUX_CMD=(tmux)
+fi
+
+# A pane only counts if tmux can still resolve it
+SEP=$'\x1f'
+if [[ -n "$PANE" ]]; then
+  IFS="$SEP" read -r PANE_ID SESSION WINDOW WINDOW_NAME WINDOW_ACTIVE SOCKET_PATH < <(
+    "${TMUX_CMD[@]}" display-message -t "$PANE" -p \
+      "#{pane_id}$SEP#{session_name}$SEP#{window_index}$SEP#{window_name}$SEP#{window_active}$SEP#{socket_path}" 2>/dev/null
+  )
+fi
+
+ARGS=(-title "$TITLE" -message "$MESSAGE" -sound "$SOUND" -activate com.mitchellh.ghostty)
+
+if [[ -n "${PANE_ID:-}" ]]; then
+  IFS="$SEP" read -r CLIENT CLIENT_SESSION < <(
+    "${TMUX_CMD[@]}" display-message -p "#{client_tty}$SEP#{client_session}" 2>/dev/null
+  )
+
+  # Skip notification if the tmux window is already visible and terminal is focused
+  if [[ "$FORCE" == 0 && "$WINDOW_ACTIVE" == "1" && "$CLIENT_SESSION" == "$SESSION" ]]; then
+    FOCUSED_APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true' 2>/dev/null)
+    [[ "$FOCUSED_APP" == "ghostty" ]] && exit 0
+  fi
+
+  SWITCH="/opt/homebrew/bin/tmux -S '$SOCKET_PATH' switch-client"
+  [[ -n "$CLIENT" ]] && SWITCH+=" -c '$CLIENT'"
+  SWITCH+=" -t '$SESSION:$WINDOW' \\; select-pane -t '$PANE_ID'"
+
+  # Grouping replaces an unanswered notification from the same window instead of stacking
+  ARGS+=(-subtitle "$SESSION:$WINDOW_NAME" -group "$SESSION:$WINDOW" -execute "$SWITCH")
+else
+  ARGS+=(-group "$TITLE")
+fi
+
+terminal-notifier "${ARGS[@]}" >/dev/null 2>&1
+exit 0
