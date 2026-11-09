@@ -2,6 +2,9 @@
 
 cd $HOME/.dotfiles
 
+# macOS drops .DS_Store files into the packages, which makes stow abort with conflicts.
+find . -name .DS_Store -not -path './.git/*' -delete
+
 # Clean symlinks if they exist
 for dir in "$@"; do
     stow -v --delete $dir
